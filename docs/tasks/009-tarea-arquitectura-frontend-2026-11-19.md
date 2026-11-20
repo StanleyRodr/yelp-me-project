@@ -67,7 +67,7 @@ UI y services usan la misma tabla. Una sola fuente.
 - `/login` pública. Resto hijas de `AppShell`.
 - `:id(\\d+)`: solo números. Ruta desconocida → inicio.
 - Guard: sin sesión → `/login?redirigir=<ruta>`; con sesión en `/login` → inicio.
-- `document.title` = `<meta.titulo> | Yelp Me`.
+- `document.title` = `<meta.titulo> | YelpMe`.
 - Vistas con carga diferida.
 
 ### 7. Layout

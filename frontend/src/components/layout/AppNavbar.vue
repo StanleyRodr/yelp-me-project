@@ -3,7 +3,7 @@
     <div class="container-fluid barra-contenedor">
       <RouterLink :to="{ name: 'inicio' }" class="navbar-brand marca">
         <i class="bi bi-bell-fill" aria-hidden="true"></i>
-        <span>Yelp Me</span>
+        <span>YelpMe</span>
       </RouterLink>
 
       <button

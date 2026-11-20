@@ -2,7 +2,7 @@
   <div class="panel">
     <p class="panel-marca">
       <i class="bi bi-bell-fill" aria-hidden="true"></i>
-      Yelp Me
+      YelpMe
     </p>
     <div class="panel-texto">
       <h1 class="panel-titulo">Panel de atención de emergencias</h1>

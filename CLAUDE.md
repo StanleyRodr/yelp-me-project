@@ -21,7 +21,9 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - Numeración consecutiva de 3 dígitos, **global** entre planes (las tareas no reinician por plan).
 - Al terminar una tarea: marcar estado ✅ en la tarea y en la tabla del plan, y anotar el commit.
 
-## Proyecto: Yelp Me
+## Proyecto: YelpMe
+
+El nombre se escribe **YelpMe** (junto, sin espacio) en código, interfaz y documentación.
 
 Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**: no se integra con servicios reales de emergencia.
 

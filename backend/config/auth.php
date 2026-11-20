@@ -92,7 +92,7 @@ return [
     |
     */
 
-    // Yelp Me: recuperación de contraseña fuera del MVP y la tabla
+    // YelpMe: recuperación de contraseña fuera del MVP y la tabla
     // password_reset_tokens no existe en database/script-bd.sql.
     // Sin broker configurado; si se implementa, crear la tabla en el script.
     'passwords' => [],

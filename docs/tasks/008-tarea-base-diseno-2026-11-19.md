@@ -63,7 +63,7 @@ Mapear tokens a Bootstrap sin Sass:
 Orden: Bootstrap CSS → Bootstrap Icons → Leaflet CSS → fuente → Material Symbols → `tokens.css` → `tema-bootstrap.css` → `base.css` → `sweetalert.css`. Tokens después de Bootstrap para que ganen.
 
 ### 8. `index.html`
-`lang="es"`, título `Yelp Me | Panel de administración`.
+`lang="es"`, título `YelpMe | Panel de administración`.
 
 ## Verificación
 - `npm run build` sin errores.

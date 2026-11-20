@@ -47,7 +47,7 @@ return [
             'report' => false,
         ],
 
-        // Fotos de perfil de usuarios y administradores (Yelp Me)
+        // Fotos de perfil de usuarios y administradores (YelpMe)
         'perfiles' => [
             'driver' => 'local',
             'root' => storage_path('app/public/perfiles'),

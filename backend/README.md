@@ -1,4 +1,4 @@
-# Yelp Me — Backend (API)
+# YelpMe — Backend (API)
 
 API REST en Laravel 12 que consumen el panel web (Vue) y la app Android. Contexto completo del proyecto en [`docs/plans/principal-plan.md`](../docs/plans/principal-plan.md).
 
@@ -59,7 +59,7 @@ php artisan test              # pruebas
 Todas las respuestas de `api/*` usan el mismo formato JSON:
 
 ```json
-{ "ok": true, "mensaje": "API Yelp Me funcionando", "datos": { } }
+{ "ok": true, "mensaje": "API YelpMe funcionando", "datos": { } }
 ```
 
 Errores (`ok: false`, `datos: null`), siempre en JSON y en español:

@@ -1,4 +1,4 @@
-# Plan principal — Yelp Me
+# Plan principal — YelpMe
 
 > Sistema de contactos y solicitudes de emergencia.
 > Creado: 2026-11-19 · Última actualización: 2026-11-19

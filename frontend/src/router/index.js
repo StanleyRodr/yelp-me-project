@@ -63,7 +63,7 @@ router.afterEach((to) => {
   } catch {
     // Almacenamiento bloqueado: nada que limpiar.
   }
-  document.title = to.meta.titulo ? `${to.meta.titulo} | Yelp Me` : 'Yelp Me'
+  document.title = to.meta.titulo ? `${to.meta.titulo} | YelpMe` : 'YelpMe'
 })
 
 export default router
