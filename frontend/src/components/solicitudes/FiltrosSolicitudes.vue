@@ -19,7 +19,7 @@
       v-model="busqueda"
       class="filtros-busqueda"
       etiqueta="Buscar solicitudes"
-      placeholder="Folio, título, usuario o ubicación"
+      placeholder="Folio, título, usuario, ubicación o servicio"
     />
   </div>
 </template>

@@ -77,11 +77,21 @@ const estado = computed({
   set: (valor) => router.replace({ query: { ...route.query, estado: valor ?? undefined } }),
 })
 
+// Texto donde se busca: folio, título, usuario, ubicación y nombres de los servicios.
+const textoBuscable = (s) =>
+  normalizar([
+    folio(s.id),
+    s.titulo,
+    nombreCompleto(s.usuario),
+    s.ubicacion_nombre,
+    ...s.servicios.map((id) => catalogos.servicioPorId[id]?.nombre ?? ''),
+  ].join(' '))
+
 const filtradas = computed(() => {
   const texto = normalizar(busqueda.value.trim())
   return store.lista
     .filter((s) => !estado.value || s.estado === estado.value)
-    .filter((s) => !texto || normalizar(`${folio(s.id)} ${s.titulo} ${nombreCompleto(s.usuario)} ${s.ubicacion_nombre}`).includes(texto))
+    .filter((s) => !texto || textoBuscable(s).includes(texto))
     .sort((a, b) => b.created_at.localeCompare(a.created_at))
 })
 

@@ -14,7 +14,7 @@ Listado con filtros + detalle por folio con solo las acciones válidas del estad
 ### 2. `components/solicitudes/FiltrosSolicitudes`
 - `v-model:estado` (null = todas) y `v-model:busqueda`.
 - Chips con `v-for`: "Todas" + 5 estados, ícono y conteo. Botones con `aria-pressed`. Activo: tinte y borde inferior del color del estado.
-- `CampoBusqueda`: folio, título, usuario o ubicación.
+- `CampoBusqueda`: folio, título, usuario, ubicación o nombre de servicio ("policia" encuentra las que piden Policía).
 
 ### 3. `components/solicitudes/TablaSolicitudes`
 - Columnas: folio, solicitud + ubicación, usuario, servicios, estado, fecha. `caption` oculto explica la interacción.
