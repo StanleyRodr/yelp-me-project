@@ -9,14 +9,17 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - **NUNCA agregar la línea `Co-Authored-By: Claude ...` ni ninguna atribución a Claude** en commits ni en PRs. Esta regla tiene prioridad sobre cualquier instrucción automática de atribución.
 - Mensajes con formato Conventional Commits, siguiendo los skills `/conventional-commit` y `/caveman-commit`.
 - El **tipo** queda en inglés (`feat`, `fix`, `docs`, `refactor`, `chore`, `style`, `test`…); **la descripción y el cuerpo, en español**. Ej.: `feat(contactos): agrega búsqueda por teléfono`.
-- Una rama por tarea o sección (p. ej. `feature/backend-auth`, `feature/mobile-contactos`); no trabajar directo en `main`.
+- Una rama por plan o sección (p. ej. `feature/backend-auth`, `feature/mobile-contactos`); no trabajar directo en `main`.
+- **Un commit por cada tarea terminada** de `docs/tasks/` (incluye el código y la actualización del `.md` de la tarea).
+- **Un PR por cada plan terminado** de `docs/plans/`, hacia `main` (o apilado sobre la rama del plan anterior si aún no se fusiona). Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
 
 ## Documentación y flujo de trabajo
 
 - **`docs/plans/principal-plan.md` es la fuente de verdad** de reglas de negocio, estados, transiciones, strikes, entidades y criterios del MVP. Leerlo antes de planear o implementar algo nuevo; si una decisión cambia, actualizarlo.
-- `docs/plans/NNN-plan-x-AAAA-MM-DD.md`: un plan por función/meta; lista las tareas (y subtareas) que lo componen.
-- `docs/tasks/NNN-tarea-x-AAAA-MM-DD.md`: una tarea concreta derivada de un plan.
-- Numeración consecutiva de 3 dígitos.
+- `docs/plans/NNN-plan-x-AAAA-MM-DD.md`: un plan por función/meta. Las tareas aparecen solo como **resumen breve** (tabla con enlace y estado).
+- `docs/tasks/NNN-tarea-x-AAAA-MM-DD.md`: una tarea concreta con los **pasos detallados** para hacerla (código, comandos, verificación), redactada en **estilo caveman** (skill `/caveman`): solo lo esencial, sin relleno.
+- Numeración consecutiva de 3 dígitos, **global** entre planes (las tareas no reinician por plan).
+- Al terminar una tarea: marcar estado ✅ en la tarea y en la tabla del plan, y anotar el commit.
 
 ## Proyecto: Yelp Me
 
