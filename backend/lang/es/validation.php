@@ -46,6 +46,7 @@ return [
     'required' => 'El campo :attribute es obligatorio.',
     'required_if' => 'El campo :attribute es obligatorio cuando :other es :value.',
     'required_with' => 'El campo :attribute es obligatorio cuando :values está presente.',
+    'required_without' => 'Escribe el :attribute o el :values.',
     'same' => 'Los campos :attribute y :other deben coincidir.',
     'size' => [
         'numeric' => 'El campo :attribute debe ser :size.',
@@ -62,6 +63,8 @@ return [
         'telefono' => 'teléfono',
         'correo' => 'correo',
         'password' => 'contraseña',
+        'password_confirmation' => 'confirmación de contraseña',
+        'fcm_token' => 'token del dispositivo',
         'parentesco' => 'parentesco',
         'titulo' => 'título',
         'descripcion' => 'descripción',

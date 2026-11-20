@@ -2,7 +2,7 @@ import { bd, CONTRASENA_DEMO_ADMIN } from '../mocks/bd'
 import { ErrorApi, responder } from './simulacion'
 
 /**
- * Autenticación del panel (simulada). Futuro: POST /api/admin/login y POST /api/logout.
+ * Autenticación del panel (simulada). Futuro: POST /api/admin/login, GET /api/sesion y DELETE /api/sesion (plan 003).
  */
 export const authService = {
   async login(correo, password) {

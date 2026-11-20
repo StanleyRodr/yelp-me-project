@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Support\PresentadorUsuario;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+/**
+ * Registro público de usuarios de la app Android (siempre rol "usuario").
+ * Los administradores no se registran por la API (se dan de alta en la BD).
+ */
+class RegistroController extends Controller
+{
+    /** POST /api/registro */
+    public function store(Request $request): JsonResponse
+    {
+        $request->merge([
+            'correo' => mb_strtolower(trim((string) $request->input('correo'))),
+            'telefono' => preg_replace('/\D/', '', (string) $request->input('telefono')),
+        ]);
+
+        $datos = $request->validate([
+            'nombre' => ['required', 'string', 'max:100'],
+            'apellidos' => ['required', 'string', 'max:100'],
+            'telefono' => ['required', 'digits:10', 'unique:usuarios,telefono'],
+            'correo' => ['required', 'email', 'max:150', 'unique:usuarios,correo'],
+            'password' => ['required', 'string', 'min:8', 'max:72', 'confirmed'],
+            'fcm_token' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        [$id, $vinculados] = DB::transaction(function () use ($datos) {
+            $ahora = now();
+
+            $id = DB::table('usuarios')->insertGetId([
+                'nombre' => trim($datos['nombre']),
+                'apellidos' => trim($datos['apellidos']),
+                'telefono' => $datos['telefono'],
+                'correo' => $datos['correo'],
+                'password' => Hash::make($datos['password']),
+                'rol' => 'usuario',
+                'fcm_token' => $datos['fcm_token'] ?? null,
+                'activo' => true,
+                'created_at' => $ahora,
+                'updated_at' => $ahora,
+            ]);
+
+            // Plan principal 6.1: los contactos de otros usuarios con este
+            // teléfono quedan vinculados a la cuenta nueva.
+            $vinculados = DB::table('contactos')
+                ->where('telefono', $datos['telefono'])
+                ->whereNull('usuario_contacto_id')
+                ->where('usuario_id', '!=', $id)
+                ->update(['usuario_contacto_id' => $id, 'updated_at' => $ahora]);
+
+            return [$id, $vinculados];
+        });
+
+        $token = User::findOrFail($id)->createToken('app')->plainTextToken;
+
+        return $this->respuesta([
+            'token' => $token,
+            'usuario' => PresentadorUsuario::porId($id),
+            'contactos_vinculados' => $vinculados,
+        ], 'Cuenta creada', 201);
+    }
+}

@@ -25,6 +25,11 @@ return Application::configure(basePath: dirname(__DIR__))
         // No hay ruta web de login: un invitado sin token recibe 401 JSON,
         // aunque el cliente no envíe "Accept: application/json" (p. ej. Retrofit).
         $middleware->redirectGuestsTo(fn () => null);
+
+        $middleware->alias([
+            'rol' => \App\Http\Middleware\VerificarRol::class,
+            'cuenta.activa' => \App\Http\Middleware\VerificarCuentaActiva::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // En la API siempre se responde JSON con el formato estándar
