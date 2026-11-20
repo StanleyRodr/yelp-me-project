@@ -52,7 +52,7 @@ $url  = Storage::disk('perfiles')->url($ruta);                    // URL para Gl
 - Archivo de prueba accesible en `public/storage/perfiles/`.
 - `git check-ignore backend/storage/app/public/perfiles/x.jpg` → ignorado. Fotos nunca se suben.
 - `public/storage` también ignorado.
-- `php artisan serve`: archivo existente → 200. Archivo inexistente → 403, no 404. Cae en ruta firmada `/storage/{path}` que Laravel registra para disco `local` (`serve => true`). Esperado, no es error.
+- `php artisan serve`: archivo existente → 200, inexistente → 404. (Antes daba 403: ruta firmada del disco `local`; se quitó en tarea 007.)
 
 ## Resultado
 Commit: `feat(backend): agrega disco perfiles para fotos de perfil`.

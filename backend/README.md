@@ -51,6 +51,7 @@ Teléfonos de usuarios: `2351000001` a `2351000005` (mismo orden de la tabla).
 
 ```bash
 php artisan serve             # http://localhost:8000
+php artisan test              # pruebas
 ```
 
 ## Formato de respuesta
