@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
+import router from './router'
 
 // Dependencias de terceros
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -17,4 +18,4 @@ import './styles/tema-bootstrap.css'
 import './styles/base.css'
 import './styles/sweetalert.css'
 
-createApp(App).use(createPinia()).mount('#app')
+createApp(App).use(createPinia()).use(router).mount('#app')
