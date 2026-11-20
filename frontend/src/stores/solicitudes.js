@@ -25,16 +25,22 @@ export const useSolicitudesStore = defineStore('solicitudes', () => {
 
   const activas = computed(() => lista.value.filter((s) => ESTADOS_ACTIVOS.includes(s.estado)))
 
-  async function cargar() {
+  // Si ya hay una carga en curso (p. ej. AppShell y la vista a la vez), se reutiliza.
+  let cargaEnCurso = null
+
+  function cargar() {
+    if (cargaEnCurso) return cargaEnCurso
     cargando.value = true
     error.value = null
-    try {
-      lista.value = await solicitudesService.listar()
-    } catch (e) {
-      error.value = e.message
-    } finally {
-      cargando.value = false
-    }
+    cargaEnCurso = solicitudesService
+      .listar()
+      .then((datos) => (lista.value = datos))
+      .catch((e) => (error.value = e.message))
+      .finally(() => {
+        cargando.value = false
+        cargaEnCurso = null
+      })
+    return cargaEnCurso
   }
 
   async function cargarUna(id) {
