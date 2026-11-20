@@ -2,48 +2,59 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Único modelo Eloquent del proyecto.
+ *
+ * Existe solo porque Laravel Sanctum lo requiere para emitir y validar
+ * tokens (HasApiTokens / createToken). El resto del acceso a datos se hace
+ * con DB::table en los controladores.
+ */
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens;
+
+    protected $table = 'usuarios';
 
     /**
-     * The attributes that are mass assignable.
-     *
+     * La tabla usuarios no tiene columna remember_token (la API usa tokens).
+     */
+    protected $rememberTokenName = false;
+
+    /**
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'nombre',
+        'apellidos',
+        'telefono',
+        'correo',
         'password',
+        'rol',
+        'foto_perfil',
+        'fcm_token',
+        'activo',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
      * @var list<string>
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        'fcm_token',
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'activo' => 'boolean',
+            'deshabilitado_en' => 'datetime',
         ];
     }
 }
