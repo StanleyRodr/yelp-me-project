@@ -20,11 +20,7 @@
     </EstadoVacio>
 
     <template v-else-if="s">
-      <header class="rejilla-cabecera">
-        <p class="folio ym-cifras">{{ folio(s.id) }}</p>
-        <h1>{{ s.titulo }}</h1>
-        <EstadoBadge :estado="s.estado" tamano="lg" />
-      </header>
+      <CabeceraSolicitud class="rejilla-cabecera" :solicitud="s" />
 
       <div class="rejilla-principal">
         <TarjetaSeccion titulo="Acciones">
@@ -55,7 +51,7 @@ import { computed, reactive, ref, watch } from 'vue'
 import DetalleSolicitud from '../components/solicitudes/DetalleSolicitud.vue'
 import AccionesSolicitud from '../components/solicitudes/AccionesSolicitud.vue'
 import TarjetaSeccion from '../components/comunes/TarjetaSeccion.vue'
-import EstadoBadge from '../components/comunes/EstadoBadge.vue'
+import CabeceraSolicitud from '../components/solicitudes/CabeceraSolicitud.vue'
 import MapaBase from '../components/comunes/MapaBase.vue'
 import LineaTiempo from '../components/comunes/LineaTiempo.vue'
 import EstadoVacio from '../components/comunes/EstadoVacio.vue'
@@ -144,13 +140,6 @@ async function ejecutar(clave) {
 
 .rejilla-volver { grid-area: volver; }
 .rejilla-cabecera { grid-area: cabecera; }
-.rejilla-cabecera h1 { margin: 0 0 var(--ym-espacio-2); }
-
-.folio {
-  margin: 0;
-  color: var(--ym-texto-secundario);
-  font-weight: var(--ym-peso-medio);
-}
 
 .rejilla-principal,
 .rejilla-lateral {

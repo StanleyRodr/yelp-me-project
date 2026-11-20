@@ -73,18 +73,18 @@ Sin dependencias nuevas: placeholders y spinners de Bootstrap 5.3.
 | 013 | [Solicitudes y atención](../tasks/013-tarea-solicitudes-atencion-2026-11-19.md) | Tabla + mapa con filtros; detalle por folio con línea de tiempo y acciones según transición. | ✅ |
 | 014 | [Usuarios](../tasks/014-tarea-usuarios-2026-11-19.md) | Tabla con estado de cuenta y perfil con historial, strikes, suspensiones y acciones. | ✅ |
 | 015 | [Perfil del admin](../tasks/015-tarea-perfil-admin-2026-11-19.md) | Datos editables, foto, cambio de contraseña y solicitudes atendidas. | ✅ |
-| 016 | [Verificación](../tasks/016-tarea-verificacion-frontend-2026-11-19.md) | Revisión visual con capturas, teclado, contraste, responsive y build. | Pendiente |
+| 016 | [Verificación](../tasks/016-tarea-verificacion-frontend-2026-11-19.md) | Revisión automática de reglas, limpieza de `_legado`, build y documentación. Auditoría visual manual pendiente. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] Todas las rutas funcionan y las protegidas redirigen a `/login` sin sesión.
-- [ ] Ningún componente usa `useAlertas`; los datos salen de stores → services → mocks.
-- [ ] Solo existen los 5 estados oficiales y las acciones permitidas por estado.
-- [ ] Ningún color hexadecimal fuera del archivo de tokens.
-- [ ] Ninguna vista contiene tablas, formularios o estilos propios salvo la rejilla.
-- [ ] Skeleton en cargas de sección y círculo solo en acciones.
-- [ ] Foco visible, navegación por teclado y `prefers-reduced-motion` respetado.
-- [ ] `npm run build` sin errores ni advertencias nuevas.
-- [ ] Commits por tarea, en español, sin coautoría; PR al terminar.
+- [ ] Todas las rutas funcionan y las protegidas redirigen a `/login` sin sesión. *(Implementado; falta confirmar en navegador: auditoría manual.)*
+- [x] Ningún componente usa `useAlertas`; los datos salen de stores → services → mocks.
+- [x] Solo existen los 5 estados oficiales y las acciones permitidas por estado.
+- [x] Ningún color hexadecimal fuera del archivo de tokens.
+- [x] Ninguna vista contiene tablas, formularios o estilos propios salvo la rejilla.
+- [x] Skeleton en cargas de sección y círculo solo en acciones.
+- [ ] Foco visible, navegación por teclado y `prefers-reduced-motion` respetado. *(Revisado en código; falta recorrido real: auditoría manual.)*
+- [x] `npm run build` sin errores ni advertencias nuevas.
+- [x] Commits por tarea, en español, sin coautoría; PR al terminar.
