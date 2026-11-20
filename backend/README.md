@@ -35,6 +35,30 @@ El script crea la base `YelpMe`, las tablas y los datos iniciales (administrador
 php artisan serve             # http://localhost:8000
 ```
 
+## Formato de respuesta
+
+Todas las respuestas de `api/*` usan el mismo formato JSON:
+
+```json
+{ "ok": true, "mensaje": "API Yelp Me funcionando", "datos": { } }
+```
+
+Errores (`ok: false`, `datos: null`), siempre en JSON y en español:
+
+| Código | Cuándo |
+|---|---|
+| 401 | Sin token o token inválido |
+| 403 | Sin permiso (rol o propietario) |
+| 404 | Ruta o recurso inexistente |
+| 405 | Método HTTP no permitido |
+| 422 | Validación fallida; incluye `errores` por campo |
+| 429 | Demasiados intentos (`throttle`) |
+| 500 | Error interno (detalle solo con `APP_DEBUG=true`) |
+
+En los controladores se usa el helper `$this->respuesta($datos, $mensaje, $codigo)` del `Controller` base.
+
+Verificación rápida: `GET http://localhost:8000/api/ping`.
+
 ## Convenciones
 
 - Controladores **sin modelos Eloquent**: acceso a datos con `DB::table(...)`. Única excepción: `App\Models\User`, solo para autenticación con Sanctum.
