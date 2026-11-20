@@ -335,7 +335,7 @@ El día de la presentación debe poder demostrarse:
 ### 15.3 Orden sugerido de planes
 1. ✅ Plan 001 — Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
 2. ✅ Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
-3. Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
+3. Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
 4. API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
 5. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. API de strikes, suspensiones y gestión de usuarios.
