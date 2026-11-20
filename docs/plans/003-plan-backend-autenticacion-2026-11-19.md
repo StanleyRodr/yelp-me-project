@@ -59,7 +59,7 @@ Implementar en la API el registro y el inicio de sesión de usuarios de la app, 
 | 017 | [Base de autenticación](../tasks/017-tarea-base-autenticacion-2026-11-19.md) | Middlewares `rol` y `cuenta.activa`, límite de intentos, presentador de usuario y traducciones. | ✅ |
 | 018 | [Registro](../tasks/018-tarea-registro-2026-11-19.md) | `POST /api/registro` con validación, token y vinculación de contactos por teléfono. | ✅ |
 | 019 | [Sesión de la app](../tasks/019-tarea-sesion-app-2026-11-19.md) | Login por correo o teléfono, consultar y cerrar sesión, token FCM. | ✅ |
-| 020 | [Sesión del panel](../tasks/020-tarea-sesion-panel-2026-11-19.md) | Login de admin y grupos de rutas protegidas por rol. | Pendiente |
+| 020 | [Sesión del panel](../tasks/020-tarea-sesion-panel-2026-11-19.md) | Login de admin y grupos de rutas protegidas por rol. | ✅ |
 | 021 | [Pruebas de autenticación](../tasks/021-tarea-pruebas-autenticacion-2026-11-19.md) | BD de pruebas desde el script y pruebas de todos los casos. | Pendiente |
 
 ---

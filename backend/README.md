@@ -78,6 +78,32 @@ En los controladores se usa el helper `$this->respuesta($datos, $mensaje, $codig
 
 Verificación rápida: `GET http://localhost:8000/api/ping`.
 
+## Autenticación (Sanctum)
+
+Token en el header `Authorization: Bearer <token>`. Los endpoints de acceso tienen un límite de 5 intentos por minuto (429).
+
+| Método | Ruta | Quién | Cuerpo | Respuesta (`datos`) |
+|---|---|---|---|---|
+| POST | `/api/registro` | Público (app) | `nombre`, `apellidos`, `telefono` (10 dígitos), `correo`, `password`, `password_confirmation`, `fcm_token`? | `token`, `usuario`, `contactos_vinculados` (201) |
+| POST | `/api/login` | Público (app, rol usuario) | `correo` **o** `telefono`, `password`, `fcm_token`? | `token`, `usuario` |
+| POST | `/api/admin/login` | Público (panel, rol admin) | `correo`, `password` | `token`, `usuario` |
+| GET | `/api/sesion` | Con token | — | `usuario` |
+| DELETE | `/api/sesion` | Con token | — | `null` (borra solo el token actual) |
+
+`usuario` = `id, nombre, apellidos, telefono, correo, rol, foto_perfil (URL), activo, suspendido, strikes_activos, limite_strikes, created_at`. Nunca incluye `password` ni `fcm_token`.
+
+| Situación | Código | Mensaje |
+|---|---|---|
+| Credenciales incorrectas (exista o no la cuenta) | 401 | Correo, teléfono o contraseña incorrectos. |
+| Admin en `/api/login` | 403 | Esta cuenta es de administrador. Inicia sesión en el panel web. |
+| Usuario en `/api/admin/login` | 403 | Esta cuenta no tiene acceso al panel de administración. |
+| Cuenta deshabilitada (login o token previo) | 403 | Esta cuenta está deshabilitada. |
+| Rol sin permiso en una ruta | 403 | No tienes permiso para realizar esta acción. |
+
+Una cuenta **suspendida** sí inicia sesión (`suspendido: true`); la app bloquea pedir servicios.
+
+Middlewares para rutas nuevas: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` (panel, prefijo `/api/admin`). Los grupos ya están en `routes/api.php`.
+
 ## Convenciones
 
 - Controladores **sin modelos Eloquent**: acceso a datos con `DB::table(...)`. Única excepción: `App\Models\User`, solo para autenticación con Sanctum.
