@@ -26,5 +26,9 @@ export const haceTiempo = (iso, ahora) => `hace ${duracion(minutosDesde(iso, aho
 
 export const nombreCompleto = (p) => (p ? [p.nombre, p.apellidos].filter(Boolean).join(' ') : '')
 
+/** Texto para búsqueda: minúsculas y sin acentos ("Policía" ≈ "policia"). */
+export const normalizar = (texto) =>
+  String(texto ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+
 /** Folio visible: #0007 */
 export const folio = (id) => `#${String(id).padStart(4, '0')}`

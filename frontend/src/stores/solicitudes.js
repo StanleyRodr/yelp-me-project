@@ -43,12 +43,13 @@ export const useSolicitudesStore = defineStore('solicitudes', () => {
     return cargaEnCurso
   }
 
-  async function cargarUna(id) {
+  /** `conservar`: refresca sin vaciar la solicitud actual (sin skeleton). */
+  async function cargarUna(id, { conservar = false } = {}) {
     cargandoActual.value = true
     error.value = null
-    actual.value = null
+    if (!conservar) actual.value = null
     try {
-      actual.value = await solicitudesService.obtener(id)
+      aplicar((actual.value = await solicitudesService.obtener(id)))
     } catch (e) {
       error.value = e.message
     } finally {
