@@ -29,6 +29,24 @@ El script crea la base `YelpMe`, las tablas y los datos iniciales (administrador
 
 > ⚠️ **No ejecutar `php artisan migrate`.** El proyecto no tiene migraciones; cualquier cambio de tablas se hace en `script-bd.sql`.
 
+### Datos de prueba
+
+```bash
+php artisan db:seed           # idempotente: no duplica si ya se cargaron
+```
+
+| Rol | Correo | Contraseña | Caso de demo |
+|---|---|---|---|
+| admin | `admin@yelpme.com` | `Admin123*` | Admin inicial (del script) |
+| admin | `laura.admin@yelpme.com` | `Admin123*` | Segundo admin |
+| usuario | `carlos@correo.com` | `Usuario123*` | Contactos vinculados y no vinculados; solicitudes Pendiente, Enviado, Cancelado |
+| usuario | `maria@correo.com` | `Usuario123*` | Solicitudes sin servicios (solo contactos) |
+| usuario | `jose@correo.com` | `Usuario123*` | Bloqueó a Ana; solicitud Terminado |
+| usuario | `ana@correo.com` | `Usuario123*` | 2 strikes activos |
+| usuario | `luis@correo.com` | `Usuario123*` | Suspendido (3 strikes), con una suspensión anterior rehabilitada |
+
+Teléfonos de usuarios: `2351000001` a `2351000005` (mismo orden de la tabla).
+
 ## Ejecutar
 
 ```bash

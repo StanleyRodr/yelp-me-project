@@ -41,7 +41,7 @@ Dejar el proyecto Laravel listo para construir la API sobre el esquema de `datab
 | 003 | [Modelo `User`](../tasks/003-tarea-modelo-user-2026-11-19.md) | Adaptar el único modelo a la tabla `usuarios` con `HasApiTokens` para emitir tokens. | ✅ |
 | 004 | [Disco de perfiles](../tasks/004-tarea-disco-perfiles-2026-11-19.md) | Disco `perfiles` público para fotos de perfil y `storage:link`. | ✅ |
 | 005 | [Base de la API](../tasks/005-tarea-base-api-2026-11-19.md) | `/api/ping`, formato JSON estándar, errores en español, validación traducida y CORS. | ✅ |
-| 006 | [Datos de prueba](../tasks/006-tarea-datos-prueba-2026-11-19.md) | Seeder con `DB::table` e idempotente que cubre estados, contactos, strikes y suspensiones. | Pendiente |
+| 006 | [Datos de prueba](../tasks/006-tarea-datos-prueba-2026-11-19.md) | Seeder con `DB::table` e idempotente que cubre estados, contactos, strikes y suspensiones. | ✅ |
 
 ---
 
@@ -51,6 +51,6 @@ Dejar el proyecto Laravel listo para construir la API sobre el esquema de `datab
 - [x] `php artisan migrate:status` no lista migraciones pendientes que puedan romper el esquema.
 - [x] Desde `tinker`, el admin inicial genera un token de Sanctum y el token queda en `personal_access_tokens`.
 - [x] Las imágenes del disco `perfiles` se sirven por URL pública.
-- [ ] `php artisan db:seed` carga los datos de demo sin errores y sin duplicar.
+- [x] `php artisan db:seed` carga los datos de demo sin errores y sin duplicar.
 - [x] Ningún archivo con secretos (`.env`, credenciales) entra en el repositorio.
 - [x] Commits por tarea, en español, sin coautoría.
