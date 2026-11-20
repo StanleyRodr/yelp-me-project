@@ -1,0 +1,71 @@
+/* Tema de SweetAlert2 con los tokens del sistema. */
+
+.swal2-popup {
+  font-family: var(--ym-fuente);
+  color: var(--ym-texto);
+  background: var(--ym-superficie);
+  border: 1px solid var(--ym-borde);
+  border-radius: var(--ym-radio);
+  padding: var(--ym-espacio-5);
+}
+
+.swal2-title {
+  font-size: var(--ym-texto-lg);
+  font-weight: var(--ym-peso-fuerte);
+  color: var(--ym-texto);
+  text-align: left;
+  padding: 0;
+}
+
+.swal2-html-container {
+  font-size: var(--ym-texto-base);
+  color: var(--ym-texto-secundario);
+  text-align: left;
+  margin: var(--ym-espacio-3) 0 0;
+}
+
+.swal2-actions {
+  justify-content: flex-end;
+  gap: var(--ym-espacio-2);
+  width: 100%;
+  margin-top: var(--ym-espacio-5);
+}
+
+.swal2-loader {
+  border-color: var(--ym-marca) transparent var(--ym-marca) transparent;
+}
+
+/* Íconos de resultado con colores de estado */
+.swal2-icon.swal2-success {
+  border-color: var(--ym-exito);
+  color: var(--ym-exito);
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: var(--ym-exito);
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border-color: var(--ym-estado-terminado-fondo);
+}
+
+.swal2-icon.swal2-error {
+  border-color: var(--ym-peligro);
+  color: var(--ym-peligro);
+}
+
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+  background-color: var(--ym-peligro);
+}
+
+/* Toasts */
+.swal2-popup.swal2-toast {
+  padding: var(--ym-espacio-3) var(--ym-espacio-4);
+  box-shadow: none;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+  font-size: var(--ym-texto-sm);
+  font-weight: var(--ym-peso-medio);
+  margin: 0 var(--ym-espacio-2);
+}

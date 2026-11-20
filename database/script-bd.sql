@@ -1,5 +1,5 @@
 -- =====================================================================
---  Yelp Me — Script de base de datos
+--  YelpMe — Script de base de datos
 --  MySQL 8 · Base de datos: YelpMe
 --
 --  Política de datos: NO se borran registros importantes, se deshabilitan.

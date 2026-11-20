@@ -10,7 +10,7 @@ class ExampleTest extends TestCase
     {
         $this->getJson('/api/ping')
             ->assertOk()
-            ->assertJson(['ok' => true, 'mensaje' => 'API Yelp Me funcionando']);
+            ->assertJson(['ok' => true, 'mensaje' => 'API YelpMe funcionando']);
     }
 
     public function test_ruta_inexistente_responde_404_json(): void

@@ -1,0 +1,210 @@
+/*
+ * Tema de Bootstrap 5.3 con variables CSS (sin Sass).
+ * Bootstrap compila los colores de cada componente en su propia clase,
+ * por eso además de :root se sobrescriben las variables locales.
+ */
+
+:root {
+  --bs-body-font-family: var(--ym-fuente);
+  --bs-body-font-size: var(--ym-texto-base);
+  --bs-body-line-height: var(--ym-interlineado);
+  --bs-body-color: var(--ym-texto);
+  --bs-body-color-rgb: var(--ym-texto-rgb);
+  --bs-body-bg: var(--ym-fondo);
+  --bs-emphasis-color: var(--ym-texto);
+  --bs-secondary-color: var(--ym-texto-secundario);
+  --bs-tertiary-bg: var(--ym-fondo);
+  --bs-border-color: var(--ym-borde);
+  --bs-border-radius: var(--ym-radio);
+  --bs-border-radius-sm: var(--ym-radio);
+  --bs-border-radius-lg: var(--ym-radio);
+  --bs-border-radius-xl: var(--ym-radio);
+  --bs-border-radius-xxl: var(--ym-radio);
+
+  --bs-primary: var(--ym-marca);
+  --bs-primary-rgb: var(--ym-marca-rgb);
+  --bs-primary-bg-subtle: var(--ym-marca-suave);
+  --bs-primary-text-emphasis: var(--ym-marca);
+  --bs-link-color: var(--ym-marca);
+  --bs-link-color-rgb: var(--ym-marca-rgb);
+  --bs-link-hover-color: var(--ym-marca-hover);
+  --bs-focus-ring-color: var(--ym-foco-anillo);
+}
+
+/* Botones */
+.btn {
+  --bs-btn-font-weight: var(--ym-peso-medio);
+  --bs-btn-border-radius: var(--ym-radio);
+  --bs-btn-focus-box-shadow: 0 0 0 0.2rem var(--ym-foco-anillo);
+}
+
+.btn-primary {
+  --bs-btn-color: var(--ym-sobre-marca);
+  --bs-btn-bg: var(--ym-marca);
+  --bs-btn-border-color: var(--ym-marca);
+  --bs-btn-hover-color: var(--ym-sobre-marca);
+  --bs-btn-hover-bg: var(--ym-marca-hover);
+  --bs-btn-hover-border-color: var(--ym-marca-hover);
+  --bs-btn-active-color: var(--ym-sobre-marca);
+  --bs-btn-active-bg: var(--ym-marca-hover);
+  --bs-btn-active-border-color: var(--ym-marca-hover);
+  --bs-btn-disabled-color: var(--ym-sobre-marca);
+  --bs-btn-disabled-bg: var(--ym-marca);
+  --bs-btn-disabled-border-color: var(--ym-marca);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--ym-marca);
+  --bs-btn-border-color: var(--ym-marca);
+  --bs-btn-hover-color: var(--ym-sobre-marca);
+  --bs-btn-hover-bg: var(--ym-marca);
+  --bs-btn-hover-border-color: var(--ym-marca);
+  --bs-btn-active-color: var(--ym-sobre-marca);
+  --bs-btn-active-bg: var(--ym-marca-hover);
+  --bs-btn-active-border-color: var(--ym-marca-hover);
+  --bs-btn-disabled-color: var(--ym-marca);
+  --bs-btn-disabled-border-color: var(--ym-marca);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--ym-texto);
+  --bs-btn-border-color: var(--ym-borde-fuerte);
+  --bs-btn-hover-color: var(--ym-texto);
+  --bs-btn-hover-bg: var(--ym-fondo);
+  --bs-btn-hover-border-color: var(--ym-borde-fuerte);
+  --bs-btn-active-color: var(--ym-texto);
+  --bs-btn-active-bg: var(--ym-borde);
+  --bs-btn-active-border-color: var(--ym-borde-fuerte);
+}
+
+.btn-success {
+  --bs-btn-color: var(--ym-sobre-marca);
+  --bs-btn-bg: var(--ym-exito);
+  --bs-btn-border-color: var(--ym-exito);
+  --bs-btn-hover-color: var(--ym-sobre-marca);
+  --bs-btn-hover-bg: var(--ym-exito-hover);
+  --bs-btn-hover-border-color: var(--ym-exito-hover);
+  --bs-btn-active-color: var(--ym-sobre-marca);
+  --bs-btn-active-bg: var(--ym-exito-hover);
+  --bs-btn-active-border-color: var(--ym-exito-hover);
+}
+
+.btn-danger {
+  --bs-btn-color: var(--ym-sobre-marca);
+  --bs-btn-bg: var(--ym-peligro);
+  --bs-btn-border-color: var(--ym-peligro);
+  --bs-btn-hover-color: var(--ym-sobre-marca);
+  --bs-btn-hover-bg: var(--ym-peligro-hover);
+  --bs-btn-hover-border-color: var(--ym-peligro-hover);
+  --bs-btn-active-color: var(--ym-sobre-marca);
+  --bs-btn-active-bg: var(--ym-peligro-hover);
+  --bs-btn-active-border-color: var(--ym-peligro-hover);
+}
+
+.btn-outline-danger {
+  --bs-btn-color: var(--ym-estado-pendiente-texto);
+  --bs-btn-border-color: var(--ym-peligro);
+  --bs-btn-hover-color: var(--ym-sobre-marca);
+  --bs-btn-hover-bg: var(--ym-peligro);
+  --bs-btn-hover-border-color: var(--ym-peligro);
+  --bs-btn-active-color: var(--ym-sobre-marca);
+  --bs-btn-active-bg: var(--ym-peligro-hover);
+  --bs-btn-active-border-color: var(--ym-peligro-hover);
+}
+
+/* Formularios */
+.form-control,
+.form-select {
+  border-color: var(--ym-borde-fuerte);
+  border-radius: var(--ym-radio);
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--ym-foco);
+  box-shadow: 0 0 0 0.2rem var(--ym-foco-anillo);
+}
+
+.form-check-input {
+  border-color: var(--ym-borde-fuerte);
+}
+
+.form-check-input:checked {
+  background-color: var(--ym-marca);
+  border-color: var(--ym-marca);
+}
+
+.form-label {
+  font-weight: var(--ym-peso-medio);
+  font-size: var(--ym-texto-sm);
+}
+
+.invalid-feedback {
+  color: var(--ym-estado-pendiente-texto);
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: var(--ym-peligro);
+}
+
+/* Tablas */
+.table {
+  --bs-table-color: var(--ym-texto);
+  --bs-table-bg: var(--ym-superficie);
+  --bs-table-border-color: var(--ym-borde);
+  --bs-table-hover-color: var(--ym-texto);
+  --bs-table-hover-bg: var(--ym-marca-suave);
+  --bs-table-active-color: var(--ym-texto);
+  --bs-table-active-bg: var(--ym-marca-suave);
+}
+
+.table > thead th {
+  color: var(--ym-texto-secundario);
+  font-size: var(--ym-texto-sm);
+  font-weight: var(--ym-peso-medio);
+  background: var(--ym-fondo);
+}
+
+/* Contenedores: bordes en lugar de sombras */
+.card {
+  --bs-card-bg: var(--ym-superficie);
+  --bs-card-border-color: var(--ym-borde);
+  --bs-card-border-radius: var(--ym-radio);
+  --bs-card-inner-border-radius: calc(var(--ym-radio) - 1px);
+  box-shadow: none;
+}
+
+.modal {
+  --bs-modal-border-color: var(--ym-borde);
+  --bs-modal-border-radius: var(--ym-radio);
+  --bs-modal-box-shadow: none;
+  --bs-modal-header-border-color: var(--ym-borde);
+  --bs-modal-footer-border-color: var(--ym-borde);
+}
+
+.dropdown-menu {
+  --bs-dropdown-border-color: var(--ym-borde);
+  --bs-dropdown-border-radius: var(--ym-radio);
+  --bs-dropdown-box-shadow: none;
+  --bs-dropdown-link-active-bg: var(--ym-marca);
+  --bs-dropdown-link-active-color: var(--ym-sobre-marca);
+}
+
+.shadow,
+.shadow-sm,
+.shadow-lg {
+  box-shadow: none !important;
+}
+
+/* Skeleton: placeholders de Bootstrap con color del sistema */
+.placeholder {
+  background-color: var(--ym-skeleton);
+  opacity: 1;
+  border-radius: var(--ym-radio);
+}
+
+.placeholder-glow .placeholder {
+  animation-duration: 1.6s;
+}

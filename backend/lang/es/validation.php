@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Mensajes de validación en español (reglas usadas en Yelp Me).
+ * Mensajes de validación en español (reglas usadas en YelpMe).
  * Las reglas no listadas aquí caen al idioma de respaldo (en).
  */
 

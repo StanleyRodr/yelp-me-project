@@ -15,6 +15,6 @@ class PingController extends Controller
         return $this->respuesta([
             'app' => config('app.name'),
             'hora' => now()->toIso8601String(),
-        ], 'API Yelp Me funcionando');
+        ], 'API YelpMe funcionando');
     }
 }
