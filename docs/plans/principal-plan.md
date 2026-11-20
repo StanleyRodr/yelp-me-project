@@ -336,11 +336,12 @@ El día de la presentación debe poder demostrarse:
 - **Sin línea de coautoría de Claude** en commits ni PRs.
 
 ### 15.3 Orden sugerido de planes
-1. Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
-2. Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
-3. API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
-4. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
-5. API de strikes, suspensiones y gestión de usuarios.
-6. Frontend: vue-router + login, axios + Pinia, migración a 5 estados, Material Symbols, conexión a la API.
-7. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
-8. Notificaciones FCM (backend + Android).
+1. ✅ Plan 001 — Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
+2. Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
+3. Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
+4. API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
+5. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
+6. API de strikes, suspensiones y gestión de usuarios.
+7. Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
+8. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
+9. Notificaciones FCM (backend + Android).

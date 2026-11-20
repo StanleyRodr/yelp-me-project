@@ -68,6 +68,14 @@ No hay linter ni tests configurados.
 
 Dependencias instaladas: Bootstrap 5, Bootstrap Icons, Leaflet, axios, Pinia (registrado en `main.js`), SweetAlert2, vue-router (instalado, **sin configurar**). Pendiente: Material Symbols para los íconos de servicios.
 
+Reglas de componentes (plan 002):
+- Carpetas por dominio en `src/components/`: `comunes/`, `layout/`, `modals/`, `dashboard/`, `solicitudes/`, `usuarios/`, `perfil/`.
+- **Vista = composición:** acomoda secciones en la rejilla y conecta el store. Sin tablas, formularios ni estilos propios salvo la rejilla.
+- Solo vistas y modales usan stores de Pinia; secciones y comunes son presentacionales (props + emits).
+- `<style scoped>` con solo tokens (`--ym-*`, `--bs-*`); ningún color hex fuera de `src/styles/tokens.css`.
+- `v-for` con `:key` estable para todo lo repetido; `v-if` para estados de la vista; `v-show` para lo que se alterna seguido; nunca `v-if` y `v-for` en el mismo elemento.
+- Carga: skeleton (placeholders de Bootstrap) en cargas de vista/sección; círculo pequeño solo dentro de botones de acción; nada en recargas periódicas.
+
 Convenciones objetivo:
 - axios para la API; Pinia para estado global; SweetAlert2 para alertas/confirmaciones.
 - vue-router con guard de autenticación (sin token → `/login`).
