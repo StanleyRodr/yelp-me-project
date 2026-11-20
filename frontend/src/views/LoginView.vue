@@ -1,39 +1,71 @@
-<!-- Provisional (tarea 009). Se rehace con componentes en la tarea 011. -->
 <template>
-  <main class="container py-5" style="max-width: 420px">
-    <h1>Iniciar sesión</h1>
-    <form novalidate @submit.prevent="entrar">
-      <div class="mb-3">
-        <label for="correo" class="form-label">Correo</label>
-        <input id="correo" v-model="correo" type="email" class="form-control" autocomplete="username" required />
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Contraseña</label>
-        <input id="password" v-model="password" type="password" class="form-control" autocomplete="current-password" required />
-      </div>
-      <p v-if="auth.error" class="text-danger" role="alert">{{ auth.error }}</p>
-      <button class="btn btn-primary w-100" :disabled="auth.cargando">Iniciar sesión</button>
-    </form>
+  <main class="login">
+    <PanelMarca class="login-marca" />
+    <div class="login-form">
+      <FormLogin
+        :cargando="auth.cargando"
+        :error="auth.error ?? ''"
+        :ayuda-demo="esDesarrollo"
+        @enviar="entrar"
+      />
+    </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import PanelMarca from '../components/auth/PanelMarca.vue'
+import FormLogin from '../components/auth/FormLogin.vue'
 import { useAuthStore } from '../stores/auth'
 
 const auth = useAuthStore()
 const router = useRouter()
 const route = useRoute()
-const correo = ref('')
-const password = ref('')
+const esDesarrollo = import.meta.env.DEV
 
-async function entrar() {
+// Un error de un intento anterior no debe aparecer al volver al login.
+onMounted(() => auth.limpiarError())
+
+// Solo rutas internas: evita redirigir a otro sitio con ?redirigir=//dominio
+const destino = () => {
+  const r = route.query.redirigir
+  return typeof r === 'string' && r.startsWith('/') && !r.startsWith('//') ? r : { name: 'inicio' }
+}
+
+async function entrar({ correo, password }) {
   try {
-    await auth.iniciarSesion(correo.value, password.value)
-    router.replace(route.query.redirigir || { name: 'inicio' })
+    await auth.iniciarSesion(correo, password)
+    router.replace(destino())
   } catch {
-    // El mensaje queda en auth.error
+    // El mensaje queda en auth.error y FormLogin lo muestra.
   }
 }
 </script>
+
+<style scoped>
+.login {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+}
+
+.login-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ym-espacio-6) var(--ym-espacio-5);
+  background: var(--ym-superficie);
+}
+
+@media (max-width: 767.98px) {
+  .login {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .login-form {
+    align-items: flex-start;
+  }
+}
+</style>

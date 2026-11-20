@@ -18,6 +18,7 @@ import { useRouter } from 'vue-router'
 import AppNavbar from './AppNavbar.vue'
 import { useAuthStore } from '../../stores/auth'
 import { useSolicitudesStore } from '../../stores/solicitudes'
+import { exito } from '../../plugins/alertas'
 
 const auth = useAuthStore()
 const solicitudes = useSolicitudesStore()
@@ -35,7 +36,8 @@ onMounted(() => {
 
 async function cerrarSesion() {
   await auth.cerrarSesion()
-  router.replace({ name: 'login' })
+  await router.replace({ name: 'login' })
+  exito('Sesión cerrada')
 }
 </script>
 

@@ -57,5 +57,9 @@ export const useAuthStore = defineStore('auth', () => {
     guardarSesion(sesion.value)
   }
 
-  return { sesion, cargando, error, autenticado, admin, iniciarSesion, cerrarSesion, actualizarAdmin }
+  function limpiarError() {
+    error.value = null
+  }
+
+  return { sesion, cargando, error, autenticado, admin, iniciarSesion, cerrarSesion, actualizarAdmin, limpiarError }
 })

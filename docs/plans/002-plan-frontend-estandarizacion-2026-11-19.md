@@ -68,7 +68,7 @@ Sin dependencias nuevas: placeholders y spinners de Bootstrap 5.3.
 | 008 | [Base de diseño](../tasks/008-tarea-base-diseno-2026-11-19.md) | Tokens CSS, fuente, Material Symbols, tema de Bootstrap y SweetAlert2; quitar `style.css` viejo. | ✅ |
 | 009 | [Arquitectura](../tasks/009-tarea-arquitectura-frontend-2026-11-19.md) | vue-router con guard, layout, stores Pinia, services con mocks de la BD; quitar `useAlertas`. | ✅ |
 | 010 | [Componentes comunes y modales](../tasks/010-tarea-componentes-comunes-2026-11-19.md) | Badge de estado, ícono de servicio, mapa base, línea de tiempo, búsqueda, skeletons y modales de acción. | ✅ |
-| 011 | [Login](../tasks/011-tarea-login-2026-11-19.md) | Pantalla de inicio de sesión simulado, logout y sesión persistente. | Pendiente |
+| 011 | [Login](../tasks/011-tarea-login-2026-11-19.md) | Pantalla de inicio de sesión simulado, logout y sesión persistente. | ✅ |
 | 012 | [Dashboard](../tasks/012-tarea-dashboard-2026-11-19.md) | Franja de estados, cola de pendientes con tiempo de espera y mapa de incidentes. | Pendiente |
 | 013 | [Solicitudes y atención](../tasks/013-tarea-solicitudes-atencion-2026-11-19.md) | Tabla + mapa con filtros; detalle por folio con línea de tiempo y acciones según transición. | Pendiente |
 | 014 | [Usuarios](../tasks/014-tarea-usuarios-2026-11-19.md) | Tabla con estado de cuenta y perfil con historial, strikes, suspensiones y acciones. | Pendiente |
