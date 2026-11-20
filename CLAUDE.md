@@ -14,9 +14,10 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 ## Documentación y flujo de trabajo
 
 - **`docs/plans/principal-plan.md` es la fuente de verdad** de reglas de negocio, estados, transiciones, strikes, entidades y criterios del MVP. Leerlo antes de planear o implementar algo nuevo; si una decisión cambia, actualizarlo.
-- `docs/plans/NNN-plan-x-AAAA-MM-DD.md`: un plan por función/meta; lista las tareas (y subtareas) que lo componen.
-- `docs/tasks/NNN-tarea-x-AAAA-MM-DD.md`: una tarea concreta derivada de un plan.
-- Numeración consecutiva de 3 dígitos.
+- `docs/plans/NNN-plan-x-AAAA-MM-DD.md`: un plan por función/meta. Las tareas aparecen solo como **resumen breve** (tabla con enlace y estado).
+- `docs/tasks/NNN-tarea-x-AAAA-MM-DD.md`: una tarea concreta con los **pasos detallados** para hacerla (código, comandos, verificación), redactada en **estilo caveman** (skill `/caveman`): solo lo esencial, sin relleno.
+- Numeración consecutiva de 3 dígitos, **global** entre planes (las tareas no reinician por plan).
+- Al terminar una tarea: marcar estado ✅ en la tarea y en la tabla del plan, y anotar el commit.
 
 ## Proyecto: Yelp Me
 
