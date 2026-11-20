@@ -72,7 +72,7 @@ Sin dependencias nuevas: placeholders y spinners de Bootstrap 5.3.
 | 012 | [Dashboard](../tasks/012-tarea-dashboard-2026-11-19.md) | Franja de estados, cola de pendientes con tiempo de espera y mapa de incidentes. | ✅ |
 | 013 | [Solicitudes y atención](../tasks/013-tarea-solicitudes-atencion-2026-11-19.md) | Tabla + mapa con filtros; detalle por folio con línea de tiempo y acciones según transición. | ✅ |
 | 014 | [Usuarios](../tasks/014-tarea-usuarios-2026-11-19.md) | Tabla con estado de cuenta y perfil con historial, strikes, suspensiones y acciones. | ✅ |
-| 015 | [Perfil del admin](../tasks/015-tarea-perfil-admin-2026-11-19.md) | Datos editables, foto, cambio de contraseña y solicitudes atendidas. | Pendiente |
+| 015 | [Perfil del admin](../tasks/015-tarea-perfil-admin-2026-11-19.md) | Datos editables, foto, cambio de contraseña y solicitudes atendidas. | ✅ |
 | 016 | [Verificación](../tasks/016-tarea-verificacion-frontend-2026-11-19.md) | Revisión visual con capturas, teclado, contraste, responsive y build. | Pendiente |
 
 ---

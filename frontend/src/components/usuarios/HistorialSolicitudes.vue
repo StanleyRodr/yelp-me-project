@@ -1,5 +1,5 @@
 <template>
-  <EstadoVacio v-if="!solicitudes.length" icono="inbox" titulo="Sin solicitudes" mensaje="Este usuario no ha creado solicitudes de ayuda." />
+  <EstadoVacio v-if="!solicitudes.length" icono="inbox" :titulo="vacioTitulo" :mensaje="vacioMensaje" />
   <ul v-else class="lista">
     <li v-for="s in ordenadas" :key="s.id" class="lista-item">
       <RouterLink :to="{ name: 'solicitud', params: { id: s.id } }" class="lista-enlace">
@@ -20,6 +20,8 @@ import { fecha, folio } from '../../utils/formato'
 
 const props = defineProps({
   solicitudes: { type: Array, required: true },
+  vacioTitulo: { type: String, default: 'Sin solicitudes' },
+  vacioMensaje: { type: String, default: 'Este usuario no ha creado solicitudes de ayuda.' },
 })
 
 const ordenadas = computed(() => [...props.solicitudes].sort((a, b) => b.created_at.localeCompare(a.created_at)))

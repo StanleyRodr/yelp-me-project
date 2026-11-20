@@ -118,6 +118,17 @@ export const usuariosService = {
     return responder(detalle(u))
   },
 
+  /** Actividad del admin: solicitudes que atendió y strikes que dio. Futuro: GET /api/perfil/actividad */
+  async actividadAdmin(adminId) {
+    const id = Number(adminId)
+    return responder({
+      solicitudes: bd.solicitudes
+        .filter((s) => s.admin_id === id)
+        .map((s) => ({ id: s.id, titulo: s.titulo, estado: s.estado, servicios: s.servicios, created_at: s.created_at })),
+      strikes_dados: bd.strikes.filter((s) => s.admin_id === id).length,
+    })
+  },
+
   async actualizarPerfil(id, cambios) {
     const u = buscar(id)
     const { nombre, apellidos, telefono, correo, foto_perfil } = cambios
