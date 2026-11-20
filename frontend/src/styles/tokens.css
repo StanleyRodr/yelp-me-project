@@ -1,0 +1,84 @@
+/*
+ * Tokens de diseño de Yelp Me.
+ * ÚNICO archivo del frontend con colores hexadecimales.
+ * Los mismos valores se replican en res/values/colors.xml de Android.
+ */
+:root {
+  /* Marca */
+  --ym-marca: #14213D;
+  --ym-marca-hover: #0E1830;
+  --ym-marca-rgb: 20, 33, 61;
+  --ym-marca-suave: #E6E9F0;
+  --ym-sobre-marca: #FFFFFF;
+  --ym-sobre-marca-tenue: #B8C1D6;
+
+  /* Superficies y texto */
+  --ym-fondo: #F3F5F8;
+  --ym-superficie: #FFFFFF;
+  --ym-texto: #1A2233;
+  --ym-texto-rgb: 26, 34, 51;
+  --ym-texto-secundario: #556070;
+  --ym-borde: #D5DBE3;
+  --ym-borde-fuerte: #AEB7C4;
+  --ym-skeleton: #E1E6EC;
+
+  /* Foco (visible sobre fondo claro y sobre la navbar) */
+  --ym-foco: #2F5BD3;
+  --ym-foco-anillo: rgba(47, 91, 211, 0.35);
+  --ym-foco-claro: #9DB8FF;
+
+  /*
+   * Estados de solicitud.
+   *   --ym-estado-X        color aprobado: puntos, marcadores, bordes
+   *   --ym-estado-X-texto  texto sobre fondo claro (contraste >= 4.5:1)
+   *   --ym-estado-X-fondo  tinte de fondo para badges
+   */
+  --ym-estado-pendiente: #C62828;
+  --ym-estado-pendiente-texto: #A82222;
+  --ym-estado-pendiente-fondo: #FBEAEA;
+
+  --ym-estado-enviado: #B26A00;
+  --ym-estado-enviado-texto: #8A5200;
+  --ym-estado-enviado-fondo: #FBF1E1;
+
+  --ym-estado-terminado: #2E7D32;
+  --ym-estado-terminado-texto: #24672A;
+  --ym-estado-terminado-fondo: #E8F3E9;
+
+  --ym-estado-rechazado: #37474F;
+  --ym-estado-rechazado-texto: #2B3A41;
+  --ym-estado-rechazado-fondo: #E7EBED;
+
+  --ym-estado-cancelado: #78909C;
+  --ym-estado-cancelado-texto: #4E636E;
+  --ym-estado-cancelado-fondo: #EEF2F4;
+
+  /* Semánticos de interfaz (reutilizan estados) */
+  --ym-peligro: var(--ym-estado-pendiente);
+  --ym-peligro-hover: #A82222;
+  --ym-exito: var(--ym-estado-terminado);
+  --ym-exito-hover: #24672A;
+  --ym-aviso: var(--ym-estado-enviado);
+
+  /* Tipografía */
+  --ym-fuente: 'Atkinson Hyperlegible Next Variable', system-ui, sans-serif;
+  --ym-texto-sm: 0.875rem;   /* 14 px */
+  --ym-texto-base: 1rem;     /* 16 px */
+  --ym-texto-lg: 1.25rem;    /* 20 px */
+  --ym-texto-xl: 1.75rem;    /* 28 px */
+  --ym-interlineado: 1.5;
+  --ym-interlineado-titulo: 1.25;
+  --ym-peso-normal: 400;
+  --ym-peso-medio: 600;
+  --ym-peso-fuerte: 700;
+
+  /* Forma y espacio */
+  --ym-radio: 6px;
+  --ym-espacio-1: 0.25rem;
+  --ym-espacio-2: 0.5rem;
+  --ym-espacio-3: 0.75rem;
+  --ym-espacio-4: 1rem;
+  --ym-espacio-5: 1.5rem;
+  --ym-espacio-6: 2rem;
+  --ym-alto-navbar: 56px;
+}

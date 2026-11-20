@@ -1,6 +1,6 @@
 # 008 — Tarea: Base de diseño
 
-> Plan: `002-plan-frontend-estandarizacion-2026-11-19.md` · Rama: `feature/frontend-base` · Estado: Pendiente
+> Plan: `002-plan-frontend-estandarizacion-2026-11-19.md` · Rama: `feature/frontend-base` · Estado: ✅ Completada
 
 ## Objetivo
 Un solo sistema visual para todo el panel: tokens, fuente, íconos, tema de Bootstrap y de SweetAlert2. Ninguna vista define colores propios.
@@ -71,4 +71,18 @@ Orden: Bootstrap CSS → Bootstrap Icons → Leaflet CSS → fuente → Material
 - En el navegador: fuente Atkinson aplicada, `<span class="material-symbols-outlined">ambulance</span>` muestra ícono.
 
 ## Resultado
-Pendiente.
+- Build limpio. Ningún hex fuera de `tokens.css` en `styles/` y `plugins/`.
+- Contraste medido (WCAG):
+
+| Estado | Texto/tinte | Color base/blanco |
+|---|---|---|
+| Pendiente | 6.19 | 5.62 |
+| Enviado | 5.71 | 4.24 (solo puntos/bordes, ≥ 3:1) |
+| Terminado | 6.04 | 5.13 |
+| Rechazado | 9.81 | 9.65 |
+| Cancelado | 5.59 | 3.35 (solo puntos/bordes, ≥ 3:1) |
+
+- Texto/fondo 14.56 · secundario/fondo 5.84 · blanco/marca 15.97 · foco claro/marca 8.16.
+- Peso: fuente Material Symbols outlined ≈ 4 MB (woff2). Se descarga una vez y queda en caché. Si molesta, subconjunto en plan futuro.
+- Vistas viejas aún tienen hex propios. Se limpian en tareas 012–015.
+- Commit: `feat(frontend): agrega sistema de diseño con tokens y temas`.
