@@ -60,17 +60,17 @@ Implementar en la API el registro y el inicio de sesión de usuarios de la app, 
 | 018 | [Registro](../tasks/018-tarea-registro-2026-11-19.md) | `POST /api/registro` con validación, token y vinculación de contactos por teléfono. | ✅ |
 | 019 | [Sesión de la app](../tasks/019-tarea-sesion-app-2026-11-19.md) | Login por correo o teléfono, consultar y cerrar sesión, token FCM. | ✅ |
 | 020 | [Sesión del panel](../tasks/020-tarea-sesion-panel-2026-11-19.md) | Login de admin y grupos de rutas protegidas por rol. | ✅ |
-| 021 | [Pruebas de autenticación](../tasks/021-tarea-pruebas-autenticacion-2026-11-19.md) | BD de pruebas desde el script y pruebas de todos los casos. | Pendiente |
+| 021 | [Pruebas de autenticación](../tasks/021-tarea-pruebas-autenticacion-2026-11-19.md) | BD de pruebas desde el script y pruebas de todos los casos. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] Los 5 endpoints responden con el formato estándar y mensajes en español.
-- [ ] Un usuario no puede entrar al panel ni un admin a la app.
-- [ ] Una cuenta deshabilitada no inicia sesión ni usa un token previo.
-- [ ] El registro vincula contactos existentes con el mismo teléfono.
-- [ ] El sexto intento de login en un minuto devuelve 429.
-- [ ] `php artisan test` pasa sobre `YelpMe_pruebas` sin tocar `YelpMe`.
-- [ ] Endpoints documentados en `backend/README.md`.
-- [ ] Commits por tarea, en español, sin coautoría; PR al terminar.
+- [x] Los 5 endpoints responden con el formato estándar y mensajes en español.
+- [x] Un usuario no puede entrar al panel ni un admin a la app.
+- [x] Una cuenta deshabilitada no inicia sesión ni usa un token previo.
+- [x] El registro vincula contactos existentes con el mismo teléfono.
+- [x] El sexto intento de login en un minuto devuelve 429.
+- [x] `php artisan test` pasa sobre `YelpMe_pruebas` sin tocar `YelpMe`.
+- [x] Endpoints documentados en `backend/README.md`.
+- [x] Commits por tarea, en español, sin coautoría; PR al terminar.

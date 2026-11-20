@@ -47,6 +47,14 @@ Web y Android consumen la **misma API Laravel**.
 
 ## Backend (Laravel) — convenciones
 
+Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos de demo, idempotente) · `php artisan bd:pruebas` (recrea `YelpMe_pruebas`) · `php artisan test` · `php artisan test --filter=NombreDePrueba`.
+
+- **Pruebas sobre `YelpMe_pruebas`**, nunca `YelpMe`: `phpunit.xml` apunta ahí, `tests/TestCase.php` aborta si no termina en `_pruebas` y cada prueba se revierte (`DatabaseTransactions`). Recrear con `bd:pruebas` tras cambiar el script o el seeder.
+- **Autenticación (plan 003):** `POST /api/registro`, `POST /api/login` (app, correo o teléfono), `POST /api/admin/login` (panel), `GET|DELETE /api/sesion`. Detalle y errores en `backend/README.md`.
+- **Proteger rutas nuevas** dentro de los grupos de `routes/api.php`: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` con prefijo `admin` (panel). El `usuario_id` sale de `$request->user()`, nunca del body.
+- Usuario en respuestas: siempre con `App\Support\PresentadorUsuario` (sin `password` ni `fcm_token`). Reglas de strikes/suspensión en `App\Support\ReglasCuenta`; credenciales en `App\Support\Credenciales`.
+- Errores con `abort(código, 'mensaje en español')`: el render de `bootstrap/app.php` los devuelve en el formato estándar.
+
 - **Controladores sin modelos Eloquent**: `DB::table(...)` / Query Builder. **Única excepción:** `App\Models\User`, solo para Sanctum (`HasApiTokens`).
 - Controladores con `index`, `show`, `store`, `update`, `destroy`.
 - Rutas en `routes/api.php` (generado con `php artisan install:api`, que instala Sanctum).

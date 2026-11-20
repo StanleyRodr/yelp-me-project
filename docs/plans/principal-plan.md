@@ -260,7 +260,7 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 | Parte    | Estado |
 |----------|--------|
 | Frontend | Plan 002: rutas con login, stores, services sobre datos de ejemplo con la forma de la BD, sistema de diseño y todas las vistas del admin. |
-| Backend  | Plan 001: Laravel 12 + Sanctum configurado, modelo `User` sobre `usuarios`, base de la API y datos de prueba. Sin endpoints de negocio. |
+| Backend  | Planes 001 y 003: Laravel 12 + Sanctum, base de la API, datos de prueba, registro, login de app y panel, sesión y protección por rol. Pruebas sobre `YelpMe_pruebas`. Sin endpoints de negocio. |
 | Mobile   | Vacío; diseños en proceso por otra persona. |
 | BD       | Creada con `database/script-bd.sql`: 9 tablas, admin inicial y catálogo de servicios. |
 
@@ -335,7 +335,7 @@ El día de la presentación debe poder demostrarse:
 ### 15.3 Orden sugerido de planes
 1. ✅ Plan 001 — Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
 2. ✅ Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
-3. Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
+3. ✅ Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
 4. API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
 5. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. API de strikes, suspensiones y gestión de usuarios.

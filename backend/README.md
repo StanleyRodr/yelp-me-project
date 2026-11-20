@@ -51,8 +51,23 @@ Teléfonos de usuarios: `2351000001` a `2351000005` (mismo orden de la tabla).
 
 ```bash
 php artisan serve             # http://localhost:8000
-php artisan test              # pruebas
 ```
+
+## Pruebas
+
+Las pruebas usan una BD aislada, **`YelpMe_pruebas`**, nunca `YelpMe`:
+
+```bash
+php artisan bd:pruebas        # recrea YelpMe_pruebas desde ../database/script-bd.sql + datos de demo
+php artisan test              # todas las pruebas
+php artisan test --filter=AutenticacionTest   # solo un archivo
+php artisan test --filter=test_login_panel_admin   # una sola prueba
+```
+
+- `bd:pruebas` solo acepta nombres terminados en `_pruebas`; no puede borrar la BD de desarrollo.
+- Cada prueba corre en una transacción que se revierte: no deja datos.
+- Si `phpunit.xml` apuntara a otra BD, `tests/TestCase.php` detiene las pruebas.
+- Volver a correr `bd:pruebas` después de cambiar `script-bd.sql` o el seeder.
 
 ## Formato de respuesta
 
