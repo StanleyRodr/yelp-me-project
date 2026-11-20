@@ -39,7 +39,30 @@ router.beforeEach((to) => {
   return true
 })
 
+/*
+ * Si el módulo de una vista no se puede descargar (dependencias de Vite
+ * re-optimizadas o un despliegue nuevo con archivos renombrados), se recarga
+ * la página una sola vez hacia la ruta destino en lugar de quedar en blanco.
+ */
+const CLAVE_RECARGA = 'ym_recarga_modulo'
+router.onError((error, to) => {
+  const esModulo = /dynamically imported module|Importing a module script failed|Outdated Optimize Dep/i.test(error?.message ?? '')
+  if (!esModulo) throw error
+  try {
+    if (sessionStorage.getItem(CLAVE_RECARGA) === to.fullPath) return
+    sessionStorage.setItem(CLAVE_RECARGA, to.fullPath)
+  } catch {
+    // Sin sessionStorage: se intenta una vez sin poder recordar el intento.
+  }
+  window.location.assign(to.fullPath)
+})
+
 router.afterEach((to) => {
+  try {
+    sessionStorage.removeItem(CLAVE_RECARGA)
+  } catch {
+    // Almacenamiento bloqueado: nada que limpiar.
+  }
   document.title = to.meta.titulo ? `${to.meta.titulo} | Yelp Me` : 'Yelp Me'
 })
 
