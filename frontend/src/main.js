@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import '@fontsource-variable/atkinson-hyperlegible-next'
 import 'material-symbols/outlined.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import './plugins/bootstrap'
 
 // Sistema de diseño (después de Bootstrap para que sus variables ganen)
 import './styles/tokens.css'
