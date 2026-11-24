@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\SesionController as AdminSesionController;
+use App\Http\Controllers\Api\ContactoController;
 use App\Http\Controllers\Api\PingController;
 use App\Http\Controllers\Api\RegistroController;
 use App\Http\Controllers\Api\SesionController;
@@ -23,7 +24,9 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
 
     // App Android (rol usuario): contactos y solicitudes propias (planes 004 y 005)
     Route::middleware('rol:usuario')->group(function () {
-        //
+        Route::apiResource('contactos', ContactoController::class)
+            ->parameters(['contactos' => 'id'])
+            ->whereNumber('id');
     });
 
     // Panel web (rol admin): solicitudes y usuarios (planes 005 y 006)
