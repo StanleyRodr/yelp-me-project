@@ -18,7 +18,18 @@ class PresentadorUsuario
         return $usuario ? self::datos($usuario) : null;
     }
 
+    /** Usuario completo (2 consultas para strikes y suspensión). */
     public static function datos(object $u): array
+    {
+        return self::base($u) + [
+            'suspendido' => ReglasCuenta::estaSuspendido($u->id),
+            'strikes_activos' => ReglasCuenta::strikesActivos($u->id),
+            'limite_strikes' => ReglasCuenta::LIMITE_STRIKES,
+        ];
+    }
+
+    /** Campos guardados en `usuarios`, sin consultas extra (para listados en lote). */
+    public static function base(object $u): array
     {
         return [
             'id' => $u->id,
@@ -29,9 +40,7 @@ class PresentadorUsuario
             'rol' => $u->rol,
             'foto_perfil' => $u->foto_perfil ? Storage::disk('perfiles')->url($u->foto_perfil) : null,
             'activo' => (bool) $u->activo,
-            'suspendido' => ReglasCuenta::estaSuspendido($u->id),
-            'strikes_activos' => ReglasCuenta::strikesActivos($u->id),
-            'limite_strikes' => ReglasCuenta::LIMITE_STRIKES,
+            'deshabilitado_en' => Normalizar::fecha($u->deshabilitado_en ?? null),
             'created_at' => Normalizar::fecha($u->created_at),
         ];
     }
