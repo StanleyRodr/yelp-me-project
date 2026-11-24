@@ -1,0 +1,79 @@
+/* Estilos base globales de YelpMe (solo tokens, sin colores directos). */
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ym-fuente);
+  font-size: var(--ym-texto-base);
+  line-height: var(--ym-interlineado);
+  color: var(--ym-texto);
+  background-color: var(--ym-fondo);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  line-height: var(--ym-interlineado-titulo);
+  font-weight: var(--ym-peso-fuerte);
+  color: var(--ym-texto);
+  margin-bottom: var(--ym-espacio-3);
+}
+
+h1 { font-size: var(--ym-texto-xl); }
+h2 { font-size: var(--ym-texto-lg); }
+h3, h4 { font-size: var(--ym-texto-base); }
+
+small,
+.small {
+  font-size: var(--ym-texto-sm);
+}
+
+.text-secondary,
+.text-muted {
+  color: var(--ym-texto-secundario) !important;
+}
+
+/* Folios, horas y conteos alineados en columna */
+.ym-cifras {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Íconos de Material Symbols alineados con el texto */
+.material-symbols-outlined {
+  font-size: 1.25em;
+  line-height: 1;
+  vertical-align: -0.25em;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+}
+
+/* Foco visible en todo elemento interactivo */
+:focus-visible {
+  outline: 2px solid var(--ym-foco);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--ym-marca-suave);
+  color: var(--ym-texto);
+}
+
+/* Movimiento reducido: sin animaciones ni transiciones */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .placeholder-glow .placeholder,
+  .placeholder-wave .placeholder {
+    animation: none !important;
+    mask-image: none !important;
+  }
+}

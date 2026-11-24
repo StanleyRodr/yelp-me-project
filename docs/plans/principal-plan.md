@@ -1,4 +1,4 @@
-# Plan principal — Yelp Me
+# Plan principal — YelpMe
 
 > Sistema de contactos y solicitudes de emergencia.
 > Creado: 2026-11-19 · Última actualización: 2026-11-19
@@ -106,7 +106,7 @@ La app Android debe realizar al menos un CRUD completo (**Crear → Consultar �
 ### 6.2 Consentimiento (mínimo)
 - El usuario B puede ver **quién lo tiene como contacto**.
 - B puede **desvincularse** o **bloquear** a A: en ambos casos **el contacto se elimina de la agenda de A**.
-- Si B bloquea a A, A no puede volver a vincularlo. B puede **desbloquear** a A (el registro del bloqueo se borra).
+- Si B bloquea a A, A no puede volver a vincularlo. B puede **desbloquear** a A (el registro del bloqueo se borra). El contacto borrado no vuelve, pero si A ya había guardado de nuevo a B, ese contacto se vincula.
 
 ### 6.3 Llamada directa
 - Botón que llama al teléfono del contacto: `Intent ACTION_CALL` con permiso `CALL_PHONE`; si no se concede, `ACTION_DIAL`.
@@ -259,18 +259,15 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 
 | Parte    | Estado |
 |----------|--------|
-| Frontend | UI del panel admin con **datos mock**. Instalados: axios, Pinia (registrado), SweetAlert2, Bootstrap, vue-router (sin configurar). Restos de la plantilla de Vite eliminados. |
-| Backend  | Vacío. |
+| Frontend | Plan 002: rutas con login, stores, services sobre datos de ejemplo con la forma de la BD, sistema de diseño y todas las vistas del admin. |
+| Backend  | Planes 001, 003 y 004: base de la API, autenticación (registro, login de app y panel, roles) y contactos (CRUD, vinculación, vínculos y bloqueos). Pruebas sobre `YelpMe_pruebas`. Faltan solicitudes y gestión de usuarios. |
 | Mobile   | Vacío; diseños en proceso por otra persona. |
 | BD       | Creada con `database/script-bd.sql`: 9 tablas, admin inicial y catálogo de servicios. |
 
-### Deuda conocida en el frontend
-- Los datos mock usan 6 estados (`Asignada`, `En Camino`, `Atendida`, …) que deben migrarse a los 5 oficiales.
-- Los modales de acciones están en `App.vue` y deben extraerse a `src/components/modals/`.
-- Navegación manual con `currentView`; debe migrarse a vue-router.
-- Íconos de servicios con Bootstrap Icons; deben cambiarse a Material Symbols.
-- No hay stores de Pinia ni servicio de axios configurados.
-- Strikes y reportes existen solo como mock en `UsuariosView` / `PerfilView`.
+### Pendiente en el frontend
+- Conectar los services a la API (plan futuro) y consulta periódica del dashboard.
+- Auditoría visual y de teclado en navegador del plan 002 (ver tarea 016).
+- Fuente Material Symbols ≈ 4 MB: recortar a los íconos usados si el peso molesta.
 
 ---
 
@@ -336,11 +333,12 @@ El día de la presentación debe poder demostrarse:
 - **Sin línea de coautoría de Claude** en commits ni PRs.
 
 ### 15.3 Orden sugerido de planes
-1. Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
-2. Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
-3. API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
-4. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
-5. API de strikes, suspensiones y gestión de usuarios.
-6. Frontend: vue-router + login, axios + Pinia, migración a 5 estados, Material Symbols, conexión a la API.
-7. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
-8. Notificaciones FCM (backend + Android).
+1. ✅ Plan 001 — Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
+2. ✅ Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
+3. ✅ Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
+4. ✅ Plan 004 — API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
+5. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
+6. API de strikes, suspensiones y gestión de usuarios.
+7. Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
+8. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
+9. Notificaciones FCM (backend + Android).

@@ -42,6 +42,7 @@ Dejar el proyecto Laravel listo para construir la API sobre el esquema de `datab
 | 004 | [Disco de perfiles](../tasks/004-tarea-disco-perfiles-2026-11-19.md) | Disco `perfiles` público para fotos de perfil y `storage:link`. | ✅ |
 | 005 | [Base de la API](../tasks/005-tarea-base-api-2026-11-19.md) | `/api/ping`, formato JSON estándar, errores en español, validación traducida y CORS. | ✅ |
 | 006 | [Datos de prueba](../tasks/006-tarea-datos-prueba-2026-11-19.md) | Seeder con `DB::table` e idempotente que cubre estados, contactos, strikes y suspensiones. | ✅ |
+| 007 | [Limpieza del backend](../tasks/007-tarea-limpieza-backend-2026-11-19.md) | Quitar SQLite sobrante, ruta firmada del disco `local`, plantilla Blade/Vite y broker de contraseñas sin tabla. | ✅ |
 
 ---
 

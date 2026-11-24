@@ -1,215 +1,152 @@
 <template>
-  <div>
-    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-      <div class="row g-4">
-        <!-- Mitad Izquierda: Tabla de Solicitudes -->
-        <div class="col-12 col-lg-6 d-flex flex-column">
-          <div class="search-box-container d-flex align-items-center mb-3">
-            <input 
-              type="text" 
-              class="search-box-input"
-              v-model="busqueda"
-              placeholder="Buscar por folio, reportante, corporación o lugar..."
-            >
-            <i class="bi bi-search text-secondary ms-2 fs-5"></i>
-          </div>
+  <div class="rejilla">
+    <header class="rejilla-cabecera">
+      <h1>Solicitudes</h1>
+      <FiltrosSolicitudes
+        v-model:estado="estado"
+        v-model:busqueda="busqueda"
+        :conteos="store.conteoPorEstado"
+        :total="store.lista.length"
+      />
+    </header>
 
-          <div class="table-container-scroll flex-grow-1">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light sticky-top">
-                <tr class="small text-secondary">
-                  <th class="ps-3">Folio</th>
-                  <th>Solicitud / Detalle</th>
-                  <th>Estado</th>
-                  <th class="text-end pe-3">Fecha y Hora</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr 
-                  v-for="item in filtradas" 
-                  :key="item.id"
-                  class="solicitud-row"
-                  :id="'row-' + item.id"
-                  :class="{ 'is-selected': seleccionadaId === item.id }"
-                  @click="seleccionarFila(item)"
-                  @dblclick="$emit('abrir-atencion', item)"
-                >
-                  <td class="ps-3 fw-bold text-dark font-monospace">#{{ item.id }}</td>
-                  <td>
-                    <div class="fw-semibold text-dark fs-6">{{ item.titulo }}</div>
-                    <div class="text-muted small">
-                      <i class="bi bi-geo-alt text-danger me-1"></i>{{ item.ubicacionNombre }}
-                    </div>
-                  </td>
-                  <td>
-                    <span 
-                      class="badge rounded-pill fw-semibold"
-                      :style="{ 
-                        backgroundColor: ESTILOS_ESTADO[item.estado]?.color || '#64748b',
-                        color: '#fff' 
-                      }"
-                    >
-                      {{ textoEstado(item.estado) }}
-                    </span>
-                  </td>
-                  <td class="text-end pe-3 fst-italic text-secondary small">
-                    <div>{{ item.fecha }}</div>
-                    <div class="text-muted" style="font-size: 0.75rem;">{{ item.hora }}</div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+    <TarjetaSeccion class="rejilla-tabla" sin-relleno>
+      <SkeletonTabla v-if="mostrarSkeleton" :filas="8" :columnas="6" etiqueta="Cargando solicitudes…" />
+      <EstadoVacio v-else-if="store.error" icono="error" titulo="No se pudieron cargar las solicitudes" :mensaje="store.error">
+        <button type="button" class="btn btn-outline-primary" @click="store.cargar()">Reintentar</button>
+      </EstadoVacio>
+      <EstadoVacio
+        v-else-if="hayDatos && !filtradas.length"
+        icono="search_off"
+        titulo="Ninguna solicitud coincide con el filtro"
+        mensaje="Prueba con otro estado o con otra búsqueda."
+      >
+        <button type="button" class="btn btn-outline-primary" @click="quitarFiltros">Quitar filtros</button>
+      </EstadoVacio>
+      <TablaSolicitudes
+        v-else-if="hayDatos"
+        :solicitudes="filtradas"
+        :catalogo="catalogos.servicioPorId"
+        :seleccionado-id="seleccionadoId"
+        @seleccionar="seleccionadoId = $event"
+        @abrir="abrir"
+      />
+    </TarjetaSeccion>
 
-        <!-- Mitad Derecha: Mapa de Solicitudes con selector de capas -->
-        <div class="col-12 col-lg-6">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="fw-bold text-dark small text-uppercase">
-              <i class="bi bi-pin-map-fill text-danger me-1"></i> MAPA DE SOLICITUDES
-            </span>
-            <span class="badge bg-light text-secondary border">Misantla, Veracruz</span>
-          </div>
-
-          <!-- Contenedor del Mapa -->
-          <div 
-            id="map-solicitudes-view" 
-            style="height: 575px; width: 100%; border-radius: 14px; border: 1px solid #e2e8f0; z-index: 1;"
-          ></div>
-        </div>
-      </div>
-    </div>
+    <aside class="rejilla-mapa" aria-label="Ubicación de las solicitudes filtradas">
+      <SkeletonBloque v-if="mostrarSkeleton" alto="560px" etiqueta="Cargando mapa…" />
+      <MapaBase
+        v-else-if="hayDatos"
+        :marcadores="filtradas"
+        :seleccionado-id="seleccionadoId"
+        alto="560px"
+        etiqueta="Mapa de las solicitudes filtradas"
+        @seleccionar="seleccionadoId = $event"
+      />
+    </aside>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
-import L from 'leaflet'
-import { useAlertas, ESTILOS_ESTADO } from '../composables/useAlertas'
+import { computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import FiltrosSolicitudes from '../components/solicitudes/FiltrosSolicitudes.vue'
+import TablaSolicitudes from '../components/solicitudes/TablaSolicitudes.vue'
+import TarjetaSeccion from '../components/comunes/TarjetaSeccion.vue'
+import MapaBase from '../components/comunes/MapaBase.vue'
+import EstadoVacio from '../components/comunes/EstadoVacio.vue'
+import SkeletonTabla from '../components/comunes/SkeletonTabla.vue'
+import SkeletonBloque from '../components/comunes/SkeletonBloque.vue'
+import { useCargaDiferida } from '../composables/useCargaDiferida'
+import { ESTADO_POR_CLAVE } from '../constantes/estados'
+import { useSolicitudesStore } from '../stores/solicitudes'
+import { useCatalogosStore } from '../stores/catalogos'
+import { folio, nombreCompleto, normalizar } from '../utils/formato'
 
-const emit = defineEmits(['abrir-atencion'])
-const { todasLasAlertas, textoEstado } = useAlertas()
+const store = useSolicitudesStore()
+const catalogos = useCatalogosStore()
+const route = useRoute()
+const router = useRouter()
 
 const busqueda = ref('')
-const seleccionadaId = ref(null)
-let moduleMap = null
-let markersMap = {}
+const seleccionadoId = ref(null)
+
+// El filtro de estado vive en la URL (?estado=Pendiente) para poder enlazarlo.
+const estado = computed({
+  get: () => (ESTADO_POR_CLAVE[route.query.estado] ? route.query.estado : null),
+  set: (valor) => router.replace({ query: { ...route.query, estado: valor ?? undefined } }),
+})
+
+// Texto donde se busca: folio, título, usuario, ubicación y nombres de los servicios.
+const textoBuscable = (s) =>
+  normalizar([
+    folio(s.id),
+    s.titulo,
+    nombreCompleto(s.usuario),
+    s.ubicacion_nombre,
+    ...s.servicios.map((id) => catalogos.servicioPorId[id]?.nombre ?? ''),
+  ].join(' '))
 
 const filtradas = computed(() => {
-  const q = busqueda.value.trim().toLowerCase()
-  if (!q) return todasLasAlertas.value
-  return todasLasAlertas.value.filter(s => 
-    s.id.toLowerCase().includes(q) ||
-    s.titulo.toLowerCase().includes(q) ||
-    s.ubicacionNombre.toLowerCase().includes(q) ||
-    s.estado.toLowerCase().includes(q)
-  )
+  const texto = normalizar(busqueda.value.trim())
+  return store.lista
+    .filter((s) => !estado.value || s.estado === estado.value)
+    .filter((s) => !texto || textoBuscable(s).includes(texto))
+    .sort((a, b) => b.created_at.localeCompare(a.created_at))
 })
 
-const seleccionarFila = (item) => {
-  seleccionadaId.value = item.id
-  if (moduleMap) {
-    moduleMap.setView([item.lat, item.lng], 16)
-    markersMap[item.id]?.openPopup()
-  }
-}
+const hayDatos = computed(() => store.lista.length > 0)
+const cargaDiferida = useCargaDiferida(() => store.cargando)
+const mostrarSkeleton = computed(() => cargaDiferida.value && !hayDatos.value)
 
 onMounted(() => {
-  // 1. Capas disponibles (Calles, Satelital, Terreno y OSM)
-  const capaCalles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Esri Street',
-    maxZoom: 19
-  })
-
-  const capaSatelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Esri Satellite',
-    maxZoom: 19
-  })
-
-  const capaTerreno = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Esri Topo',
-    maxZoom: 19
-  })
-
-  const capaOSM = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap',
-    maxZoom: 19
-  })
-
-  // 2. Inicializar mapa con la capa calles por defecto
-  moduleMap = L.map('map-solicitudes-view', {
-    center: [19.9298, -96.8525],
-    zoom: 14,
-    layers: [capaCalles]
-  })
-
-  // 3. Menú selector de capas en la esquina superior derecha
-  const capasBase = {
-    '🗺️ Calles': capaCalles,
-    '🛰️ Satelital': capaSatelite,
-    '⛰️ Terreno': capaTerreno,
-    '🌐 OpenStreetMap': capaOSM
-  }
-
-  L.control.layers(capasBase, null, { position: 'topright' }).addTo(moduleMap)
-
-  // 4. Marcadores de las solicitudes
-  todasLasAlertas.value.forEach(alerta => {
-    const color = ESTILOS_ESTADO[alerta.estado]?.color || '#64748b'
-    const marker = L.circleMarker([alerta.lat, alerta.lng], { 
-      radius: 9, 
-      fillColor: color, 
-      color: '#fff', 
-      weight: 2, 
-      fillOpacity: 0.95 
-    }).addTo(moduleMap)
-
-    marker.bindPopup(`<b>#${alerta.id} · ${alerta.titulo}</b><br><small>${alerta.ubicacionNombre}</small>`)
-    
-    marker.on('click', () => {
-      seleccionadaId.value = alerta.id
-      nextTick(() => {
-        document.getElementById('row-' + alerta.id)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-      })
-    })
-
-    marker.on('dblclick', () => {
-      emit('abrir-atencion', alerta)
-    })
-
-    markersMap[alerta.id] = marker
-  })
+  catalogos.cargar()
+  store.cargar()
 })
+
+function quitarFiltros() {
+  busqueda.value = ''
+  estado.value = null
+}
+
+const abrir = (id) => router.push({ name: 'solicitud', params: { id } })
 </script>
 
 <style scoped>
-.search-box-container { 
-  background-color: #f1f5f9; 
-  border-radius: 8px; 
-  padding: 6px 14px; 
-  border: 1px solid #e2e8f0; 
+.rejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  grid-template-areas:
+    'cabecera cabecera'
+    'tabla mapa';
+  gap: var(--ym-espacio-4);
+  align-items: start;
 }
-.search-box-input { 
-  background: transparent; 
-  border: none; 
-  outline: none; 
-  width: 100%; 
+
+.rejilla-cabecera {
+  grid-area: cabecera;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ym-espacio-3);
 }
-.table-container-scroll { 
-  max-height: 520px; 
-  overflow-y: auto; 
-  border-radius: 12px; 
-  border: 1px solid #e2e8f0; 
+
+.rejilla-cabecera h1 { margin: 0; }
+.rejilla-tabla { grid-area: tabla; }
+
+.rejilla-mapa {
+  grid-area: mapa;
+  position: sticky;
+  top: calc(var(--ym-alto-navbar) + var(--ym-espacio-4));
 }
-.solicitud-row { 
-  cursor: pointer; 
-  user-select: none; 
-}
-.solicitud-row:hover { 
-  background-color: #f8fafc; 
-}
-.solicitud-row.is-selected { 
-  background-color: #eff6ff !important; 
-  border-left: 4px solid #0284c7 !important; 
+
+@media (max-width: 1199.98px) {
+  .rejilla {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'cabecera' 'tabla' 'mapa';
+  }
+
+  .rejilla-mapa {
+    position: static;
+  }
 }
 </style>

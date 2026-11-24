@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * Datos de demo de Yelp Me (sin modelos: solo DB::table).
+ * Datos de demo de YelpMe (sin modelos: solo DB::table).
  *
  * El admin inicial (id 1) y el catálogo de servicios vienen de
  * database/script-bd.sql; aquí solo se agregan datos de prueba.

@@ -1,4 +1,4 @@
-# Yelp Me — Backend (API)
+# YelpMe — Backend (API)
 
 API REST en Laravel 12 que consumen el panel web (Vue) y la app Android. Contexto completo del proyecto en [`docs/plans/principal-plan.md`](../docs/plans/principal-plan.md).
 
@@ -53,12 +53,28 @@ Teléfonos de usuarios: `2351000001` a `2351000005` (mismo orden de la tabla).
 php artisan serve             # http://localhost:8000
 ```
 
+## Pruebas
+
+Las pruebas usan una BD aislada, **`YelpMe_pruebas`**, nunca `YelpMe`:
+
+```bash
+php artisan bd:pruebas        # recrea YelpMe_pruebas desde ../database/script-bd.sql + datos de demo
+php artisan test              # todas las pruebas
+php artisan test --filter=AutenticacionTest   # solo un archivo
+php artisan test --filter=test_login_panel_admin   # una sola prueba
+```
+
+- `bd:pruebas` solo acepta nombres terminados en `_pruebas`; no puede borrar la BD de desarrollo.
+- Cada prueba corre en una transacción que se revierte: no deja datos.
+- Si `phpunit.xml` apuntara a otra BD, `tests/TestCase.php` detiene las pruebas.
+- Volver a correr `bd:pruebas` después de cambiar `script-bd.sql` o el seeder.
+
 ## Formato de respuesta
 
 Todas las respuestas de `api/*` usan el mismo formato JSON:
 
 ```json
-{ "ok": true, "mensaje": "API Yelp Me funcionando", "datos": { } }
+{ "ok": true, "mensaje": "API YelpMe funcionando", "datos": { } }
 ```
 
 Errores (`ok: false`, `datos: null`), siempre en JSON y en español:
@@ -76,6 +92,56 @@ Errores (`ok: false`, `datos: null`), siempre en JSON y en español:
 En los controladores se usa el helper `$this->respuesta($datos, $mensaje, $codigo)` del `Controller` base.
 
 Verificación rápida: `GET http://localhost:8000/api/ping`.
+
+## Autenticación (Sanctum)
+
+Token en el header `Authorization: Bearer <token>`. Los endpoints de acceso tienen un límite de 5 intentos por minuto (429).
+
+| Método | Ruta | Quién | Cuerpo | Respuesta (`datos`) |
+|---|---|---|---|---|
+| POST | `/api/registro` | Público (app) | `nombre`, `apellidos`, `telefono` (10 dígitos), `correo`, `password`, `password_confirmation`, `fcm_token`? | `token`, `usuario`, `contactos_vinculados` (201) |
+| POST | `/api/login` | Público (app, rol usuario) | `correo` **o** `telefono`, `password`, `fcm_token`? | `token`, `usuario` |
+| POST | `/api/admin/login` | Público (panel, rol admin) | `correo`, `password` | `token`, `usuario` |
+| GET | `/api/sesion` | Con token | — | `usuario` |
+| DELETE | `/api/sesion` | Con token | — | `null` (borra solo el token actual) |
+
+`usuario` = `id, nombre, apellidos, telefono, correo, rol, foto_perfil (URL), activo, suspendido, strikes_activos, limite_strikes, created_at`. Nunca incluye `password` ni `fcm_token`.
+
+| Situación | Código | Mensaje |
+|---|---|---|
+| Credenciales incorrectas (exista o no la cuenta) | 401 | Correo, teléfono o contraseña incorrectos. |
+| Admin en `/api/login` | 403 | Esta cuenta es de administrador. Inicia sesión en el panel web. |
+| Usuario en `/api/admin/login` | 403 | Esta cuenta no tiene acceso al panel de administración. |
+| Cuenta deshabilitada (login o token previo) | 403 | Esta cuenta está deshabilitada. |
+| Rol sin permiso en una ruta | 403 | No tienes permiso para realizar esta acción. |
+
+Una cuenta **suspendida** sí inicia sesión (`suspendido: true`); la app bloquea pedir servicios.
+
+Middlewares para rutas nuevas: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` (panel, prefijo `/api/admin`). Los grupos ya están en `routes/api.php`.
+
+## Contactos de confianza (app, rol `usuario`)
+
+| Método | Ruta | Cuerpo | Respuesta (`datos`) |
+|---|---|---|---|
+| GET | `/api/contactos` | — | Lista de mi agenda, por nombre |
+| POST | `/api/contactos` | `nombre`, `telefono`, `parentesco` | Contacto (201) |
+| GET | `/api/contactos/{id}` | — | Contacto |
+| PUT/PATCH | `/api/contactos/{id}` | Campos a cambiar | Contacto |
+| DELETE | `/api/contactos/{id}` | — | `null` |
+| GET | `/api/telefonos/{telefono}` | — | `{ telefono, vinculable, en_agenda }` (30/min) |
+| GET | `/api/vinculos` | — | Quién me tiene: `[{ id, nombre, apellidos, telefono, desde }]` |
+| DELETE | `/api/vinculos/{id}` | — | `null` (me borra de su agenda) |
+| GET | `/api/bloqueos` | — | `[{ id, nombre, apellidos, telefono, desde }]` |
+| POST | `/api/bloqueos` | `contacto_id` (id de un vínculo) | Bloqueo (201) |
+| DELETE | `/api/bloqueos/{id}` | — | `null` |
+
+Contacto = `id, nombre, telefono, parentesco, vinculado, created_at, updated_at`.
+
+- **Vinculación automática** al crear y al cambiar el teléfono: si el número es de una cuenta de rol `usuario` que no me bloqueó. Si no, se guarda sin vínculo (se puede llamar, no recibe avisos).
+- **Errores 422:** teléfono repetido en mi agenda ("Ya tienes un contacto con ese teléfono."), mi propio número ("No puedes agregarte a ti mismo como contacto.").
+- **Propiedad:** contactos, vínculos y bloqueos ajenos responden 404 (no revela que existen).
+- **Bloquear** borra el contacto de la agenda de quien me tiene e impide que me vuelva a vincular. **Desbloquear** no lo restaura, pero vincula el contacto si ya me había guardado de nuevo.
+- `vinculable: false` es igual para sin cuenta, admin, número propio o cuenta que me bloqueó.
 
 ## Convenciones
 

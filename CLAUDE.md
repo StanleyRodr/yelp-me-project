@@ -11,7 +11,8 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - El **tipo** queda en inglés (`feat`, `fix`, `docs`, `refactor`, `chore`, `style`, `test`…); **la descripción y el cuerpo, en español**. Ej.: `feat(contactos): agrega búsqueda por teléfono`.
 - Una rama por plan o sección (p. ej. `feature/backend-auth`, `feature/mobile-contactos`); no trabajar directo en `main`.
 - **Un commit por cada tarea terminada** de `docs/tasks/` (incluye el código y la actualización del `.md` de la tarea).
-- **Un PR por cada plan terminado** de `docs/plans/`, hacia `main` (o apilado sobre la rama del plan anterior si aún no se fusiona). Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
+- **Un PR por cada plan terminado** de `docs/plans/`, **hacia `main`**. Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
+- Cada plan nuevo sale de `main` actualizado. Evitar cadenas de PR apilados: al fusionarlas en desorden, planes enteros quedaron fuera de `main` (corregido con el PR #5). Si un plan depende de otro aún sin fusionar, avisar antes de apilar.
 
 ## Documentación y flujo de trabajo
 
@@ -21,14 +22,16 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - Numeración consecutiva de 3 dígitos, **global** entre planes (las tareas no reinician por plan).
 - Al terminar una tarea: marcar estado ✅ en la tarea y en la tabla del plan, y anotar el commit.
 
-## Proyecto: Yelp Me
+## Proyecto: YelpMe
+
+El nombre se escribe **YelpMe** (junto, sin espacio) en código, interfaz y documentación.
 
 Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**: no se integra con servicios reales de emergencia.
 
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
-| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Iniciado (solo UI mock) |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | Vacío                   |
+| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Estructura y diseño listos (plan 002), datos de ejemplo |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | Base, autenticación y contactos (planes 001, 003, 004) |
 | `mobile/`   | Android Studio, Java                        | App del usuario final       | Vacío                   |
 
 Web y Android consumen la **misma API Laravel**.
@@ -44,6 +47,16 @@ Web y Android consumen la **misma API Laravel**.
 - **Strikes:** 3 activos suspenden la cuenta para pedir servicios; rehabilitar los reinicia a 0, con historial de suspensiones.
 
 ## Backend (Laravel) — convenciones
+
+Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos de demo, idempotente) · `php artisan bd:pruebas` (recrea `YelpMe_pruebas`) · `php artisan test` · `php artisan test --filter=NombreDePrueba`.
+
+- **Pruebas sobre `YelpMe_pruebas`**, nunca `YelpMe`: `phpunit.xml` apunta ahí, `tests/TestCase.php` aborta si no termina en `_pruebas` y cada prueba se revierte (`DatabaseTransactions`). Recrear con `bd:pruebas` tras cambiar el script o el seeder.
+- **Autenticación (plan 003):** `POST /api/registro`, `POST /api/login` (app, correo o teléfono), `POST /api/admin/login` (panel), `GET|DELETE /api/sesion`. Detalle y errores en `backend/README.md`.
+- **Contactos (plan 004):** `apiResource /api/contactos`, `GET /api/telefonos/{telefono}`, `/api/vinculos`, `/api/bloqueos` (rol usuario). Recursos ajenos → 404. Vinculación en `App\Support\ReglasContactos`; normalización de teléfono, correo y fechas en `App\Support\Normalizar`.
+- Pruebas: `$this->como('correo@demo')` en `tests/TestCase.php` autentica con Sanctum sin login.
+- **Proteger rutas nuevas** dentro de los grupos de `routes/api.php`: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` con prefijo `admin` (panel). El `usuario_id` sale de `$request->user()`, nunca del body.
+- Usuario en respuestas: siempre con `App\Support\PresentadorUsuario` (sin `password` ni `fcm_token`). Reglas de strikes/suspensión en `App\Support\ReglasCuenta`; credenciales en `App\Support\Credenciales`.
+- Errores con `abort(código, 'mensaje en español')`: el render de `bootstrap/app.php` los devuelve en el formato estándar.
 
 - **Controladores sin modelos Eloquent**: `DB::table(...)` / Query Builder. **Única excepción:** `App\Models\User`, solo para Sanctum (`HasApiTokens`).
 - Controladores con `index`, `show`, `store`, `update`, `destroy`.
@@ -66,21 +79,29 @@ npm run preview  # previsualizar build
 
 No hay linter ni tests configurados.
 
-Dependencias instaladas: Bootstrap 5, Bootstrap Icons, Leaflet, axios, Pinia (registrado en `main.js`), SweetAlert2, vue-router (instalado, **sin configurar**). Pendiente: Material Symbols para los íconos de servicios.
+Dependencias: Vue 3, vue-router, Pinia, axios, Bootstrap 5 (build ESM vía `src/plugins/bootstrap.js`; no importar el bundle), Bootstrap Icons, SweetAlert2, Leaflet, Atkinson Hyperlegible Next y Material Symbols (offline, npm). Credenciales de demo: `admin@yelpme.com` / `Admin123*`.
 
-Convenciones objetivo:
-- axios para la API; Pinia para estado global; SweetAlert2 para alertas/confirmaciones.
-- vue-router con guard de autenticación (sin token → `/login`).
-- Vistas (`src/views/`) compuestas por componentes en `src/components/` (`layout/`, `modals/`, …).
-- Íconos de servicios con **Material Symbols** (mismo ícono que Android); Bootstrap Icons para el resto de la UI.
-- Dashboard actualizado por consulta periódica (10–15 s), no push.
+Si el navegador muestra `504 (Outdated Optimize Dep)` tras instalar paquetes: reiniciar con `npm run dev -- --force` y recargar sin caché.
 
-Arquitectura actual (a migrar):
-- **Navegación manual:** `App.vue` alterna vistas con `currentView` (`inicio`, `solicitudes`, `atencion`, `usuarios`, `perfil`) y eventos (`cambiar-vista`, `abrir-atencion`, `volver`, `abrir-modal`). `AppNavbar.vue` cambia de color según la vista.
-- **Modales de acciones sobre solicitudes** (editar servicios, rechazar con reporte, despachar, cancelar) viven en `App.vue` y operan sobre `solicitudEnAtencion`; deben pasar a `src/components/modals/` (vacía).
-- **Estado en `src/composables/useAlertas.js`:** singleton a nivel de módulo con `todasLasAlertas` (**mock**), `solicitudEnAtencion`, contadores, `ESTILOS_ESTADO` y `catalogoServicios`. `UsuariosView` y `PerfilView` tienen mocks locales (incluidos strikes/reportes).
-- Los mocks usan 6 estados obsoletos (`Asignada`, `En Camino`, `Atendida`, …); deben migrarse a los 5 oficiales en datos, `ESTILOS_ESTADO`, `textoEstado` y modales.
-- **Mapas con Leaflet** (`InicioView`, `SolicitudesView`, `AtencionView`) sobre `lat`/`lng`, instanciados con `L.map(id)`.
+Arquitectura (plan 002):
+- **Flujo de datos:** vistas → stores (`src/stores/`) → services (`src/services/`) → mocks (`src/mocks/`). Los mocks replican las tablas de `script-bd.sql` y el seeder; cada service documenta su endpoint futuro. Conectar la API = cambiar solo los services (cliente listo en `services/http.js`).
+- **Reglas de negocio en un solo lugar:** transiciones en `constantes/transiciones.js` (`accionesPermitidas`), estados en `constantes/estados.js`, cuentas/strikes en `constantes/cuentas.js` y `services/reglasUsuarios.js`. UI y services usan las mismas funciones.
+- **Rutas** (`router/index.js`): `/login` pública; resto hijas de `components/layout/AppShell.vue` con guard de sesión. `router.onError` recarga una vez si falla la descarga de un módulo.
+- **Diseño:** tokens en `styles/tokens.css` (único archivo con hex); tema de Bootstrap por variables en `styles/tema-bootstrap.css`; base, foco y movimiento reducido en `styles/base.css`; SweetAlert2 en `styles/sweetalert.css` + `plugins/alertas.js` (`confirmar`, `exito`, `error`).
+- **Piezas comunes** (`components/comunes/`): `EstadoBadge`, `ListaServicios`, `MapaBase` (único lugar que usa Leaflet), `LineaTiempo`, `TarjetaSeccion`, `CampoBusqueda`, `EstadoVacio`, `BotonCarga`, skeletons. Modales en `components/modals/` sobre `ModalBase`; acciones con motivo reutilizan `ModalMotivo`.
+
+Reglas de componentes (plan 002):
+- Carpetas por dominio en `src/components/`: `comunes/`, `layout/`, `modals/`, `dashboard/`, `solicitudes/`, `usuarios/`, `perfil/`.
+- **Vista = composición:** acomoda secciones en la rejilla y conecta el store. Sin tablas, formularios ni estilos propios salvo la rejilla.
+- Solo vistas y modales usan stores de Pinia; secciones y comunes son presentacionales (props + emits).
+- `<style scoped>` con solo tokens (`--ym-*`, `--bs-*`); ningún color hex fuera de `src/styles/tokens.css`.
+- `v-for` con `:key` estable para todo lo repetido; `v-if` para estados de la vista; `v-show` para lo que se alterna seguido; nunca `v-if` y `v-for` en el mismo elemento.
+- Carga: skeleton (placeholders de Bootstrap) en cargas de vista/sección; círculo pequeño solo dentro de botones de acción; nada en recargas periódicas.
+
+Otras convenciones:
+- Íconos de servicios y estados con **Material Symbols** (mismo ícono que Android); Bootstrap Icons para el resto de la UI. La columna `servicios.color` no se usa en pantalla.
+- Textos de interfaz: verbos concretos en botones ("Enviar ayuda"), errores que dicen cómo corregir, redacción neutra en género ("quien la creó"), sin separadores "·".
+- Pendiente (plan futuro): conectar services a la API y consulta periódica del dashboard (10–15 s), sin push.
 
 ## Mobile (`mobile/`) — Android, Java
 

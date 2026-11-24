@@ -92,14 +92,10 @@ return [
     |
     */
 
-    'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-    ],
+    // YelpMe: recuperación de contraseña fuera del MVP y la tabla
+    // password_reset_tokens no existe en database/script-bd.sql.
+    // Sin broker configurado; si se implementa, crear la tabla en el script.
+    'passwords' => [],
 
     /*
     |--------------------------------------------------------------------------
