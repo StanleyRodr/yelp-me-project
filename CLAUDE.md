@@ -30,7 +30,7 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
-| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Estructura y diseño listos (plan 002), datos de ejemplo |
+| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002 y 007) |
 | `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006) |
 | `mobile/`   | Android Studio, Java                        | App del usuario final       | Vacío                   |
 
@@ -89,8 +89,11 @@ Dependencias: Vue 3, vue-router, Pinia, axios, Bootstrap 5 (build ESM vía `src/
 Si el navegador muestra `504 (Outdated Optimize Dep)` tras instalar paquetes: reiniciar con `npm run dev -- --force` y recargar sin caché.
 
 Arquitectura (plan 002):
-- **Flujo de datos:** vistas → stores (`src/stores/`) → services (`src/services/`) → mocks (`src/mocks/`). Los mocks replican las tablas de `script-bd.sql` y el seeder; cada service documenta su endpoint futuro. Conectar la API = cambiar solo los services (cliente listo en `services/http.js`).
-- **Reglas de negocio en un solo lugar:** transiciones en `constantes/transiciones.js` (`accionesPermitidas`), estados en `constantes/estados.js`, cuentas/strikes en `constantes/cuentas.js` y `services/reglasUsuarios.js`. UI y services usan las mismas funciones.
+- **Flujo de datos:** vistas → stores (`src/stores/`) → services (`src/services/`) → API con axios (`services/http.js`, `pedir()` devuelve `datos`). Sin mocks. Los errores llegan como `ErrorApi { message, codigo, errores }` con el mensaje de Laravel; `campo(nombre)` da el error de un input.
+- **Sesión:** `main.js` registra `registrarSesionExpirada`: cualquier 401 fuera del login limpia la sesión y manda a `/login?expirada=1`. Al iniciar, `auth.validarSesion()` confirma el token con `GET /api/sesion`.
+- **Recarga periódica:** `useConsultaPeriodica` en `AppShell` llama `solicitudes.refrescar()` cada 15 s (silenciosa: sin skeleton, conserva datos si falla); se pausa con la pestaña oculta.
+- **Para levantar el panel:** backend con `php artisan serve` (puerto 8000) y frontend con `npm run dev`. `VITE_API_URL` en `frontend/.env` (ver `.env.example`).
+- **Reglas que deciden qué botones mostrar:** `constantes/transiciones.js` (`accionesPermitidas`) y `constantes/cuentas.js` (`accionesCuenta`), espejo de `TransicionesSolicitud` y `ReglasCuenta::ACCIONES` del backend (cambiar ambos lados). La validación real es de la API.
 - **Rutas** (`router/index.js`): `/login` pública; resto hijas de `components/layout/AppShell.vue` con guard de sesión. `router.onError` recarga una vez si falla la descarga de un módulo.
 - **Diseño:** tokens en `styles/tokens.css` (único archivo con hex); tema de Bootstrap por variables en `styles/tema-bootstrap.css`; base, foco y movimiento reducido en `styles/base.css`; SweetAlert2 en `styles/sweetalert.css` + `plugins/alertas.js` (`confirmar`, `exito`, `error`).
 - **Piezas comunes** (`components/comunes/`): `EstadoBadge`, `ListaServicios`, `MapaBase` (único lugar que usa Leaflet), `LineaTiempo`, `TarjetaSeccion`, `CampoBusqueda`, `EstadoVacio`, `BotonCarga`, skeletons. Modales en `components/modals/` sobre `ModalBase`; acciones con motivo reutilizan `ModalMotivo`.
@@ -106,7 +109,7 @@ Reglas de componentes (plan 002):
 Otras convenciones:
 - Íconos de servicios y estados con **Material Symbols** (mismo ícono que Android); Bootstrap Icons para el resto de la UI. La columna `servicios.color` no se usa en pantalla.
 - Textos de interfaz: verbos concretos en botones ("Enviar ayuda"), errores que dicen cómo corregir, redacción neutra en género ("quien la creó"), sin separadores "·".
-- Pendiente (plan futuro): conectar services a la API y consulta periódica del dashboard (10–15 s), sin push.
+- Probar services contra la API sin navegador: `vite.ssrLoadModule` con `localStorage` simulado y la API servida sobre `YelpMe_pruebas` (`DB_DATABASE=YelpMe_pruebas php artisan serve --port=8010`). El límite de 5 logins por minuto también aplica: `php artisan cache:clear` lo reinicia.
 
 ## Mobile (`mobile/`) — Android, Java
 

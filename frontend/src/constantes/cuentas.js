@@ -11,7 +11,10 @@ export const ESTADOS_CUENTA = [
 
 export const CUENTA_POR_CLAVE = Object.fromEntries(ESTADOS_CUENTA.map((e) => [e.clave, e]))
 
-/** Acciones del admin sobre una cuenta según su estado (plan principal sección 8). */
+/**
+ * Acciones del admin sobre una cuenta según su estado (plan principal sección 8).
+ * Espejo de ReglasCuenta::ACCIONES en el backend: si cambia una, cambiar la otra.
+ */
 export const ACCIONES_CUENTA = {
   reportar: { clave: 'reportar', etiqueta: 'Reportar (sumar strike)', icono: 'bi-flag', variante: 'outline-danger' },
   suspender: { clave: 'suspender', etiqueta: 'Suspender', icono: 'bi-pause-circle', variante: 'outline-secondary' },

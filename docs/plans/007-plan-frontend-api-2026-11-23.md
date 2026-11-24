@@ -40,17 +40,17 @@ Reemplazar los datos de ejemplo del panel por la API real: cada *service* del fr
 | 038 | [Sesión contra la API](../tasks/038-tarea-sesion-api-2026-11-23.md) | Login, cierre y validación de sesión al iniciar. | ✅ |
 | 039 | [Solicitudes contra la API](../tasks/039-tarea-solicitudes-api-2026-11-23.md) | Catálogo, listado, detalle y acciones; recarga periódica del dashboard. | ✅ |
 | 040 | [Usuarios y perfil contra la API](../tasks/040-tarea-usuarios-perfil-api-2026-11-23.md) | Gestión de cuentas, strikes, suspensiones, perfil, foto y contraseña. | ✅ |
-| 041 | [Quitar mocks y verificar](../tasks/041-tarea-quitar-mocks-verificar-2026-11-23.md) | Borrar datos de ejemplo y probar todos los services contra la API real. | Pendiente |
+| 041 | [Quitar mocks y verificar](../tasks/041-tarea-quitar-mocks-verificar-2026-11-23.md) | Borrar datos de ejemplo y probar todos los services contra la API real (44/44). | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] Ningún service usa datos de ejemplo; `src/mocks/` no existe.
-- [ ] Todos los services funcionan contra la API (probado contra `YelpMe_pruebas`).
-- [ ] Los mensajes de error de la API llegan a la interfaz.
-- [ ] Un 401 cierra la sesión y lleva a `/login`.
-- [ ] La foto de perfil se sube y se ve con la URL del backend.
-- [ ] El dashboard se actualiza solo sin mostrar skeleton.
-- [ ] `npm run build` sin errores.
-- [ ] Commits por tarea, en español, sin coautoría; PR a `main` al terminar.
+- [x] Ningún service usa datos de ejemplo; `src/mocks/` no existe.
+- [x] Todos los services funcionan contra la API (probado contra `YelpMe_pruebas`).
+- [x] Los mensajes de error de la API llegan a la interfaz.
+- [x] Un 401 cierra la sesión y lleva a `/login`.
+- [x] La foto de perfil se sube y se ve con la URL del backend.
+- [x] El dashboard se actualiza solo sin mostrar skeleton.
+- [x] `npm run build` sin errores.
+- [x] Commits por tarea, en español, sin coautoría; PR a `main` al terminar.
