@@ -30,6 +30,18 @@ abstract class TestCase extends BaseTestCase
         $this->app['auth']->forgetGuards();
     }
 
+    /**
+     * PNG real de 1×1 sin la extensión GD (UploadedFile::fake()->image la requiere).
+     * `$rellenoKb` agrega bytes al final para probar el límite de tamaño.
+     */
+    protected function imagenPng(string $nombre = 'foto.png', int $rellenoKb = 0): \Illuminate\Http\UploadedFile
+    {
+        $ruta = tempnam(sys_get_temp_dir(), 'ym');
+        file_put_contents($ruta, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==').str_repeat("\0", $rellenoKb * 1024));
+
+        return new \Illuminate\Http\UploadedFile($ruta, $nombre, 'image/png', null, true);
+    }
+
     /** Autentica como un usuario del demo (por correo) sin pasar por el login. */
     protected function como(string $correo): User
     {

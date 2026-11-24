@@ -68,7 +68,7 @@ class BloqueoController extends Controller
 
             DB::table('contactos')
                 ->where('usuario_id', $bloqueadoId)
-                ->where('telefono', $yo->telefono)
+                ->where('telefono', DB::table('usuarios')->where('id', $yo->id)->value('telefono'))
                 ->whereNull('usuario_contacto_id')
                 ->update(['usuario_contacto_id' => $yo->id, 'updated_at' => now()]);
         });
