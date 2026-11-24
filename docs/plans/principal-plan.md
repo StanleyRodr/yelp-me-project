@@ -336,7 +336,7 @@ El día de la presentación debe poder demostrarse:
 1. ✅ Plan 001 — Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
 2. ✅ Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
 3. ✅ Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
-4. API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
+4. Plan 004 — API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
 5. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. API de strikes, suspensiones y gestión de usuarios.
 7. Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
