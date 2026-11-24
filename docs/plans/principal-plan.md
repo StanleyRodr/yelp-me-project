@@ -339,6 +339,6 @@ El día de la presentación debe poder demostrarse:
 4. ✅ Plan 004 — API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
 5. ✅ Plan 005 — API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. ✅ Plan 006 — Gestión de usuarios (strikes, suspensiones, cuentas) y perfil propio.
-7. Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
+7. Plan 007 — Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
 8. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
 9. Notificaciones FCM (backend + Android).
