@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\EstadoSolicitudController as AdminEstadoSolicitudController;
+use App\Http\Controllers\Api\Admin\ServiciosSolicitudController as AdminServiciosSolicitudController;
 use App\Http\Controllers\Api\Admin\SesionController as AdminSesionController;
+use App\Http\Controllers\Api\Admin\SolicitudController as AdminSolicitudController;
 use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
 use App\Http\Controllers\Api\EstadoSolicitudController;
@@ -52,6 +55,9 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
 
     // Panel web (rol admin): solicitudes y usuarios (planes 005 y 006)
     Route::prefix('admin')->middleware('rol:admin')->group(function () {
-        //
+        Route::apiResource('solicitudes', AdminSolicitudController::class)->only(['index', 'show'])
+            ->parameters(['solicitudes' => 'id'])->whereNumber('id')->names('admin.solicitudes');
+        Route::put('/solicitudes/{id}/estado', [AdminEstadoSolicitudController::class, 'update'])->whereNumber('id');
+        Route::put('/solicitudes/{id}/servicios', [AdminServiciosSolicitudController::class, 'update'])->whereNumber('id');
     });
 });

@@ -61,7 +61,7 @@ Archivos por actor sobre `YelpMe_pruebas`, buscando solicitudes del demo por tí
 | 027 | [Base de solicitudes](../tasks/027-tarea-base-solicitudes-2026-11-23.md) | Tabla de transiciones, presentador, strikes con suspensión automática y catálogo de servicios. | ✅ |
 | 028 | [Solicitudes del usuario](../tasks/028-tarea-solicitudes-usuario-2026-11-23.md) | Crear, listar, ver y modificar mientras está pendiente; regla de suspensión. | ✅ |
 | 029 | [Estado por el usuario](../tasks/029-tarea-estado-usuario-2026-11-23.md) | Cancelar con motivo y dar por terminada según la tabla. | ✅ |
-| 030 | [Solicitudes del panel](../tasks/030-tarea-solicitudes-panel-2026-11-23.md) | Listado y detalle, enviar, rechazar con strike, terminar y corregir servicios con control de concurrencia. | Pendiente |
+| 030 | [Solicitudes del panel](../tasks/030-tarea-solicitudes-panel-2026-11-23.md) | Listado y detalle, enviar, rechazar con strike, terminar y corregir servicios con control de concurrencia. | ✅ |
 | 031 | [Pruebas y documentación](../tasks/031-tarea-pruebas-solicitudes-2026-11-23.md) | Pruebas de todas las transiciones y endpoints en el README. | Pendiente |
 
 ---
