@@ -106,7 +106,7 @@ La app Android debe realizar al menos un CRUD completo (**Crear → Consultar �
 ### 6.2 Consentimiento (mínimo)
 - El usuario B puede ver **quién lo tiene como contacto**.
 - B puede **desvincularse** o **bloquear** a A: en ambos casos **el contacto se elimina de la agenda de A**.
-- Si B bloquea a A, A no puede volver a vincularlo. B puede **desbloquear** a A (el registro del bloqueo se borra).
+- Si B bloquea a A, A no puede volver a vincularlo. B puede **desbloquear** a A (el registro del bloqueo se borra). El contacto borrado no vuelve, pero si A ya había guardado de nuevo a B, ese contacto se vincula.
 
 ### 6.3 Llamada directa
 - Botón que llama al teléfono del contacto: `Intent ACTION_CALL` con permiso `CALL_PHONE`; si no se concede, `ACTION_DIAL`.
@@ -260,7 +260,7 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 | Parte    | Estado |
 |----------|--------|
 | Frontend | Plan 002: rutas con login, stores, services sobre datos de ejemplo con la forma de la BD, sistema de diseño y todas las vistas del admin. |
-| Backend  | Planes 001 y 003: Laravel 12 + Sanctum, base de la API, datos de prueba, registro, login de app y panel, sesión y protección por rol. Pruebas sobre `YelpMe_pruebas`. Sin endpoints de negocio. |
+| Backend  | Planes 001, 003 y 004: base de la API, autenticación (registro, login de app y panel, roles) y contactos (CRUD, vinculación, vínculos y bloqueos). Pruebas sobre `YelpMe_pruebas`. Faltan solicitudes y gestión de usuarios. |
 | Mobile   | Vacío; diseños en proceso por otra persona. |
 | BD       | Creada con `database/script-bd.sql`: 9 tablas, admin inicial y catálogo de servicios. |
 
@@ -336,7 +336,7 @@ El día de la presentación debe poder demostrarse:
 1. ✅ Plan 001 — Backend base: proyecto Laravel, conexión a `YelpMe`, datos de prueba.
 2. ✅ Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
 3. ✅ Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
-4. API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
+4. ✅ Plan 004 — API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
 5. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. API de strikes, suspensiones y gestión de usuarios.
 7. Frontend: conectar los services a la API con axios y consulta periódica del dashboard.

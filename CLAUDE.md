@@ -11,7 +11,8 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - El **tipo** queda en inglés (`feat`, `fix`, `docs`, `refactor`, `chore`, `style`, `test`…); **la descripción y el cuerpo, en español**. Ej.: `feat(contactos): agrega búsqueda por teléfono`.
 - Una rama por plan o sección (p. ej. `feature/backend-auth`, `feature/mobile-contactos`); no trabajar directo en `main`.
 - **Un commit por cada tarea terminada** de `docs/tasks/` (incluye el código y la actualización del `.md` de la tarea).
-- **Un PR por cada plan terminado** de `docs/plans/`, hacia `main` (o apilado sobre la rama del plan anterior si aún no se fusiona). Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
+- **Un PR por cada plan terminado** de `docs/plans/`, **hacia `main`**. Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
+- Cada plan nuevo sale de `main` actualizado. Evitar cadenas de PR apilados: al fusionarlas en desorden, planes enteros quedaron fuera de `main` (corregido con el PR #5). Si un plan depende de otro aún sin fusionar, avisar antes de apilar.
 
 ## Documentación y flujo de trabajo
 
@@ -30,7 +31,7 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
 | `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Estructura y diseño listos (plan 002), datos de ejemplo |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | Base lista (plan 001), sin endpoints de negocio |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | Base, autenticación y contactos (planes 001, 003, 004) |
 | `mobile/`   | Android Studio, Java                        | App del usuario final       | Vacío                   |
 
 Web y Android consumen la **misma API Laravel**.
@@ -51,6 +52,8 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 
 - **Pruebas sobre `YelpMe_pruebas`**, nunca `YelpMe`: `phpunit.xml` apunta ahí, `tests/TestCase.php` aborta si no termina en `_pruebas` y cada prueba se revierte (`DatabaseTransactions`). Recrear con `bd:pruebas` tras cambiar el script o el seeder.
 - **Autenticación (plan 003):** `POST /api/registro`, `POST /api/login` (app, correo o teléfono), `POST /api/admin/login` (panel), `GET|DELETE /api/sesion`. Detalle y errores en `backend/README.md`.
+- **Contactos (plan 004):** `apiResource /api/contactos`, `GET /api/telefonos/{telefono}`, `/api/vinculos`, `/api/bloqueos` (rol usuario). Recursos ajenos → 404. Vinculación en `App\Support\ReglasContactos`; normalización de teléfono, correo y fechas en `App\Support\Normalizar`.
+- Pruebas: `$this->como('correo@demo')` en `tests/TestCase.php` autentica con Sanctum sin login.
 - **Proteger rutas nuevas** dentro de los grupos de `routes/api.php`: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` con prefijo `admin` (panel). El `usuario_id` sale de `$request->user()`, nunca del body.
 - Usuario en respuestas: siempre con `App\Support\PresentadorUsuario` (sin `password` ni `fcm_token`). Reglas de strikes/suspensión en `App\Support\ReglasCuenta`; credenciales en `App\Support\Credenciales`.
 - Errores con `abort(código, 'mensaje en español')`: el render de `bootstrap/app.php` los devuelve en el formato estándar.

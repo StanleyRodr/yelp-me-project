@@ -2,7 +2,6 @@
 
 namespace App\Support;
 
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,7 +32,7 @@ class PresentadorUsuario
             'suspendido' => ReglasCuenta::estaSuspendido($u->id),
             'strikes_activos' => ReglasCuenta::strikesActivos($u->id),
             'limite_strikes' => ReglasCuenta::LIMITE_STRIKES,
-            'created_at' => $u->created_at ? Carbon::parse($u->created_at)->toIso8601String() : null,
+            'created_at' => Normalizar::fecha($u->created_at),
         ];
     }
 }
