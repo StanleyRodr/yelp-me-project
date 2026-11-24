@@ -143,6 +143,41 @@ Contacto = `id, nombre, telefono, parentesco, vinculado, created_at, updated_at`
 - **Bloquear** borra el contacto de la agenda de quien me tiene e impide que me vuelva a vincular. **Desbloquear** no lo restaura, pero vincula el contacto si ya me había guardado de nuevo.
 - `vinculable: false` es igual para sin cuenta, admin, número propio o cuenta que me bloqueó.
 
+## Solicitudes de ayuda
+
+Solicitud = columnas de `solicitudes` (`id, usuario_id, titulo, descripcion, latitud, longitud, ubicacion_nombre, estado, admin_id, cerrado_por_id, motivo, enviado_en, cerrado_en, created_at, updated_at`) + `servicios` (ids) + `usuario` `{ id, nombre, apellidos, telefono }` + `admin` y `cerrado_por` `{ id, nombre, apellidos }` o `null`. Misma forma que usa el frontend.
+
+| Método | Ruta | Quién | Cuerpo |
+|---|---|---|---|
+| GET | `/api/servicios` | Cualquier rol | — (`{ id, nombre, icono, color }`) |
+| GET | `/api/solicitudes?estado=` | Usuario | — |
+| POST | `/api/solicitudes` | Usuario | `titulo`, `latitud`, `longitud`, `descripcion`?, `ubicacion_nombre`?, `servicios`? (ids) |
+| GET | `/api/solicitudes/{id}` | Usuario | — |
+| PUT/PATCH | `/api/solicitudes/{id}` | Usuario (solo Pendiente) | Campos a cambiar |
+| PUT | `/api/solicitudes/{id}/estado` | Usuario | `estado` (Cancelado/Terminado), `motivo` (al cancelar) |
+| GET | `/api/admin/solicitudes?estado=` | Admin | — |
+| GET | `/api/admin/solicitudes/{id}` | Admin | — |
+| PUT | `/api/admin/solicitudes/{id}/estado` | Admin | `estado` (Enviado/Rechazado/Terminado), `motivo` (al rechazar), `strike`? |
+| PUT | `/api/admin/solicitudes/{id}/servicios` | Admin | `servicios` (mínimo 1) |
+
+Transiciones (plan principal 7.2; tabla en `App\Support\TransicionesSolicitud`, igual al frontend):
+
+| Rol | Con servicios | Sin servicios |
+|---|---|---|
+| Admin | Pendiente → Enviado/Rechazado · Enviado → Terminado | Pendiente → Rechazado |
+| Usuario | Pendiente → Cancelado · Enviado → Terminado/Cancelado | Pendiente → Terminado/Cancelado |
+
+| Situación | Código |
+|---|---|
+| Transición no permitida o ya cambiada por otro admin | 409 "La solicitud está en X: no se puede pasar a Y…" |
+| Modificar una solicitud que no está Pendiente | 409 |
+| Cuenta suspendida pide o agrega servicios | 403 "Tu cuenta está suspendida: solo puedes avisar a tus contactos." |
+| Falta motivo al cancelar o rechazar | 422 |
+| Solicitud ajena (rutas de la app) | 404 |
+
+- Rechazar con `strike: true` registra el strike ligado a la solicitud; con 3 activos, la cuenta se suspende automáticamente.
+- Las solicitudes no se borran (DELETE → 405).
+
 ## Convenciones
 
 - Controladores **sin modelos Eloquent**: acceso a datos con `DB::table(...)`. Única excepción: `App\Models\User`, solo para autenticación con Sanctum.

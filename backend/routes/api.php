@@ -1,11 +1,17 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\EstadoSolicitudController as AdminEstadoSolicitudController;
+use App\Http\Controllers\Api\Admin\ServiciosSolicitudController as AdminServiciosSolicitudController;
 use App\Http\Controllers\Api\Admin\SesionController as AdminSesionController;
+use App\Http\Controllers\Api\Admin\SolicitudController as AdminSolicitudController;
 use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
+use App\Http\Controllers\Api\EstadoSolicitudController;
 use App\Http\Controllers\Api\PingController;
 use App\Http\Controllers\Api\RegistroController;
+use App\Http\Controllers\Api\ServicioController;
 use App\Http\Controllers\Api\SesionController;
+use App\Http\Controllers\Api\SolicitudController;
 use App\Http\Controllers\Api\TelefonoController;
 use App\Http\Controllers\Api\VinculoController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +30,7 @@ Route::middleware('throttle:acceso')->group(function () {
 Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
     Route::get('/sesion', [SesionController::class, 'show']);
     Route::delete('/sesion', [SesionController::class, 'destroy']);
+    Route::get('/servicios', [ServicioController::class, 'index']);
 
     // App Android (rol usuario): contactos y solicitudes propias (planes 004 y 005)
     Route::middleware('rol:usuario')->group(function () {
@@ -34,6 +41,11 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
         Route::get('/telefonos/{telefono}', [TelefonoController::class, 'show'])
             ->middleware('throttle:telefonos');
 
+        // Solicitudes de ayuda propias (sin destroy: se cancelan con /estado)
+        Route::apiResource('solicitudes', SolicitudController::class)->except(['destroy'])
+            ->parameters(['solicitudes' => 'id'])->whereNumber('id');
+        Route::put('/solicitudes/{id}/estado', [EstadoSolicitudController::class, 'update'])->whereNumber('id');
+
         // Quién me tiene como contacto, desvincularme y bloqueos
         Route::apiResource('vinculos', VinculoController::class)->only(['index', 'destroy'])
             ->parameters(['vinculos' => 'id'])->whereNumber('id');
@@ -43,6 +55,9 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
 
     // Panel web (rol admin): solicitudes y usuarios (planes 005 y 006)
     Route::prefix('admin')->middleware('rol:admin')->group(function () {
-        //
+        Route::apiResource('solicitudes', AdminSolicitudController::class)->only(['index', 'show'])
+            ->parameters(['solicitudes' => 'id'])->whereNumber('id')->names('admin.solicitudes');
+        Route::put('/solicitudes/{id}/estado', [AdminEstadoSolicitudController::class, 'update'])->whereNumber('id');
+        Route::put('/solicitudes/{id}/servicios', [AdminServiciosSolicitudController::class, 'update'])->whereNumber('id');
     });
 });
