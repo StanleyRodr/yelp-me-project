@@ -1,0 +1,74 @@
+<?php
+
+/*
+ * Mensajes de validación en español (reglas usadas en Yelp Me).
+ * Las reglas no listadas aquí caen al idioma de respaldo (en).
+ */
+
+return [
+    'accepted' => 'El campo :attribute debe ser aceptado.',
+    'array' => 'El campo :attribute debe ser una lista.',
+    'between' => [
+        'numeric' => 'El campo :attribute debe estar entre :min y :max.',
+        'string' => 'El campo :attribute debe tener entre :min y :max caracteres.',
+        'array' => 'El campo :attribute debe tener entre :min y :max elementos.',
+        'file' => 'El archivo :attribute debe pesar entre :min y :max kilobytes.',
+    ],
+    'boolean' => 'El campo :attribute debe ser verdadero o falso.',
+    'confirmed' => 'La confirmación de :attribute no coincide.',
+    'date' => 'El campo :attribute debe ser una fecha válida.',
+    'different' => 'Los campos :attribute y :other deben ser diferentes.',
+    'digits' => 'El campo :attribute debe tener :digits dígitos.',
+    'digits_between' => 'El campo :attribute debe tener entre :min y :max dígitos.',
+    'distinct' => 'El campo :attribute tiene un valor duplicado.',
+    'email' => 'El campo :attribute debe ser un correo válido.',
+    'exists' => 'El :attribute seleccionado no es válido.',
+    'file' => 'El campo :attribute debe ser un archivo.',
+    'image' => 'El campo :attribute debe ser una imagen.',
+    'in' => 'El :attribute seleccionado no es válido.',
+    'integer' => 'El campo :attribute debe ser un número entero.',
+    'max' => [
+        'numeric' => 'El campo :attribute no debe ser mayor que :max.',
+        'string' => 'El campo :attribute no debe tener más de :max caracteres.',
+        'array' => 'El campo :attribute no debe tener más de :max elementos.',
+        'file' => 'El archivo :attribute no debe pesar más de :max kilobytes.',
+    ],
+    'mimes' => 'El campo :attribute debe ser un archivo de tipo: :values.',
+    'min' => [
+        'numeric' => 'El campo :attribute debe ser al menos :min.',
+        'string' => 'El campo :attribute debe tener al menos :min caracteres.',
+        'array' => 'El campo :attribute debe tener al menos :min elementos.',
+        'file' => 'El archivo :attribute debe pesar al menos :min kilobytes.',
+    ],
+    'numeric' => 'El campo :attribute debe ser un número.',
+    'present' => 'El campo :attribute debe estar presente.',
+    'regex' => 'El formato de :attribute no es válido.',
+    'required' => 'El campo :attribute es obligatorio.',
+    'required_if' => 'El campo :attribute es obligatorio cuando :other es :value.',
+    'required_with' => 'El campo :attribute es obligatorio cuando :values está presente.',
+    'same' => 'Los campos :attribute y :other deben coincidir.',
+    'size' => [
+        'numeric' => 'El campo :attribute debe ser :size.',
+        'string' => 'El campo :attribute debe tener :size caracteres.',
+        'array' => 'El campo :attribute debe tener :size elementos.',
+        'file' => 'El archivo :attribute debe pesar :size kilobytes.',
+    ],
+    'string' => 'El campo :attribute debe ser texto.',
+    'unique' => 'El :attribute ya está registrado.',
+
+    'attributes' => [
+        'nombre' => 'nombre',
+        'apellidos' => 'apellidos',
+        'telefono' => 'teléfono',
+        'correo' => 'correo',
+        'password' => 'contraseña',
+        'parentesco' => 'parentesco',
+        'titulo' => 'título',
+        'descripcion' => 'descripción',
+        'latitud' => 'latitud',
+        'longitud' => 'longitud',
+        'motivo' => 'motivo',
+        'servicios' => 'servicios',
+        'foto_perfil' => 'foto de perfil',
+    ],
+];
