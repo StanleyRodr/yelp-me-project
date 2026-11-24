@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\SesionController as AdminSesionController;
+use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
 use App\Http\Controllers\Api\PingController;
 use App\Http\Controllers\Api\RegistroController;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\Api\TelefonoController;
+use App\Http\Controllers\Api\VinculoController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas públicas
@@ -31,6 +33,12 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
 
         Route::get('/telefonos/{telefono}', [TelefonoController::class, 'show'])
             ->middleware('throttle:telefonos');
+
+        // Quién me tiene como contacto, desvincularme y bloqueos
+        Route::apiResource('vinculos', VinculoController::class)->only(['index', 'destroy'])
+            ->parameters(['vinculos' => 'id'])->whereNumber('id');
+        Route::apiResource('bloqueos', BloqueoController::class)->only(['index', 'store', 'destroy'])
+            ->parameters(['bloqueos' => 'id'])->whereNumber('id');
     });
 
     // Panel web (rol admin): solicitudes y usuarios (planes 005 y 006)

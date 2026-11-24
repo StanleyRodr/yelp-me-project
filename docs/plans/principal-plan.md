@@ -106,7 +106,7 @@ La app Android debe realizar al menos un CRUD completo (**Crear → Consultar �
 ### 6.2 Consentimiento (mínimo)
 - El usuario B puede ver **quién lo tiene como contacto**.
 - B puede **desvincularse** o **bloquear** a A: en ambos casos **el contacto se elimina de la agenda de A**.
-- Si B bloquea a A, A no puede volver a vincularlo. B puede **desbloquear** a A (el registro del bloqueo se borra).
+- Si B bloquea a A, A no puede volver a vincularlo. B puede **desbloquear** a A (el registro del bloqueo se borra). El contacto borrado no vuelve, pero si A ya había guardado de nuevo a B, ese contacto se vincula.
 
 ### 6.3 Llamada directa
 - Botón que llama al teléfono del contacto: `Intent ACTION_CALL` con permiso `CALL_PHONE`; si no se concede, `ACTION_DIAL`.

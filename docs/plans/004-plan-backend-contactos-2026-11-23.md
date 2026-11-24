@@ -41,7 +41,7 @@ Implementar en la API el **CRUD de contactos de confianza** que consume Android 
 - **Respuesta del contacto:** `id, nombre, telefono, parentesco, vinculado (bool), created_at, updated_at`. No se expone el id ni los datos de la cuenta vinculada.
 - **Verificación de teléfono:** responde solo `{ vinculable: bool }`. Límite de 30 consultas por minuto.
 - **Vínculos:** cada fila muestra `id` del contacto y nombre, apellidos y teléfono de quien me agregó (su cuenta, no el alias que me puso).
-- **Desvincular y bloquear** borran el contacto de la agenda de quien me agregó (plan principal 6.2). Bloquear además impide que me vuelva a vincular; desbloquear solo borra el bloqueo (no restaura el contacto).
+- **Desvincular y bloquear** borran el contacto de la agenda de quien me agregó (plan principal 6.2). Bloquear además impide que me vuelva a vincular. Desbloquear borra el bloqueo; no restaura el contacto borrado, pero si esa persona ya me volvió a guardar, ese contacto se vincula.
 - **Borrado físico** de contactos y bloqueos (son de las tablas que sí se borran).
 
 ### Pruebas
@@ -58,7 +58,7 @@ Archivo nuevo por recurso sobre `YelpMe_pruebas`, con los datos de demo.
 | 022 | [Base de contactos](../tasks/022-tarea-base-contactos-2026-11-23.md) | Reglas de vinculación, presentador de contacto, normalización y límite de consultas. | ✅ |
 | 023 | [CRUD de contactos](../tasks/023-tarea-crud-contactos-2026-11-23.md) | `index`, `store`, `show`, `update`, `destroy` con propiedad y vinculación. | ✅ |
 | 024 | [Verificación de teléfono](../tasks/024-tarea-verificacion-telefono-2026-11-23.md) | Saber si un número se vinculará y si ya está en la agenda, sin exponer datos. | ✅ |
-| 025 | [Vínculos y bloqueos](../tasks/025-tarea-vinculos-bloqueos-2026-11-23.md) | Quién me tiene, desvincularme, bloquear y desbloquear. | Pendiente |
+| 025 | [Vínculos y bloqueos](../tasks/025-tarea-vinculos-bloqueos-2026-11-23.md) | Quién me tiene, desvincularme, bloquear y desbloquear (revincula al desbloquear). | ✅ |
 | 026 | [Pruebas y documentación](../tasks/026-tarea-pruebas-contactos-2026-11-23.md) | Pruebas de todos los casos y endpoints en el README. | Pendiente |
 
 ---
