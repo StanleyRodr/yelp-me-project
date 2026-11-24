@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
 use App\Http\Controllers\Api\PingController;
 use App\Http\Controllers\Api\RegistroController;
+use App\Http\Controllers\Api\ServicioController;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\Api\TelefonoController;
 use App\Http\Controllers\Api\VinculoController;
@@ -24,6 +25,7 @@ Route::middleware('throttle:acceso')->group(function () {
 Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
     Route::get('/sesion', [SesionController::class, 'show']);
     Route::delete('/sesion', [SesionController::class, 'destroy']);
+    Route::get('/servicios', [ServicioController::class, 'index']);
 
     // App Android (rol usuario): contactos y solicitudes propias (planes 004 y 005)
     Route::middleware('rol:usuario')->group(function () {
