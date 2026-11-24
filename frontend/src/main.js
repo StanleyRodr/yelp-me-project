@@ -18,4 +18,20 @@ import './styles/tema-bootstrap.css'
 import './styles/base.css'
 import './styles/sweetalert.css'
 
-createApp(App).use(createPinia()).use(router).mount('#app')
+import { registrarSesionExpirada } from './services/http'
+import { useAuthStore } from './stores/auth'
+
+const app = createApp(App).use(createPinia()).use(router)
+const auth = useAuthStore()
+
+// Cualquier 401 de la API (token borrado, cuenta deshabilitada): fuera del panel.
+registrarSesionExpirada(() => {
+  if (!auth.autenticado) return
+  auth.limpiarSesion()
+  router.replace({ name: 'login', query: { expirada: '1' } })
+})
+
+app.mount('#app')
+
+// Con un token guardado, confirmar que sigue válido (no bloquea la carga).
+auth.validarSesion()

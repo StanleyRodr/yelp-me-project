@@ -5,6 +5,7 @@
       <FormLogin
         :cargando="auth.cargando"
         :error="auth.error ?? ''"
+        :aviso="route.query.expirada ? 'Tu sesión terminó. Inicia sesión de nuevo para continuar.' : ''"
         :ayuda-demo="esDesarrollo"
         @enviar="entrar"
       />

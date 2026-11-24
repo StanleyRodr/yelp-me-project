@@ -3,6 +3,11 @@
     <h2 class="form-titulo">Iniciar sesión</h2>
     <p class="form-descripcion">Acceso solo para administradores.</p>
 
+    <div v-if="aviso && !error" class="aviso" role="status">
+      <i class="bi bi-info-circle" aria-hidden="true"></i>
+      {{ aviso }}
+    </div>
+
     <div v-if="error" class="alerta" role="alert">
       <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
       {{ error }}
@@ -75,6 +80,8 @@ import BotonCarga from '../comunes/BotonCarga.vue'
 defineProps({
   cargando: { type: Boolean, default: false },
   error: { type: String, default: '' },
+  /** Mensaje informativo (p. ej. sesión expirada); se oculta si hay error. */
+  aviso: { type: String, default: '' },
   ayudaDemo: { type: Boolean, default: false },
 })
 
@@ -122,6 +129,18 @@ async function enviar() {
 .form-descripcion {
   color: var(--ym-texto-secundario);
   margin-bottom: var(--ym-espacio-5);
+}
+
+.aviso {
+  display: flex;
+  gap: var(--ym-espacio-2);
+  align-items: flex-start;
+  padding: var(--ym-espacio-3);
+  margin-bottom: var(--ym-espacio-4);
+  border: 1px solid var(--ym-borde-fuerte);
+  border-radius: var(--ym-radio);
+  background: var(--ym-marca-suave);
+  color: var(--ym-texto);
 }
 
 .alerta {

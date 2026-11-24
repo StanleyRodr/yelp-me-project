@@ -43,12 +43,34 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  /** Olvida la sesión local (sin llamar a la API). */
+  function limpiarSesion() {
+    sesion.value = null
+    guardarSesion(null)
+  }
+
   async function cerrarSesion() {
     try {
       await authService.logout()
+    } catch {
+      // Si el token ya no era válido, igual se cierra la sesión local.
     } finally {
-      sesion.value = null
-      guardarSesion(null)
+      limpiarSesion()
+    }
+  }
+
+  /**
+   * Al abrir el panel con un token guardado: confirma con GET /api/sesion que
+   * sigue válido y refresca los datos del admin. Un 401 lo maneja el aviso
+   * global de sesión expirada (main.js).
+   */
+  async function validarSesion() {
+    if (!autenticado.value) return
+    try {
+      actualizarAdmin(await authService.sesion())
+    } catch {
+      // 401 → sesión expirada (manejado globalmente). Sin conexión: se conserva
+      // la sesión local y la siguiente petición lo volverá a intentar.
     }
   }
 
@@ -61,5 +83,8 @@ export const useAuthStore = defineStore('auth', () => {
     error.value = null
   }
 
-  return { sesion, cargando, error, autenticado, admin, iniciarSesion, cerrarSesion, actualizarAdmin, limpiarError }
+  return {
+    sesion, cargando, error, autenticado, admin,
+    iniciarSesion, cerrarSesion, limpiarSesion, validarSesion, actualizarAdmin, limpiarError,
+  }
 })
