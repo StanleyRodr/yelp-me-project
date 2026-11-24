@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Admin\SesionController as AdminSesionController;
 use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
+use App\Http\Controllers\Api\EstadoSolicitudController;
 use App\Http\Controllers\Api\PingController;
 use App\Http\Controllers\Api\RegistroController;
 use App\Http\Controllers\Api\ServicioController;
@@ -40,6 +41,7 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
         // Solicitudes de ayuda propias (sin destroy: se cancelan con /estado)
         Route::apiResource('solicitudes', SolicitudController::class)->except(['destroy'])
             ->parameters(['solicitudes' => 'id'])->whereNumber('id');
+        Route::put('/solicitudes/{id}/estado', [EstadoSolicitudController::class, 'update'])->whereNumber('id');
 
         // Quién me tiene como contacto, desvincularme y bloqueos
         Route::apiResource('vinculos', VinculoController::class)->only(['index', 'destroy'])

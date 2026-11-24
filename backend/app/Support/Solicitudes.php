@@ -52,6 +52,35 @@ class Solicitudes
         ];
     }
 
+    /**
+     * Aplica un cambio de estado ya validado por TransicionesSolicitud y llena la
+     * trazabilidad del plan 7.4:
+     *  - Enviado:   admin_id, enviado_en
+     *  - Rechazado: admin_id + cierre (cerrado_por_id, cerrado_en, motivo)
+     *  - Cancelado / Terminado: cierre (motivo solo si viene)
+     */
+    public static function aplicarEstado(object $solicitud, string $hacia, int $actorId, ?string $motivo = null): void
+    {
+        $ahora = now();
+        $cambios = ['estado' => $hacia, 'updated_at' => $ahora];
+
+        if (in_array($hacia, ['Enviado', 'Rechazado'], true)) {
+            $cambios['admin_id'] = $actorId;
+        }
+
+        if ($hacia === 'Enviado') {
+            $cambios['enviado_en'] = $ahora;
+        }
+
+        if (in_array($hacia, TransicionesSolicitud::FINALES, true)) {
+            $cambios['cerrado_por_id'] = $actorId;
+            $cambios['cerrado_en'] = $ahora;
+            $cambios['motivo'] = $motivo !== null ? trim($motivo) : null;
+        }
+
+        DB::table('solicitudes')->where('id', $solicitud->id)->update($cambios);
+    }
+
     /** 403 si la cuenta está suspendida (plan 8: no puede pedir ni agregar servicios). */
     public static function exigirNoSuspendido(int $usuarioId): void
     {
