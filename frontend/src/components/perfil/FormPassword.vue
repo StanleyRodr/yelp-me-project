@@ -27,12 +27,14 @@
 </template>
 
 <script setup>
-import { reactive, useId } from 'vue'
+import { reactive, useId, watch } from 'vue'
 import BotonCarga from '../comunes/BotonCarga.vue'
 
-defineProps({
+const props = defineProps({
   guardando: { type: Boolean, default: false },
   error: { type: String, default: '' },
+  /** Errores por campo de la API (p. ej. contraseña actual incorrecta) */
+  erroresApi: { type: Object, default: null },
 })
 
 const emit = defineEmits(['cambiar'])
@@ -47,6 +49,15 @@ const CAMPOS = [
 const id = useId()
 const datos = reactive({ actual: '', nueva: '', confirmar: '' })
 const errores = reactive({ actual: '', nueva: '', confirmar: '' })
+
+watch(
+  () => props.erroresApi,
+  (lista) => {
+    for (const [campo, mensajes] of Object.entries(lista ?? {})) {
+      if (campo in errores) errores[campo] = mensajes[0]
+    }
+  },
+)
 
 function validar() {
   errores.actual = datos.actual ? '' : 'Escribe tu contraseña actual.'

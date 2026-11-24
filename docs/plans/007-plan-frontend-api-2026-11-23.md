@@ -39,7 +39,7 @@ Reemplazar los datos de ejemplo del panel por la API real: cada *service* del fr
 | 037 | [Cliente HTTP](../tasks/037-tarea-cliente-http-2026-11-23.md) | Interceptor de errores, `ErrorApi`, manejo global de 401 y `.env.example`. | ✅ |
 | 038 | [Sesión contra la API](../tasks/038-tarea-sesion-api-2026-11-23.md) | Login, cierre y validación de sesión al iniciar. | ✅ |
 | 039 | [Solicitudes contra la API](../tasks/039-tarea-solicitudes-api-2026-11-23.md) | Catálogo, listado, detalle y acciones; recarga periódica del dashboard. | ✅ |
-| 040 | [Usuarios y perfil contra la API](../tasks/040-tarea-usuarios-perfil-api-2026-11-23.md) | Gestión de cuentas, strikes, suspensiones, perfil, foto y contraseña. | Pendiente |
+| 040 | [Usuarios y perfil contra la API](../tasks/040-tarea-usuarios-perfil-api-2026-11-23.md) | Gestión de cuentas, strikes, suspensiones, perfil, foto y contraseña. | ✅ |
 | 041 | [Quitar mocks y verificar](../tasks/041-tarea-quitar-mocks-verificar-2026-11-23.md) | Borrar datos de ejemplo y probar todos los services contra la API real. | Pendiente |
 
 ---
