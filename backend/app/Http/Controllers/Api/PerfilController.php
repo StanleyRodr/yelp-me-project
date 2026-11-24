@@ -36,9 +36,11 @@ class PerfilController extends Controller
         $datos = array_map(fn ($v) => trim($v), $datos);
 
         DB::transaction(function () use ($yo, $datos) {
+            // Valores actuales desde la BD ($request->user() puede estar desactualizado).
+            $actual = DB::table('usuarios')->where('id', $yo->id)->lockForUpdate()->first(['telefono', 'rol']);
             DB::table('usuarios')->where('id', $yo->id)->update($datos + ['updated_at' => now()]);
 
-            if (isset($datos['telefono']) && $datos['telefono'] !== $yo->telefono && $yo->rol === 'usuario') {
+            if (isset($datos['telefono']) && $datos['telefono'] !== $actual->telefono && $actual->rol === 'usuario') {
                 $this->actualizarAgendas($yo->id, $datos['telefono']);
             }
         });

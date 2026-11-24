@@ -178,6 +178,47 @@ Transiciones (plan principal 7.2; tabla en `App\Support\TransicionesSolicitud`, 
 - Rechazar con `strike: true` registra el strike ligado a la solicitud; con 3 activos, la cuenta se suspende automáticamente.
 - Las solicitudes no se borran (DELETE → 405).
 
+## Gestión de usuarios (panel, rol `admin`)
+
+| Método | Ruta | Cuerpo | Respuesta (`datos`) |
+|---|---|---|---|
+| GET | `/api/admin/usuarios` | — | Resúmenes de usuarios de la app |
+| GET | `/api/admin/usuarios/{id}` | — | Detalle |
+| PUT | `/api/admin/usuarios/{id}/cuenta` | `activo` (false deshabilita, true reactiva) | Detalle |
+| POST | `/api/admin/usuarios/{id}/strikes` | `motivo` | Detalle (201) |
+| PUT | `/api/admin/strikes/{id}/anulacion` | `motivo` | Detalle |
+| POST | `/api/admin/usuarios/{id}/suspension` | `motivo` | Detalle (201) |
+| DELETE | `/api/admin/usuarios/{id}/suspension` | — | Detalle (rehabilitar) |
+| GET | `/api/admin/actividad` | — | `{ solicitudes, strikes_dados }` del admin con sesión |
+
+- **Resumen** = usuario + `suspendido, strikes_activos, limite_strikes, estado_cuenta, veces_suspendido`. **Detalle** = resumen + `suspension_vigente, solicitudes, strikes, suspensiones` (con nombres de los admins). Misma forma que `frontend/src/services/usuariosService.js`.
+- Solo usuarios de rol `usuario`: un id de admin → 404.
+
+| Cuenta | Acciones permitidas (otra → 409) |
+|---|---|
+| Activo | reportar, suspender, deshabilitar |
+| Suspendido | rehabilitar, reportar, deshabilitar |
+| Deshabilitado | reactivar |
+
+- Reportar suma un strike manual; al tercero activo, suspensión automática.
+- Anular deja de contar el strike y guarda quién y por qué; **no** levanta la suspensión (eso es rehabilitar).
+- Rehabilitar cierra la suspensión vigente y reinicia los strikes activos a 0; el historial se conserva.
+- Deshabilitar cierra todas las sesiones de la cuenta.
+
+## Perfil propio (cualquier rol)
+
+| Método | Ruta | Cuerpo |
+|---|---|---|
+| GET | `/api/sesion` | — (consultar el perfil) |
+| PUT/PATCH | `/api/perfil` | `nombre`, `apellidos`, `telefono`, `correo` (los que cambian) |
+| POST | `/api/perfil/foto` | multipart `foto` (JPG/PNG/WEBP, máx. 1 MB) |
+| DELETE | `/api/perfil/foto` | — |
+| PUT | `/api/perfil/password` | `actual`, `nueva`, `nueva_confirmation` |
+
+- Teléfono nuevo: se actualiza en las agendas que me tienen vinculado (salvo donde ese número ya estaba guardado aparte) y se vinculan contactos que ya lo tenían.
+- La foto anterior se borra del disco al reemplazarla o quitarla.
+- Cambiar la contraseña cierra las demás sesiones; la actual sigue.
+
 ## Convenciones
 
 - Controladores **sin modelos Eloquent**: acceso a datos con `DB::table(...)`. Única excepción: `App\Models\User`, solo para autenticación con Sanctum.

@@ -27,7 +27,9 @@ class PasswordController extends Controller
 
         $yo = $request->user();
 
-        if (! Hash::check($datos['actual'], $yo->password)) {
+        $hashActual = DB::table('usuarios')->where('id', $yo->id)->value('password');
+
+        if (! Hash::check($datos['actual'], $hashActual)) {
             throw ValidationException::withMessages(['actual' => 'La contraseña actual no es correcta.']);
         }
 

@@ -65,18 +65,18 @@ Completar la API que el panel ya muestra con datos de ejemplo: gestión de los u
 | 033 | [Usuarios del panel](../tasks/033-tarea-usuarios-panel-2026-11-23.md) | Listado, detalle, deshabilitar y reactivar. | ✅ |
 | 034 | [Strikes y suspensiones](../tasks/034-tarea-strikes-suspensiones-2026-11-23.md) | Reportar, anular, suspender y rehabilitar. | ✅ |
 | 035 | [Perfil propio](../tasks/035-tarea-perfil-propio-2026-11-23.md) | Datos, teléfono con agendas, foto, contraseña y actividad del admin. | ✅ |
-| 036 | [Pruebas y documentación](../tasks/036-tarea-pruebas-usuarios-2026-11-23.md) | Pruebas de todos los casos y endpoints en el README. | Pendiente |
+| 036 | [Pruebas y documentación](../tasks/036-tarea-pruebas-usuarios-2026-11-23.md) | Pruebas de todos los casos y endpoints en el README. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] Las acciones por estado de cuenta coinciden con el frontend; las demás responden 409.
-- [ ] Reportar, anular, suspender y rehabilitar conservan todo el historial.
-- [ ] Deshabilitar cierra las sesiones de la cuenta.
-- [ ] Las rutas de gestión no operan sobre admins.
-- [ ] Cambiar el teléfono mantiene los vínculos y actualiza las agendas.
-- [ ] La forma de respuesta coincide con la del frontend.
-- [ ] `php artisan test` pasa sobre `YelpMe_pruebas`.
-- [ ] Endpoints documentados en `backend/README.md`.
-- [ ] Commits por tarea, en español, sin coautoría; PR a `main` al terminar.
+- [x] Las acciones por estado de cuenta coinciden con el frontend; las demás responden 409.
+- [x] Reportar, anular, suspender y rehabilitar conservan todo el historial.
+- [x] Deshabilitar cierra las sesiones de la cuenta.
+- [x] Las rutas de gestión no operan sobre admins.
+- [x] Cambiar el teléfono mantiene los vínculos y actualiza las agendas.
+- [x] La forma de respuesta coincide con la del frontend.
+- [x] `php artisan test` pasa sobre `YelpMe_pruebas`.
+- [x] Endpoints documentados en `backend/README.md`.
+- [x] Commits por tarea, en español, sin coautoría; PR a `main` al terminar.

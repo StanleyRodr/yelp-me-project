@@ -26,26 +26,31 @@ class FotoPerfilController extends Controller
             'foto.image' => 'La foto debe ser JPG, PNG o WEBP.',
         ]);
 
-        $yo = $request->user();
+        $id = $request->user()->id;
         $ruta = $request->file('foto')->store('', 'perfiles');
 
-        $this->reemplazar($yo->id, $yo->foto_perfil, $ruta);
+        $this->reemplazar($id, $ruta);
 
-        return $this->respuesta(PresentadorUsuario::porId($yo->id), 'Foto actualizada');
+        return $this->respuesta(PresentadorUsuario::porId($id), 'Foto actualizada');
     }
 
     /** DELETE /api/perfil/foto */
     public function destroy(Request $request): JsonResponse
     {
-        $yo = $request->user();
-        $this->reemplazar($yo->id, $yo->foto_perfil, null);
+        $id = $request->user()->id;
+        $this->reemplazar($id, null);
 
-        return $this->respuesta(PresentadorUsuario::porId($yo->id), 'Foto eliminada');
+        return $this->respuesta(PresentadorUsuario::porId($id), 'Foto eliminada');
     }
 
-    /** Guarda la nueva ruta y borra el archivo anterior (no quedan fotos huérfanas). */
-    private function reemplazar(int $id, ?string $anterior, ?string $nueva): void
+    /**
+     * Guarda la nueva ruta y borra el archivo anterior (no quedan fotos huérfanas).
+     * La ruta anterior se lee de la BD, no de $request->user(): ese objeto puede
+     * estar desactualizado.
+     */
+    private function reemplazar(int $id, ?string $nueva): void
     {
+        $anterior = DB::table('usuarios')->where('id', $id)->value('foto_perfil');
         DB::table('usuarios')->where('id', $id)->update(['foto_perfil' => $nueva, 'updated_at' => now()]);
 
         if ($anterior && $anterior !== $nueva) {
