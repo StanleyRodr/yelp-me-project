@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Support\Credenciales;
+use App\Support\Normalizar;
 use App\Support\PresentadorUsuario;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,8 +21,8 @@ class SesionController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->merge(array_filter([
-            'correo' => $request->filled('correo') ? mb_strtolower(trim((string) $request->input('correo'))) : null,
-            'telefono' => $request->filled('telefono') ? preg_replace('/\D/', '', (string) $request->input('telefono')) : null,
+            'correo' => Normalizar::correo($request->input('correo')),
+            'telefono' => Normalizar::telefono($request->input('telefono')),
         ], fn ($v) => $v !== null));
 
         $datos = $request->validate([

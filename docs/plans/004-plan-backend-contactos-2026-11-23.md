@@ -55,7 +55,7 @@ Archivo nuevo por recurso sobre `YelpMe_pruebas`, con los datos de demo.
 
 | # | Tarea | Resumen | Estado |
 |---|---|---|---|
-| 022 | [Base de contactos](../tasks/022-tarea-base-contactos-2026-11-23.md) | Reglas de vinculación, presentador de contacto, normalización y rutas. | Pendiente |
+| 022 | [Base de contactos](../tasks/022-tarea-base-contactos-2026-11-23.md) | Reglas de vinculación, presentador de contacto, normalización y límite de consultas. | ✅ |
 | 023 | [CRUD de contactos](../tasks/023-tarea-crud-contactos-2026-11-23.md) | `index`, `store`, `show`, `update`, `destroy` con propiedad y vinculación. | Pendiente |
 | 024 | [Verificación de teléfono](../tasks/024-tarea-verificacion-telefono-2026-11-23.md) | Saber si un número se vinculará sin exponer datos. | Pendiente |
 | 025 | [Vínculos y bloqueos](../tasks/025-tarea-vinculos-bloqueos-2026-11-23.md) | Quién me tiene, desvincularme, bloquear y desbloquear. | Pendiente |

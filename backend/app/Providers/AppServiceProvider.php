@@ -28,5 +28,11 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)->by($identificador.'|'.$request->ip());
         });
+
+        // Verificar si un teléfono tiene cuenta: 30 por minuto por usuario.
+        // Frena que se recorran números para descubrir quién está registrado.
+        RateLimiter::for('telefonos', function (Request $request) {
+            return Limit::perMinute(30)->by('telefonos|'.($request->user()?->id ?? $request->ip()));
+        });
     }
 }

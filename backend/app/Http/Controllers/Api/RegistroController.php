@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Normalizar;
 use App\Support\PresentadorUsuario;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,8 +21,8 @@ class RegistroController extends Controller
     public function store(Request $request): JsonResponse
     {
         $request->merge([
-            'correo' => mb_strtolower(trim((string) $request->input('correo'))),
-            'telefono' => preg_replace('/\D/', '', (string) $request->input('telefono')),
+            'correo' => Normalizar::correo($request->input('correo')),
+            'telefono' => Normalizar::telefono($request->input('telefono')),
         ]);
 
         $datos = $request->validate([
