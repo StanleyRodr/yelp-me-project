@@ -43,8 +43,29 @@ class ReglasCuenta
         $estado = self::estadoCuenta($usuario);
 
         if (! in_array($accion, self::ACCIONES[$estado], true)) {
-            abort(409, "La cuenta está {$estado}: no se puede ".self::VERBOS[$accion].'. Recarga para ver su estado actual.');
+            $adjetivo = ['Activo' => 'activa', 'Suspendido' => 'suspendida', 'Deshabilitado' => 'deshabilitada'][$estado];
+            abort(409, "La cuenta está {$adjetivo}: no se puede ".self::VERBOS[$accion].'. Recarga para ver su estado actual.');
         }
+    }
+
+    /**
+     * Usuario de la app (rol "usuario") bloqueado para un cambio, o 404.
+     * Usar dentro de DB::transaction. Los admins no se gestionan desde aquí.
+     */
+    public static function bloquearUsuarioApp(int $id): object
+    {
+        return DB::table('usuarios')->where('id', $id)->where('rol', 'usuario')->lockForUpdate()->first()
+            ?? abort(404);
+    }
+
+    /** Cierra todas las sesiones de una cuenta (borra sus tokens de Sanctum). */
+    public static function cerrarSesiones(int $usuarioId, ?int $exceptoTokenId = null): void
+    {
+        DB::table('personal_access_tokens')
+            ->where('tokenable_type', \App\Models\User::class)
+            ->where('tokenable_id', $usuarioId)
+            ->when($exceptoTokenId, fn ($q, $id) => $q->where('id', '!=', $id))
+            ->delete();
     }
 
     /** Cierra la suspensión vigente y reinicia a 0 los strikes activos (no los anula). */
