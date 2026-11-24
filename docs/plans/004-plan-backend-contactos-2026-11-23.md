@@ -59,18 +59,18 @@ Archivo nuevo por recurso sobre `YelpMe_pruebas`, con los datos de demo.
 | 023 | [CRUD de contactos](../tasks/023-tarea-crud-contactos-2026-11-23.md) | `index`, `store`, `show`, `update`, `destroy` con propiedad y vinculación. | ✅ |
 | 024 | [Verificación de teléfono](../tasks/024-tarea-verificacion-telefono-2026-11-23.md) | Saber si un número se vinculará y si ya está en la agenda, sin exponer datos. | ✅ |
 | 025 | [Vínculos y bloqueos](../tasks/025-tarea-vinculos-bloqueos-2026-11-23.md) | Quién me tiene, desvincularme, bloquear y desbloquear (revincula al desbloquear). | ✅ |
-| 026 | [Pruebas y documentación](../tasks/026-tarea-pruebas-contactos-2026-11-23.md) | Pruebas de todos los casos y endpoints en el README. | Pendiente |
+| 026 | [Pruebas y documentación](../tasks/026-tarea-pruebas-contactos-2026-11-23.md) | Pruebas de todos los casos y endpoints en el README. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] CRUD completo de contactos con formato estándar y mensajes en español.
-- [ ] Un usuario no puede ver, modificar ni borrar contactos de otro (404).
-- [ ] Vinculación automática al crear y al cambiar teléfono, respetando bloqueos.
-- [ ] La verificación de teléfono no devuelve datos personales.
-- [ ] Desvincular y bloquear borran el contacto de la agenda del otro; el bloqueo impide volver a vincular.
-- [ ] Un admin no puede usar estos endpoints (403).
-- [ ] `php artisan test` pasa sobre `YelpMe_pruebas`.
-- [ ] Endpoints documentados en `backend/README.md`.
-- [ ] Commits por tarea, en español, sin coautoría; PR al terminar.
+- [x] CRUD completo de contactos con formato estándar y mensajes en español.
+- [x] Un usuario no puede ver, modificar ni borrar contactos de otro (404).
+- [x] Vinculación automática al crear y al cambiar teléfono, respetando bloqueos.
+- [x] La verificación de teléfono no devuelve datos personales.
+- [x] Desvincular y bloquear borran el contacto de la agenda del otro; el bloqueo impide volver a vincular.
+- [x] Un admin no puede usar estos endpoints (403).
+- [x] `php artisan test` pasa sobre `YelpMe_pruebas`.
+- [x] Endpoints documentados en `backend/README.md`.
+- [x] Commits por tarea, en español, sin coautoría; PR al terminar.
