@@ -337,7 +337,7 @@ El día de la presentación debe poder demostrarse:
 2. ✅ Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
 3. ✅ Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
 4. ✅ Plan 004 — API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
-5. API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
+5. Plan 005 — API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. API de strikes, suspensiones y gestión de usuarios.
 7. Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
 8. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
