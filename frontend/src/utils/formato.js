@@ -6,6 +6,9 @@ const fmtFechaHora = new Intl.DateTimeFormat('es-MX', {
 const fmtFecha = new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'short', year: 'numeric' })
 
 export const fechaHora = (iso) => (iso ? fmtFechaHora.format(new Date(iso)) : '')
+
+const fmtHora = new Intl.DateTimeFormat('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+export const hora = (iso) => (iso ? fmtHora.format(new Date(iso)) : '')
 export const fecha = (iso) => (iso ? fmtFecha.format(new Date(iso)) : '')
 
 export const minutosDesde = (iso, ahora = Date.now()) =>

@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { ESTADOS, ESTADOS_ACTIVOS } from '../constantes/estados'
 import { solicitudesService } from '../services/solicitudesService'
-import { useAuthStore } from './auth'
 
 /** Solicitudes de ayuda: listado, detalle y acciones del admin. */
 export const useSolicitudesStore = defineStore('solicitudes', () => {
@@ -11,6 +10,8 @@ export const useSolicitudesStore = defineStore('solicitudes', () => {
   const cargando = ref(false)
   const cargandoActual = ref(false)
   const error = ref(null)
+  /** Momento de la última lista recibida (para "Actualizado hh:mm"). */
+  const actualizadoEn = ref(null)
 
   const conteoPorEstado = computed(() =>
     Object.fromEntries(ESTADOS.map((e) => [e.clave, lista.value.filter((s) => s.estado === e.clave).length])),
@@ -28,20 +29,34 @@ export const useSolicitudesStore = defineStore('solicitudes', () => {
   // Si ya hay una carga en curso (p. ej. AppShell y la vista a la vez), se reutiliza.
   let cargaEnCurso = null
 
-  function cargar() {
+  /**
+   * `silenciosa`: recarga periódica. No marca `cargando` (sin skeleton) y, si
+   * falla, conserva los datos que ya había sin mostrar error.
+   */
+  function cargar({ silenciosa = false } = {}) {
     if (cargaEnCurso) return cargaEnCurso
-    cargando.value = true
-    error.value = null
+    if (!silenciosa) {
+      cargando.value = true
+      error.value = null
+    }
     cargaEnCurso = solicitudesService
       .listar()
-      .then((datos) => (lista.value = datos))
-      .catch((e) => (error.value = e.message))
+      .then((datos) => {
+        lista.value = datos
+        actualizadoEn.value = new Date().toISOString()
+        error.value = null
+      })
+      .catch((e) => {
+        if (!silenciosa) error.value = e.message
+      })
       .finally(() => {
         cargando.value = false
         cargaEnCurso = null
       })
     return cargaEnCurso
   }
+
+  const refrescar = () => cargar({ silenciosa: true })
 
   /** `conservar`: refresca sin vaciar la solicitud actual (sin skeleton). */
   async function cargarUna(id, { conservar = false } = {}) {
@@ -65,18 +80,16 @@ export const useSolicitudesStore = defineStore('solicitudes', () => {
     return solicitud
   }
 
-  const adminId = () => useAuthStore().admin?.id
-
-  const enviar = async (id) => aplicar(await solicitudesService.enviar(id, { adminId: adminId() }))
-  const terminar = async (id) => aplicar(await solicitudesService.terminar(id, { adminId: adminId() }))
-  const rechazar = async (id, { motivo, strike }) =>
-    aplicar(await solicitudesService.rechazar(id, { adminId: adminId(), motivo, strike }))
+  // El admin que actúa lo toma la API del token.
+  const enviar = async (id) => aplicar(await solicitudesService.enviar(id))
+  const terminar = async (id) => aplicar(await solicitudesService.terminar(id))
+  const rechazar = async (id, { motivo, strike }) => aplicar(await solicitudesService.rechazar(id, { motivo, strike }))
   const actualizarServicios = async (id, servicios) =>
     aplicar(await solicitudesService.actualizarServicios(id, { servicios }))
 
   return {
-    lista, actual, cargando, cargandoActual, error,
+    lista, actual, cargando, cargandoActual, error, actualizadoEn,
     conteoPorEstado, pendientesPorAntiguedad, activas,
-    cargar, cargarUna, enviar, terminar, rechazar, actualizarServicios,
+    cargar, refrescar, cargarUna, enviar, terminar, rechazar, actualizarServicios,
   }
 })

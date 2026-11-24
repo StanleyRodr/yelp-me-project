@@ -19,6 +19,7 @@ import AppNavbar from './AppNavbar.vue'
 import { useAuthStore } from '../../stores/auth'
 import { useSolicitudesStore } from '../../stores/solicitudes'
 import { exito } from '../../plugins/alertas'
+import { useConsultaPeriodica } from '../../composables/useConsultaPeriodica'
 
 const auth = useAuthStore()
 const solicitudes = useSolicitudesStore()
@@ -33,6 +34,10 @@ const enlaces = computed(() => [
 onMounted(() => {
   if (!solicitudes.lista.length) solicitudes.cargar()
 })
+
+// Plan principal 9: el panel no recibe push; consulta cada 15 s. Una sola
+// consulta aquí mantiene al día navbar, dashboard y listado (mismo store).
+useConsultaPeriodica(() => solicitudes.refrescar(), 15000)
 
 async function cerrarSesion() {
   await auth.cerrarSesion()
