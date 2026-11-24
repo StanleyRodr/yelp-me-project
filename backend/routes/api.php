@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ContactoController;
 use App\Http\Controllers\Api\PingController;
 use App\Http\Controllers\Api\RegistroController;
 use App\Http\Controllers\Api\SesionController;
+use App\Http\Controllers\Api\TelefonoController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas públicas
@@ -27,6 +28,9 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
         Route::apiResource('contactos', ContactoController::class)
             ->parameters(['contactos' => 'id'])
             ->whereNumber('id');
+
+        Route::get('/telefonos/{telefono}', [TelefonoController::class, 'show'])
+            ->middleware('throttle:telefonos');
     });
 
     // Panel web (rol admin): solicitudes y usuarios (planes 005 y 006)
