@@ -62,18 +62,18 @@ Archivos por actor sobre `YelpMe_pruebas`, buscando solicitudes del demo por tí
 | 028 | [Solicitudes del usuario](../tasks/028-tarea-solicitudes-usuario-2026-11-23.md) | Crear, listar, ver y modificar mientras está pendiente; regla de suspensión. | ✅ |
 | 029 | [Estado por el usuario](../tasks/029-tarea-estado-usuario-2026-11-23.md) | Cancelar con motivo y dar por terminada según la tabla. | ✅ |
 | 030 | [Solicitudes del panel](../tasks/030-tarea-solicitudes-panel-2026-11-23.md) | Listado y detalle, enviar, rechazar con strike, terminar y corregir servicios con control de concurrencia. | ✅ |
-| 031 | [Pruebas y documentación](../tasks/031-tarea-pruebas-solicitudes-2026-11-23.md) | Pruebas de todas las transiciones y endpoints en el README. | Pendiente |
+| 031 | [Pruebas y documentación](../tasks/031-tarea-pruebas-solicitudes-2026-11-23.md) | Pruebas de todas las transiciones (matriz de 100) y endpoints en el README. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] Todas las transiciones de la tabla 7.2 funcionan y las demás responden 409.
-- [ ] Dos admins no pueden atender la misma solicitud (409 al segundo).
-- [ ] Un usuario suspendido no puede pedir ni agregar servicios.
-- [ ] Rechazar con strike suma el strike y suspende al tercero.
-- [ ] Un usuario no ve ni modifica solicitudes ajenas; un admin no usa las rutas del usuario ni al revés.
-- [ ] La forma de respuesta coincide con la que usa el frontend.
-- [ ] `php artisan test` pasa sobre `YelpMe_pruebas`.
-- [ ] Endpoints documentados en `backend/README.md`.
-- [ ] Commits por tarea, en español, sin coautoría; PR a `main` al terminar.
+- [x] Todas las transiciones de la tabla 7.2 funcionan y las demás responden 409.
+- [x] Dos admins no pueden atender la misma solicitud (409 al segundo).
+- [x] Un usuario suspendido no puede pedir ni agregar servicios.
+- [x] Rechazar con strike suma el strike y suspende al tercero.
+- [x] Un usuario no ve ni modifica solicitudes ajenas; un admin no usa las rutas del usuario ni al revés.
+- [x] La forma de respuesta coincide con la que usa el frontend.
+- [x] `php artisan test` pasa sobre `YelpMe_pruebas`.
+- [x] Endpoints documentados en `backend/README.md`.
+- [x] Commits por tarea, en español, sin coautoría; PR a `main` al terminar.

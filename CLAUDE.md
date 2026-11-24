@@ -31,7 +31,7 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
 | `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Estructura y diseño listos (plan 002), datos de ejemplo |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | Base, autenticación y contactos (planes 001, 003, 004) |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | Base, autenticación, contactos y solicitudes (planes 001, 003–005) |
 | `mobile/`   | Android Studio, Java                        | App del usuario final       | Vacío                   |
 
 Web y Android consumen la **misma API Laravel**.
@@ -53,6 +53,8 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 - **Pruebas sobre `YelpMe_pruebas`**, nunca `YelpMe`: `phpunit.xml` apunta ahí, `tests/TestCase.php` aborta si no termina en `_pruebas` y cada prueba se revierte (`DatabaseTransactions`). Recrear con `bd:pruebas` tras cambiar el script o el seeder.
 - **Autenticación (plan 003):** `POST /api/registro`, `POST /api/login` (app, correo o teléfono), `POST /api/admin/login` (panel), `GET|DELETE /api/sesion`. Detalle y errores en `backend/README.md`.
 - **Contactos (plan 004):** `apiResource /api/contactos`, `GET /api/telefonos/{telefono}`, `/api/vinculos`, `/api/bloqueos` (rol usuario). Recursos ajenos → 404. Vinculación en `App\Support\ReglasContactos`; normalización de teléfono, correo y fechas en `App\Support\Normalizar`.
+- **Solicitudes (plan 005):** app `apiResource /api/solicitudes` (sin destroy) + `PUT /api/solicitudes/{id}/estado`; panel `/api/admin/solicitudes`, `…/{id}/estado`, `…/{id}/servicios`; `GET /api/servicios`. Transiciones **solo** en `App\Support\TransicionesSolicitud` (espejo de `frontend/src/constantes/transiciones.js`: cambiar ambas). Todo cambio de estado: `DB::transaction` + `Solicitudes::bloquear` (FOR UPDATE) + `exigir` + `aplicarEstado`. Strikes con `ReglasCuenta::darStrike` (suspende al tercero).
+- Cuidado con `$a + $b` en reglas de validación: no sobrescribe claves; usar `array_merge`.
 - Pruebas: `$this->como('correo@demo')` en `tests/TestCase.php` autentica con Sanctum sin login.
 - **Proteger rutas nuevas** dentro de los grupos de `routes/api.php`: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` con prefijo `admin` (panel). El `usuario_id` sale de `$request->user()`, nunca del body.
 - Usuario en respuestas: siempre con `App\Support\PresentadorUsuario` (sin `password` ni `fcm_token`). Reglas de strikes/suspensión en `App\Support\ReglasCuenta`; credenciales en `App\Support\Credenciales`.

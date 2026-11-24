@@ -260,7 +260,7 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 | Parte    | Estado |
 |----------|--------|
 | Frontend | Plan 002: rutas con login, stores, services sobre datos de ejemplo con la forma de la BD, sistema de diseño y todas las vistas del admin. |
-| Backend  | Planes 001, 003 y 004: base de la API, autenticación (registro, login de app y panel, roles) y contactos (CRUD, vinculación, vínculos y bloqueos). Pruebas sobre `YelpMe_pruebas`. Faltan solicitudes y gestión de usuarios. |
+| Backend  | Planes 001, 003 y 004: base de la API, autenticación (registro, login de app y panel, roles) , contactos (CRUD, vinculación, vínculos y bloqueos) y solicitudes (ciclo completo con transiciones, concurrencia y strikes). Pruebas sobre `YelpMe_pruebas`. Falta la gestión de usuarios del panel. |
 | Mobile   | Vacío; diseños en proceso por otra persona. |
 | BD       | Creada con `database/script-bd.sql`: 9 tablas, admin inicial y catálogo de servicios. |
 
@@ -337,7 +337,7 @@ El día de la presentación debe poder demostrarse:
 2. ✅ Plan 002 — Frontend: estandarización de estructura y diseño con datos de ejemplo (vue-router, Pinia, services, 5 estados, Material Symbols).
 3. ✅ Plan 003 — Autenticación: registro/login/logout de usuarios, login de admin, protección por rol, throttle.
 4. ✅ Plan 004 — API de contactos (CRUD, vinculación por teléfono, desvincular/bloquear).
-5. Plan 005 — API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
+5. ✅ Plan 005 — API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. API de strikes, suspensiones y gestión de usuarios.
 7. Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
 8. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
