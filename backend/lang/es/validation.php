@@ -75,5 +75,8 @@ return [
         'servicios.*' => 'servicio',
         'ubicacion_nombre' => 'referencia de ubicación',
         'foto_perfil' => 'foto de perfil',
+        'foto' => 'foto',
+        'actual' => 'contraseña actual',
+        'nueva' => 'nueva contraseña',
     ],
 ];

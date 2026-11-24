@@ -51,6 +51,24 @@ class PresentadorCuenta
         })->values()->all();
     }
 
+    /**
+     * Lista breve de solicitudes `{ id, titulo, estado, servicios, created_at }`,
+     * más recientes primero. Para historiales (perfil de usuario, actividad del admin).
+     */
+    public static function solicitudesBreves(\Illuminate\Database\Query\Builder $consulta): array
+    {
+        $solicitudes = $consulta->orderByDesc('created_at')->orderByDesc('id')->get(['id', 'titulo', 'estado', 'created_at']);
+        $servicios = DB::table('solicitud_servicio')->whereIn('solicitud_id', $solicitudes->pluck('id'))->orderBy('servicio_id')->get()->groupBy('solicitud_id');
+
+        return $solicitudes->map(fn ($s) => [
+            'id' => $s->id,
+            'titulo' => $s->titulo,
+            'estado' => $s->estado,
+            'servicios' => ($servicios->get($s->id) ?? collect())->pluck('servicio_id')->map(fn ($v) => (int) $v)->values()->all(),
+            'created_at' => Normalizar::fecha($s->created_at),
+        ])->values()->all();
+    }
+
     /** Detalle de un usuario de la app, o null si no existe o es admin. */
     public static function detalle(int $id): ?array
     {
@@ -71,8 +89,6 @@ class PresentadorCuenta
             ->merge($suspensiones->pluck('suspendido_por_id'))
             ->merge($suspensiones->pluck('rehabilitado_por_id')));
 
-        $solicitudes = DB::table('solicitudes')->where('usuario_id', $id)->orderByDesc('created_at')->orderByDesc('id')->get(['id', 'titulo', 'estado', 'created_at']);
-        $servicios = DB::table('solicitud_servicio')->whereIn('solicitud_id', $solicitudes->pluck('id'))->orderBy('servicio_id')->get()->groupBy('solicitud_id');
 
         $suspension = fn ($s) => [
             'id' => $s->id,
@@ -90,13 +106,7 @@ class PresentadorCuenta
 
         return self::resumenes(collect([$usuario]))[0] + [
             'suspension_vigente' => $vigente ? $suspension($vigente) : null,
-            'solicitudes' => $solicitudes->map(fn ($s) => [
-                'id' => $s->id,
-                'titulo' => $s->titulo,
-                'estado' => $s->estado,
-                'servicios' => ($servicios->get($s->id) ?? collect())->pluck('servicio_id')->map(fn ($v) => (int) $v)->values()->all(),
-                'created_at' => Normalizar::fecha($s->created_at),
-            ])->values()->all(),
+            'solicitudes' => self::solicitudesBreves(DB::table('solicitudes')->where('usuario_id', $id)),
             'strikes' => $strikes->map(fn ($s) => [
                 'id' => $s->id,
                 'usuario_id' => $s->usuario_id,

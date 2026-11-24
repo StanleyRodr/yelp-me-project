@@ -64,7 +64,7 @@ Completar la API que el panel ya muestra con datos de ejemplo: gestión de los u
 | 032 | [Base de cuentas](../tasks/032-tarea-base-cuentas-2026-11-23.md) | Presentador de cuenta (resumen y detalle sin N+1), estado de cuenta y acciones permitidas. | ✅ |
 | 033 | [Usuarios del panel](../tasks/033-tarea-usuarios-panel-2026-11-23.md) | Listado, detalle, deshabilitar y reactivar. | ✅ |
 | 034 | [Strikes y suspensiones](../tasks/034-tarea-strikes-suspensiones-2026-11-23.md) | Reportar, anular, suspender y rehabilitar. | ✅ |
-| 035 | [Perfil propio](../tasks/035-tarea-perfil-propio-2026-11-23.md) | Datos, teléfono con agendas, foto, contraseña y actividad del admin. | Pendiente |
+| 035 | [Perfil propio](../tasks/035-tarea-perfil-propio-2026-11-23.md) | Datos, teléfono con agendas, foto, contraseña y actividad del admin. | ✅ |
 | 036 | [Pruebas y documentación](../tasks/036-tarea-pruebas-usuarios-2026-11-23.md) | Pruebas de todos los casos y endpoints en el README. | Pendiente |
 
 ---
