@@ -260,7 +260,7 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 | Parte    | Estado |
 |----------|--------|
 | Frontend | Plan 002: rutas con login, stores, services sobre datos de ejemplo con la forma de la BD, sistema de diseño y todas las vistas del admin. |
-| Backend  | Planes 001, 003 y 004: base de la API, autenticación (registro, login de app y panel, roles) , contactos (CRUD, vinculación, vínculos y bloqueos) y solicitudes (ciclo completo con transiciones, concurrencia y strikes). Pruebas sobre `YelpMe_pruebas`. Falta la gestión de usuarios del panel. |
+| Backend  | Planes 001, 003, 004 y 005: base de la API, autenticación (registro, login de app y panel, roles), contactos (CRUD, vinculación, vínculos y bloqueos) y solicitudes (ciclo completo con transiciones, concurrencia y strikes). Pruebas sobre `YelpMe_pruebas`. Falta la gestión de usuarios del panel. |
 | Mobile   | Vacío; diseños en proceso por otra persona. |
 | BD       | Creada con `database/script-bd.sql`: 9 tablas, admin inicial y catálogo de servicios. |
 
