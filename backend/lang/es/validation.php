@@ -72,6 +72,8 @@ return [
         'longitud' => 'longitud',
         'motivo' => 'motivo',
         'servicios' => 'servicios',
+        'servicios.*' => 'servicio',
+        'ubicacion_nombre' => 'referencia de ubicación',
         'foto_perfil' => 'foto de perfil',
     ],
 ];

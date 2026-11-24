@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PingController;
 use App\Http\Controllers\Api\RegistroController;
 use App\Http\Controllers\Api\ServicioController;
 use App\Http\Controllers\Api\SesionController;
+use App\Http\Controllers\Api\SolicitudController;
 use App\Http\Controllers\Api\TelefonoController;
 use App\Http\Controllers\Api\VinculoController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,10 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
 
         Route::get('/telefonos/{telefono}', [TelefonoController::class, 'show'])
             ->middleware('throttle:telefonos');
+
+        // Solicitudes de ayuda propias (sin destroy: se cancelan con /estado)
+        Route::apiResource('solicitudes', SolicitudController::class)->except(['destroy'])
+            ->parameters(['solicitudes' => 'id'])->whereNumber('id');
 
         // Quién me tiene como contacto, desvincularme y bloqueos
         Route::apiResource('vinculos', VinculoController::class)->only(['index', 'destroy'])
