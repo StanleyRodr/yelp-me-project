@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AnulacionStrikeController as AdminAnulacionStrikeController;
 use App\Http\Controllers\Api\Admin\CuentaController as AdminCuentaController;
 use App\Http\Controllers\Api\Admin\EstadoSolicitudController as AdminEstadoSolicitudController;
 use App\Http\Controllers\Api\Admin\ServiciosSolicitudController as AdminServiciosSolicitudController;
 use App\Http\Controllers\Api\Admin\SesionController as AdminSesionController;
 use App\Http\Controllers\Api\Admin\SolicitudController as AdminSolicitudController;
+use App\Http\Controllers\Api\Admin\StrikeController as AdminStrikeController;
+use App\Http\Controllers\Api\Admin\SuspensionController as AdminSuspensionController;
 use App\Http\Controllers\Api\Admin\UsuarioController as AdminUsuarioController;
 use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
@@ -66,5 +69,9 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
         Route::apiResource('usuarios', AdminUsuarioController::class)->only(['index', 'show'])
             ->parameters(['usuarios' => 'id'])->whereNumber('id')->names('admin.usuarios');
         Route::put('/usuarios/{id}/cuenta', [AdminCuentaController::class, 'update'])->whereNumber('id');
+        Route::post('/usuarios/{id}/strikes', [AdminStrikeController::class, 'store'])->whereNumber('id');
+        Route::put('/strikes/{id}/anulacion', [AdminAnulacionStrikeController::class, 'update'])->whereNumber('id');
+        Route::post('/usuarios/{id}/suspension', [AdminSuspensionController::class, 'store'])->whereNumber('id');
+        Route::delete('/usuarios/{id}/suspension', [AdminSuspensionController::class, 'destroy'])->whereNumber('id');
     });
 });
