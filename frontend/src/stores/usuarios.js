@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { usuariosService } from '../services/usuariosService'
-import { useAuthStore } from './auth'
 
 /** Usuarios de la app: listado, perfil, strikes y suspensiones. */
 export const useUsuariosStore = defineStore('usuarios', () => {
@@ -47,13 +46,11 @@ export const useUsuariosStore = defineStore('usuarios', () => {
     return detalle
   }
 
-  const adminId = () => useAuthStore().admin?.id
-
-  const reportar = async (id, motivo) => aplicar(await usuariosService.reportar(id, { motivo, adminId: adminId() }))
-  const anularStrike = async (strikeId, motivo) =>
-    aplicar(await usuariosService.anularStrike(strikeId, { motivo, adminId: adminId() }))
-  const suspender = async (id, motivo) => aplicar(await usuariosService.suspender(id, { motivo, adminId: adminId() }))
-  const rehabilitar = async (id) => aplicar(await usuariosService.rehabilitar(id, { adminId: adminId() }))
+  // El admin que actúa lo toma la API del token.
+  const reportar = async (id, motivo) => aplicar(await usuariosService.reportar(id, { motivo }))
+  const anularStrike = async (strikeId, motivo) => aplicar(await usuariosService.anularStrike(strikeId, { motivo }))
+  const suspender = async (id, motivo) => aplicar(await usuariosService.suspender(id, { motivo }))
+  const rehabilitar = async (id) => aplicar(await usuariosService.rehabilitar(id))
   const deshabilitar = async (id) => aplicar(await usuariosService.deshabilitar(id))
   const reactivar = async (id) => aplicar(await usuariosService.reactivar(id))
 

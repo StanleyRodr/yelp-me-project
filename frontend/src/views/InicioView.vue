@@ -2,6 +2,10 @@
   <div class="rejilla">
     <header class="rejilla-cabecera">
       <h1>Inicio</h1>
+      <p v-if="store.actualizadoEn" class="small text-secondary mb-0">
+        Se actualiza solo cada 15 segundos. Última actualización:
+        <time class="ym-cifras" :datetime="store.actualizadoEn">{{ hora(store.actualizadoEn) }}</time>
+      </p>
     </header>
 
     <div class="rejilla-franja">
@@ -60,6 +64,7 @@ import { useCargaDiferida } from '../composables/useCargaDiferida'
 import { useAhora } from '../composables/useAhora'
 import { useSolicitudesStore } from '../stores/solicitudes'
 import { useCatalogosStore } from '../stores/catalogos'
+import { hora } from '../utils/formato'
 
 const store = useSolicitudesStore()
 const catalogos = useCatalogosStore()

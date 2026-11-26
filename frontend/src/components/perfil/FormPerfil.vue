@@ -7,6 +7,9 @@
         <label :for="`${id}-foto`" class="btn btn-outline-secondary btn-sm">
           <i class="bi bi-camera me-1" aria-hidden="true"></i>Cambiar foto
         </label>
+        <button v-if="datos.foto_perfil" type="button" class="btn btn-link btn-sm" :disabled="guardando" @click="quitarFoto">
+          Quitar foto
+        </button>
         <input
           :id="`${id}-foto`"
           type="file"
@@ -59,6 +62,8 @@ const props = defineProps({
   admin: { type: Object, required: true },
   guardando: { type: Boolean, default: false },
   error: { type: String, default: '' },
+  /** Errores por campo de la API (ErrorApi.errores) */
+  erroresApi: { type: Object, default: null },
 })
 
 const emit = defineEmits(['guardar'])
@@ -74,6 +79,9 @@ const TAMANO_MAXIMO = 1024 * 1024
 const id = useId()
 const datos = reactive({})
 const errores = reactive({})
+// Archivo elegido (se sube aparte, multipart) y si se pidió quitar la foto.
+let archivoFoto = null
+let quitar = false
 
 // Copia editable del admin; se rehace si cambia desde fuera (p. ej. tras guardar).
 watch(
@@ -86,8 +94,18 @@ watch(
       correo: admin.correo,
       foto_perfil: admin.foto_perfil,
     })
+    archivoFoto = null
+    quitar = false
   },
   { immediate: true },
+)
+
+// Mensajes de la API (p. ej. "El teléfono ya está registrado.") bajo su campo.
+watch(
+  () => props.erroresApi,
+  (lista) => {
+    for (const [campo, mensajes] of Object.entries(lista ?? {})) errores[campo] = mensajes[0]
+  },
 )
 
 const iniciales = computed(() => [datos.nombre, datos.apellidos].map((p) => p?.[0] ?? '').join('').toUpperCase())
@@ -105,7 +123,9 @@ function elegirFoto(evento) {
     errores.foto = 'La imagen pesa más de 1 MB. Elige una más ligera.'
     return
   }
-  // Vista previa local. Con la API, el archivo se enviará como multipart.
+  // Vista previa local; el archivo se sube al guardar.
+  archivoFoto = archivo
+  quitar = false
   const lector = new FileReader()
   lector.onload = () => (datos.foto_perfil = lector.result)
   lector.readAsDataURL(archivo)
@@ -119,9 +139,16 @@ function validar() {
   return CAMPOS.every((c) => !errores[c.clave])
 }
 
+function quitarFoto() {
+  datos.foto_perfil = null
+  archivoFoto = null
+  quitar = true
+}
+
 function enviar() {
   if (!validar()) return
-  emit('guardar', { ...datos })
+  const { nombre, apellidos, telefono, correo } = datos
+  emit('guardar', { datos: { nombre, apellidos, telefono, correo }, foto: archivoFoto, quitarFoto: quitar })
 }
 </script>
 

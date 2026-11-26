@@ -1,7 +1,7 @@
 /**
  * Transiciones de estado que puede hacer el ADMIN (plan principal 7.2).
- * Lo usan la UI (qué botones mostrar) y los services mock (validar).
- * Cuando exista la API, la validación real vive en el backend.
+ * Solo decide qué botones mostrar: la validación real la hace la API.
+ * Espejo de backend/app/Support/TransicionesSolicitud.php: si cambia una, cambiar la otra.
  */
 export const ACCIONES = {
   enviar: { clave: 'enviar', etiqueta: 'Enviar ayuda', icono: 'bi-send', variante: 'primary' },

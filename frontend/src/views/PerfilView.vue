@@ -6,10 +6,10 @@
 
     <div class="rejilla-formularios">
       <TarjetaSeccion titulo="Datos personales">
-        <FormPerfil v-if="auth.admin" :admin="auth.admin" :guardando="guardandoDatos" :error="errorDatos" @guardar="guardarDatos" />
+        <FormPerfil v-if="auth.admin" :admin="auth.admin" :guardando="guardandoDatos" :error="errorDatos" :errores-api="erroresDatos" @guardar="guardarDatos" />
       </TarjetaSeccion>
       <TarjetaSeccion titulo="Contraseña">
-        <FormPassword ref="formPassword" :guardando="guardandoPassword" :error="errorPassword" @cambiar="cambiarPassword" />
+        <FormPassword ref="formPassword" :guardando="guardandoPassword" :error="errorPassword" :errores-api="erroresPassword" @cambiar="cambiarPassword" />
       </TarjetaSeccion>
     </div>
 
@@ -45,8 +45,10 @@ const perfil = usePerfilStore()
 
 const guardandoDatos = ref(false)
 const errorDatos = ref('')
+const erroresDatos = ref(null)
 const guardandoPassword = ref(false)
 const errorPassword = ref('')
+const erroresPassword = ref(null)
 const formPassword = ref(null)
 
 const cargaDiferida = useCargaDiferida(() => perfil.cargandoActividad)
@@ -57,11 +59,14 @@ onMounted(() => perfil.cargarActividad())
 async function guardarDatos(datos) {
   guardandoDatos.value = true
   errorDatos.value = ''
+  erroresDatos.value = null
   try {
     await perfil.guardarDatos(datos)
     exito('Datos actualizados')
   } catch (e) {
-    errorDatos.value = e.message
+    // Con errores por campo se muestran bajo cada input; si no, arriba.
+    erroresDatos.value = e.errores
+    errorDatos.value = e.errores ? 'Revisa los campos marcados.' : e.message
   } finally {
     guardandoDatos.value = false
   }
@@ -70,12 +75,14 @@ async function guardarDatos(datos) {
 async function cambiarPassword(datos) {
   guardandoPassword.value = true
   errorPassword.value = ''
+  erroresPassword.value = null
   try {
     await perfil.cambiarPassword(datos)
     formPassword.value?.reiniciar()
     exito('Contraseña actualizada')
   } catch (e) {
-    errorPassword.value = e.message
+    erroresPassword.value = e.errores
+    errorPassword.value = e.errores ? 'Revisa los campos marcados.' : e.message
   } finally {
     guardandoPassword.value = false
   }

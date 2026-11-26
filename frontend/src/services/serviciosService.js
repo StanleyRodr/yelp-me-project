@@ -1,9 +1,8 @@
-import { bd } from '../mocks/bd'
-import { responder } from './simulacion'
+import { pedir } from './http'
 
-/** Catálogo de servicios de emergencia. Futuro: GET /api/servicios. */
+/** Catálogo de servicios de emergencia activos. GET /api/servicios */
 export const serviciosService = {
-  async listar() {
-    return responder(bd.servicios.filter((s) => s.activo))
+  listar() {
+    return pedir({ url: '/servicios' })
   },
 }

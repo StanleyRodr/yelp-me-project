@@ -1,28 +1,22 @@
-import { bd, CONTRASENA_DEMO_ADMIN } from '../mocks/bd'
-import { ErrorApi, responder } from './simulacion'
+import { pedir } from './http'
 
 /**
- * Autenticación del panel (simulada). Futuro: POST /api/admin/login, GET /api/sesion y DELETE /api/sesion (plan 003).
+ * Sesión del panel contra la API (plan 003).
+ * Errores: ErrorApi con el mensaje de la API (401 credenciales, 403 sin acceso o deshabilitada).
  */
 export const authService = {
-  async login(correo, password) {
-    const usuario = bd.usuarios.find((u) => u.correo.toLowerCase() === correo.trim().toLowerCase())
-    if (!usuario || password !== CONTRASENA_DEMO_ADMIN) {
-      await responder(null)
-      throw new ErrorApi('Correo o contraseña incorrectos.', 401)
-    }
-    if (usuario.rol !== 'admin') {
-      await responder(null)
-      throw new ErrorApi('Esta cuenta no tiene acceso al panel de administración.', 403)
-    }
-    if (!usuario.activo) {
-      await responder(null)
-      throw new ErrorApi('Esta cuenta está deshabilitada.', 403)
-    }
-    return responder({ token: `demo-${usuario.id}-${Date.now()}`, usuario })
+  /** POST /api/admin/login → { token, usuario } */
+  login(correo, password) {
+    return pedir({ method: 'post', url: '/admin/login', data: { correo, password } })
   },
 
-  async logout() {
-    return responder(true, 150)
+  /** GET /api/sesion → usuario del token (confirma que sigue válido). */
+  sesion() {
+    return pedir({ method: 'get', url: '/sesion' })
+  },
+
+  /** DELETE /api/sesion → borra el token actual. */
+  logout() {
+    return pedir({ method: 'delete', url: '/sesion' })
   },
 }
