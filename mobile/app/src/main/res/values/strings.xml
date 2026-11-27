@@ -84,23 +84,35 @@
     <!-- Inicio (crear solicitud) -->
     <string name="inicio_saludo">¡Hola, %1$s!</string>
     <string name="inicio_saludo_simple">¡Hola!</string>
-    <string name="inicio_titulo">Solicitudes</string>
-    <string name="inicio_emergencia">Emergencia</string>
-    <string name="inicio_lugar">Lugar</string>
-    <string name="inicio_ayuda_de">Ayuda de:</string>
+    <string name="inicio_titulo">Pedir ayuda</string>
+    <string name="inicio_emergencia">¿Qué pasa?</string>
+    <string name="inicio_lugar">¿Dónde? (opcional)</string>
+    <string name="inicio_lugar_ayuda">Una referencia: calle, negocio, entre qué calles.</string>
+    <string name="inicio_origen_buscando">Buscando tu ubicación…</string>
+    <string name="inicio_origen_gps">Tu ubicación actual</string>
+    <string name="inicio_origen_domicilio">Tu domicilio</string>
+    <string name="inicio_origen_mapa">Punto en el mapa</string>
+    <string name="inicio_origen_falta">Sin ubicación todavía</string>
+    <string name="inicio_cambiar_mapa">Marcar en mapa</string>
+    <string name="inicio_mi_domicilio">Mi domicilio</string>
+    <string name="inicio_sin_servicios_ayuda">Si no eliges ninguno, solo avisaremos a tus contactos.</string>
+    <string name="inicio_falta_titulo">Escribe qué pasa.</string>
+    <string name="inicio_enviando">Enviando…</string>
+    <string name="inicio_enviada">Solicitud enviada.</string>
+    <string name="inicio_solo_contactos">Solo tus contactos</string>
+    <string name="inicio_ayuda_de">¿Qué servicios necesitas?</string>
     <string name="inicio_comentarios">Comentarios</string>
     <string name="inicio_limpiar">Limpiar</string>
-    <string name="inicio_enviar">Enviar</string>
+    <string name="inicio_enviar">Pedir ayuda</string>
     <string name="inicio_tu_solicitud">Tu solicitud</string>
     <string name="inicio_editar">Editar</string>
     <string name="inicio_cancelar">Cancelar solicitud</string>
-    <string name="inicio_envio_pendiente">El envío de solicitudes llega en la siguiente versión de la app.</string>
 
     <!-- Resumen de solicitud -->
     <string name="resumen_titulo">Resumen</string>
-    <string name="resumen_emergencia">Emergencia: %1$s</string>
+    <string name="resumen_emergencia">%1$s</string>
     <string name="resumen_lugar">Lugar: %1$s</string>
-    <string name="resumen_ayudas">Ayuda de:</string>
+    <string name="resumen_ayudas">Servicios:</string>
     <string name="resumen_estado">Estado: Pendiente</string>
     <string name="resumen_enviar">Enviar</string>
     <string name="resumen_corregir">Corregir</string>

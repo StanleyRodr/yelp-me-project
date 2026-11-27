@@ -15,7 +15,7 @@
         android:orientation="vertical"
         android:padding="@dimen/espacio_4">
 
-        <!-- Formulario de solicitud -->
+        <!-- Formulario: pedir ayuda (título, ubicación, servicios, comentarios) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardFormulario"
             android:layout_width="match_parent"
@@ -38,13 +38,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/espacio_4"
-                    android:hint="@string/inicio_emergencia">
+                    android:hint="@string/inicio_emergencia"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="150">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etEmergencia"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textCapSentences" />
+                        android:inputType="textCapSentences"
+                        android:maxLength="150" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -52,34 +55,97 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/espacio_3"
-                    android:hint="@string/inicio_lugar">
+                    android:hint="@string/inicio_lugar"
+                    app:helperText="@string/inicio_lugar_ayuda">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etLugar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPostalAddress" />
+                        android:inputType="textPostalAddress|textCapSentences"
+                        android:maxLength="255" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/tvOrigen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:drawablePadding="@dimen/espacio_2"
+                    android:gravity="center_vertical"
+                    android:text="@string/inicio_origen_buscando"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                    android:textColor="@color/ym_texto"
+                    app:drawableStartCompat="@drawable/ic_my_location"
+                    app:drawableTint="@color/ym_texto_secundario" />
 
                 <FrameLayout
                     android:id="@+id/mapContainer"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/mapa_alto"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:background="@color/ym_skeleton" />
+                    android:layout_marginTop="@dimen/espacio_2"
+                    android:background="@color/ym_skeleton"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_2"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnUsarDomicilio"
+                        style="@style/Widget.YelpMe.Boton.Texto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/inicio_mi_domicilio"
+                        android:visibility="gone"
+                        app:icon="@drawable/ic_home"
+                        app:iconGravity="textStart" />
+
+                    <Button
+                        android:id="@+id/btnCambiarMapa"
+                        style="@style/Widget.YelpMe.Boton.Texto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/inicio_cambiar_mapa"
+                        app:icon="@drawable/ic_place"
+                        app:iconGravity="textStart" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_4"
+                    android:layout_marginTop="@dimen/espacio_3"
                     android:text="@string/inicio_ayuda_de"
                     android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+                <TextView
+                    android:id="@+id/tvAvisoSuspendido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_2"
+                    android:background="@drawable/bg_aviso_peligro"
+                    android:padding="@dimen/espacio_3"
+                    android:text="@string/perfil_suspendido"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                    android:textColor="@color/ym_estado_pendiente_texto"
+                    android:visibility="gone" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/grupoServicios"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/espacio_2" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_1"
+                    android:text="@string/inicio_sin_servicios_ayuda"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilComentarios"
@@ -94,6 +160,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="top"
                         android:inputType="textMultiLine|textCapSentences"
+                        android:maxLength="2000"
                         android:minLines="3" />
                 </com.google.android.material.textfield.TextInputLayout>
 

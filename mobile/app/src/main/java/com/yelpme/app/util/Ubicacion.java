@@ -60,11 +60,9 @@ public class Ubicacion {
         this.cliente = LocationServices.getFusedLocationProviderClient(activity);
         this.permisos = activity.registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), this::alResponderPermisos);
         this.encenderGps = activity.registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(), r -> {
-            if (r.getResultCode() == Activity.RESULT_OK) {
-                leer();
-            } else {
-                fallar(Motivo.GPS_APAGADO);
-            }
+            // Si no acepta encender o mejorar la precisión, igual se intenta leer:
+            // a veces solo faltaba la "precisión de ubicación" de Google.
+            leer(r.getResultCode() == Activity.RESULT_OK ? null : Motivo.GPS_APAGADO);
         });
     }
 
@@ -110,7 +108,7 @@ public class Ubicacion {
                 .addLocationRequest(new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 1000).build())
                 .build();
         LocationServices.getSettingsClient(activity).checkLocationSettings(ajustes)
-                .addOnSuccessListener(activity, r -> leer())
+                .addOnSuccessListener(activity, r -> leer(null))
                 .addOnFailureListener(activity, e -> {
                     if (e instanceof ResolvableApiException) {
                         encenderGps.launch(new IntentSenderRequest.Builder(((ResolvableApiException) e).getResolution()).build());
@@ -120,8 +118,9 @@ public class Ubicacion {
                 });
     }
 
+    /** `motivoSiFalla`: motivo a informar si no llega punto (null = según el resultado). */
     @SuppressLint("MissingPermission") // tienePermiso() se revisó antes
-    private void leer() {
+    private void leer(Motivo motivoSiFalla) {
         CancellationTokenSource cancelar = new CancellationTokenSource();
         Runnable limite = cancelar::cancel;
         principal.postDelayed(limite, LIMITE_MS);
@@ -138,8 +137,12 @@ public class Ubicacion {
                         if (ultima.isSuccessful() && ultima.getResult() != null) {
                             exito(ultima.getResult());
                         } else {
-                            fallar(tarea.isCanceled() || cancelar.getToken().isCancellationRequested()
-                                    ? Motivo.TIEMPO_AGOTADO : Motivo.ERROR);
+                            if (motivoSiFalla != null) {
+                                fallar(motivoSiFalla);
+                            } else {
+                                fallar(tarea.isCanceled() || cancelar.getToken().isCancellationRequested()
+                                        ? Motivo.TIEMPO_AGOTADO : Motivo.ERROR);
+                            }
                         }
                     });
                 });
