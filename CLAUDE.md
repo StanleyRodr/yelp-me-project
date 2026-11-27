@@ -13,7 +13,7 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - **Un commit por cada tarea terminada** de `docs/tasks/` (incluye el código y la actualización del `.md` de la tarea).
 - **Un PR por cada plan terminado** de `docs/plans/`, **hacia `main`**. Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
 - Cada plan nuevo sale de `main` actualizado. Evitar cadenas de PR apilados: al fusionarlas en desorden, planes enteros quedaron fuera de `main` (corregido con el PR #5). Si un plan depende de otro aún sin fusionar, avisar antes de apilar.
-- **Tandas de 2 planes (desde el plan 009):** 009+010, 011+012, 013 solo. Antes de cada tanda se fusiona el PR anterior. Rama A desde `main`, rama B desde A; PR A → `main`, PR B → rama A (indicar "fusionar después de #A"). Fusionar con **Merge commit** (no squash ni rebase), A primero y borrando su rama: GitHub reapunta B a `main`. Cambios pedidos en A: commit en A y `git merge` de A dentro de B, sin force-push. Recorrido de verificación al cerrar cada plan.
+- **Tandas de 2 planes (desde el plan 009):** 009+010, 011+012, 013 solo. Antes de cada tanda se fusiona el PR anterior. Rama A desde `main`, rama B desde A; PR A → `main`, PR B → rama A (indicar "fusionar después de #A"). Fusionar con **Merge commit** (no squash ni rebase), A primero; luego `gh pr edit B --base main` y **después** borrar la rama A (borrarla antes cierra el PR B en lugar de reapuntarlo). Cambios pedidos en A: commit en A y `git merge` de A dentro de B, sin force-push. Recorrido de verificación al cerrar cada plan.
 
 ## Documentación y flujo de trabajo
 
@@ -32,10 +32,10 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
 | `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002, 007–009) |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006, 008–010) |
-| `mobile/`   | Android Studio, Java                        | App del usuario final       | Base, perfil y contactos conectados a la API (planes 008–010); solicitudes en el plan 011 |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP con push FCM (planes 001, 003–006, 008–012) |
+| `mobile/`   | Android Studio, Java                        | App del usuario final       | Completa contra la API, con push (planes 008–012); falta publicar el APK (plan 013) |
 
-**Planes pendientes ya escritos** (con sus tareas 067–081 en `docs/tasks/`): 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
+**Plan pendiente ya escrito** (tareas 076–081 en `docs/tasks/`): 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: crear su rama desde `main` y ejecutar sus tareas en orden.
 
 Web y Android consumen la **misma API Laravel**.
 
@@ -58,7 +58,7 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 - **Recuperar contraseña (plan 008):** `POST /api/recuperacion`, `POST /api/recuperacion/verificacion`, `PUT /api/recuperacion` (públicas, `throttle:acceso`). Lógica en `App\Support\Recuperacion` (tabla `codigos_recuperacion`, hash del código, 15 min, 5 intentos); el 422 se lanza fuera de la transacción para no revertir el intento. Con `MAIL_MAILER=log` el código queda en `storage/logs/laravel.log`.
 - **Nombre:** `apellido_paterno` (obligatorio) + `apellido_materno` (opcional, vacío → `null`). Nombre compuesto con `PresentadorUsuario::nombreCompleto`; en el panel `nombreCompleto` de `utils/formato.js`.
 - **Contactos (plan 004):** `apiResource /api/contactos`, `GET /api/telefonos/{telefono}`, `/api/vinculos`, `/api/bloqueos` (rol usuario). Plan 010: `PUT|DELETE /api/contactos/{id}/favorito` (uno por usuario, `FavoritoController`) y `domicilio` en cada vínculo. Recursos ajenos → 404. Vinculación en `App\Support\ReglasContactos`; normalización de teléfono, correo y fechas en `App\Support\Normalizar`.
-- **Solicitudes (plan 005):** app `apiResource /api/solicitudes` (sin destroy) + `PUT /api/solicitudes/{id}/estado`; panel `/api/admin/solicitudes`, `…/{id}/estado`, `…/{id}/servicios`; `GET /api/servicios`. Transiciones **solo** en `App\Support\TransicionesSolicitud` (espejo de `frontend/src/constantes/transiciones.js`: cambiar ambas). Todo cambio de estado: `DB::transaction` + `Solicitudes::bloquear` (FOR UPDATE) + `exigir` + `aplicarEstado`. Strikes con `ReglasCuenta::darStrike` (suspende al tercero).
+- **Solicitudes (plan 005):** app `apiResource /api/solicitudes` (sin destroy) + `PUT /api/solicitudes/{id}/estado`; panel `/api/admin/solicitudes`, `…/{id}/estado`, `…/{id}/servicios`; `GET /api/servicios`. Transiciones **solo** en `App\Support\TransicionesSolicitud`, con espejo en tres lados: `frontend/src/constantes/transiciones.js` (admin) y `mobile/.../util/TransicionesSolicitud.java` (usuario, con prueba unitaria). Cambiar los tres. Todo cambio de estado: `DB::transaction` + `Solicitudes::bloquear` (FOR UPDATE) + `exigir` + `aplicarEstado`. Strikes con `ReglasCuenta::darStrike` (suspende al tercero).
 - **Usuarios y perfil (plan 006):** panel `/api/admin/usuarios` (+ `/cuenta`, `/strikes`, `/suspension`), `/api/admin/strikes/{id}/anulacion`, `/api/admin/actividad`; perfil `/api/perfil`, `/api/perfil/foto`, `/api/perfil/password` (cualquier rol). Acciones por estado de cuenta en `ReglasCuenta::exigirAccion` (espejo de `frontend/src/constantes/cuentas.js`). Listados en lote con `PresentadorCuenta`.
 - **No confiar en `$request->user()` para datos que la misma operación lee o cambia** (foto, teléfono, contraseña): leerlos de la BD. En pruebas `Sanctum::actingAs` reutiliza el objeto y queda desactualizado.
 - Este PHP no tiene GD: en pruebas usar `$this->imagenPng()` de `tests/TestCase.php`, no `UploadedFile::fake()->image()`.
@@ -75,7 +75,7 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 - Disco para fotos de perfil en `config/filesystems.php` + `php artisan storage:link`.
 - BD: MySQL `localhost:3306`, base **`YelpMe`**. **El esquema vive en `database/script-bd.sql`** (fuente oficial, sin migraciones de Laravel); cualquier cambio de tablas se hace ahí. Por eso `User` usa `protected $table = 'usuarios'` y `.env` va con `SESSION_DRIVER=file` / `CACHE_STORE=file`.
 - **Deshabilitar, no borrar:** usuarios, servicios, strikes, suspensiones y solicitudes nunca se borran (`activo = 0`, anulación o estado final). Solo se borran físicamente contactos, bloqueos, filas de `solicitud_servicio` y tokens. Todas las FK son `ON DELETE RESTRICT`.
-- FCM (fase final) con la API v1; librería sugerida `kreait/laravel-firebase`.
+- **Push (plan 012):** `App\Support\Notificador` (`NotificadorFcm` con `kreait/laravel-firebase`, API v1; `NotificadorNulo` sin credenciales: todo funciona igual). Qué avisar y a quién en `App\Support\Avisos`, llamado con `DB::afterCommit` (si se revierte, no avisa). Mensajes **solo de datos** (`aviso_titulo`, `aviso_cuerpo`, `canal`). Token del dispositivo con `TokensFcm::asignar` (login, registro y `PUT /api/sesion/fcm`). Credenciales en `config/services.php` (`FIREBASE_CREDENTIALS` local en `storage/app/firebase/credenciales.json`, `FIREBASE_CREDENTIALS_BASE64` en producción); nunca en git. La librería pide la extensión PHP `sodium` (en XAMPP, `extension=sodium` en `php.ini`). En pruebas `TestCase` registra `Tests\Support\NotificadorFalso` (`$this->notificador->enviados`).
 
 ## Frontend (`frontend/`)
 
@@ -149,5 +149,13 @@ Contactos (plan 010):
 - **Llamadas:** `util/Llamadas` (crear en `onCreate`): `ACTION_CALL` con `CALL_PHONE`, si se niega `ACTION_DIAL`. Solo para contactos; los servicios de la barra siguen simulados.
 - **Favorito:** `api/Favorito` en memoria por usuario (la lista lo actualiza; detalle y formulario lo invalidan). La barra muestra su nombre y lo llama; sin favorito abre Contactos.
 - Mapa dentro de un diálogo: meterlo en un marco de alto fijo y llamar `MapaOsm.liberar()` al cerrar.
+
+Solicitudes (plan 011):
+- **Formulario:** `layout_form_solicitud` + `ui/inicio/FormularioSolicitud` (crear en `onCreate`) lo comparten Inicio (crear, con resumen antes de enviar) y `ui/solicitudes/FormSolicitudActivity` (editar en Pendiente). Ubicación con `util/Ubicacion` (permisos, encender ubicación, 10 s, última conocida) y respaldo `DialogoSinUbicacion` (domicilio, reintentar, mapa); sin "Lugar" escrito y con domicilio, `ubicacion_nombre` = "Domicilio: …" (el panel lo marca). Suspendido: chips deshabilitados; al editar puede quitar servicios, no agregar. Inicio refresca el usuario (`GET /sesion`) al volver, para ver suspensiones o rehabilitaciones.
+- **Estado:** Inicio muestra la solicitud activa (Pendiente o Enviado) y `DetalleSolicitudActivity` (acciones según `TransicionesSolicitud`, cancelar con motivo); ambas se recargan cada 15 s mientras están visibles (`Handler` que se detiene en `onPause`). Historial con filtro por estado (`HistorialActivity`). `ui/comunes/BadgeEstado` = mismos colores e íconos que `EstadoBadge` del panel.
+- **Ojo con los ids:** un layout que incluye `layout_barra_secundaria` no puede tener otro `@+id/tvTitulo` (ViewBinding toma el de la barra).
+
+Push (plan 012):
+- `mobile/app/google-services.json` fuera de git; sin él la app compila sin push (`BuildConfig.FCM_ACTIVO`). Paquete `notificaciones`: `TokenFcm` (manda el token a la API), `Canales` (`alertas`, `estado`, mismos ids que `Avisos`), `ServicioMensajes` (arma la notificación; alerta → `ui/alertas/AlertaContactoActivity`, estado → detalle). Pasos de Firebase en `mobile/README.md`. Emulador con imagen Google Play.
 
 - **Generar íconos nuevos:** glifo de `frontend/node_modules/material-symbols/material-symbols-outlined.woff2` con fontTools (`TransformPen(pen, (1,0,0,-1,0,960))`, viewport 960), mismo formato que los `ic_*.xml` existentes.

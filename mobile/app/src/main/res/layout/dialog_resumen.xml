@@ -1,97 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Resumen antes de enviar una solicitud (diseño original). Se usa en el plan 011. -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Resumen antes de enviar una solicitud (diseño original): qué pasa, dónde,
+     servicios y estado inicial. Lo abre InicioActivity. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/espacio_5">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:padding="@dimen/espacio_5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:accessibilityHeading="true"
+                android:text="@string/resumen_titulo"
+                android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+
+            <Button
+                android:id="@+id/btnCerrarModal"
+                style="?attr/materialIconButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/cd_cerrar"
+                app:icon="@drawable/ic_close" />
+        </LinearLayout>
 
         <TextView
-            android:layout_width="0dp"
+            android:id="@+id/tvResumenEmergencia"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:accessibilityHeading="true"
-            android:text="@string/resumen_titulo"
-            android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+            android:layout_marginTop="@dimen/espacio_3"
+            android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnCerrarModal"
-            style="?attr/materialIconButtonStyle"
+        <TextView
+            android:id="@+id/tvResumenLugar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/espacio_2"
+            android:drawablePadding="@dimen/espacio_1"
+            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+            android:textColor="@color/ym_texto"
+            app:drawableStartCompat="@drawable/ic_place"
+            app:drawableTint="@color/ym_texto_secundario" />
+
+        <FrameLayout
+            android:id="@+id/mapResumenContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mapa_alto"
+            android:layout_marginTop="@dimen/espacio_3"
+            android:background="@color/ym_skeleton" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/cd_cerrar"
-            app:icon="@drawable/ic_close" />
-    </LinearLayout>
+            android:layout_marginTop="@dimen/espacio_3"
+            android:text="@string/resumen_ayudas"
+            android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
 
-    <TextView
-        android:id="@+id/tvResumenEmergencia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/espacio_3"
-        android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgResumenServicios"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-    <TextView
-        android:id="@+id/tvResumenLugar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/espacio_2"
-        android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
-
-    <FrameLayout
-        android:id="@+id/mapResumenContainer"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mapa_alto"
-        android:layout_marginTop="@dimen/espacio_3"
-        android:background="@color/ym_skeleton" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/espacio_3"
-        android:text="@string/resumen_ayudas"
-        android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-    <LinearLayout
-        android:id="@+id/llAyudasSeleccionadas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" />
-
-    <TextView
-        android:id="@+id/tvResumenEstado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/espacio_3"
-        android:text="@string/resumen_estado"
-        android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/espacio_4"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btnModalCancelar"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvResumenSoloContactos"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/espacio_2"
-            android:layout_weight="1"
-            android:text="@string/resumen_corregir" />
+            android:text="@string/inicio_solo_contactos"
+            android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+            android:visibility="gone" />
 
-        <Button
-            android:id="@+id/btnModalAceptar"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvResumenEstado"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/resumen_enviar" />
+            android:layout_marginTop="@dimen/espacio_3"
+            android:text="@string/resumen_estado"
+            android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/espacio_4"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnModalCancelar"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/espacio_2"
+                android:layout_weight="1"
+                android:text="@string/resumen_corregir" />
+
+            <Button
+                android:id="@+id/btnModalAceptar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/resumen_enviar" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

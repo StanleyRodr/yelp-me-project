@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\ContactoController;
 use App\Http\Controllers\Api\DomicilioController;
 use App\Http\Controllers\Api\EstadoSolicitudController;
 use App\Http\Controllers\Api\FavoritoController;
+use App\Http\Controllers\Api\FcmController;
 use App\Http\Controllers\Api\FotoPerfilController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\PerfilController;
@@ -58,6 +59,9 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
 
     // App Android (rol usuario): contactos y solicitudes propias (planes 004 y 005)
     Route::middleware('rol:usuario')->group(function () {
+        // Token de notificaciones del dispositivo (plan 012)
+        Route::put('/sesion/fcm', [FcmController::class, 'update']);
+
         Route::apiResource('contactos', ContactoController::class)
             ->parameters(['contactos' => 'id'])
             ->whereNumber('id');

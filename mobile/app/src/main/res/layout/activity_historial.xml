@@ -1,162 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Contenido de Historial (diseño: lista con filtro y detalle). Se conecta en el plan 011. -->
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Contenido de Historial (diseño: lista con filtro). El filtro es un grupo de chips
+     (en lugar del Spinner) y el detalle es DetalleSolicitudActivity. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:orientation="vertical"
     tools:context=".ui.historial.HistorialActivity">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/espacio_4">
+        android:layout_marginHorizontal="@dimen/espacio_4"
+        android:layout_marginTop="@dimen/espacio_4"
+        android:accessibilityHeading="true"
+        android:text="@string/historial_titulo"
+        android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardListaHistorial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/espacio_2"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/espacio_4"
+        android:scrollbars="none">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cgFiltro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/historial_filtro"
+            app:checkedChip="@id/chipTodas"
+            app:selectionRequired="true"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTodas"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/historial_todas" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:accessibilityHeading="true"
-                    android:text="@string/historial_titulo"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPendiente"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/estado_pendiente" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilFiltro"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:hint="@string/historial_filtro">
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipEnviado"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/estado_enviado" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/etFiltro"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none" />
-                </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipTerminado"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/estado_terminado" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/listaHistorial"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:nestedScrollingEnabled="false" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCancelado"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/estado_cancelado" />
 
-                <TextView
-                    android:id="@+id/tvVacio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_vacio"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRechazado"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/estado_rechazado" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardDetalleHistorial"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/recargaHistorial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvHistorial"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingHorizontal="@dimen/espacio_4"
+                android:paddingBottom="@dimen/espacio_4"
+                tools:listitem="@layout/item_solicitud" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/tvVacio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/btnVolverHistorial"
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/historial_volver"
-                    app:icon="@drawable/ic_arrow_back" />
-
-                <TextView
-                    android:id="@+id/tvTituloSolicitud"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_2"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
-
-                <TextView
-                    android:id="@+id/tvEstadoSolicitud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_2"
-                    android:paddingHorizontal="@dimen/espacio_3"
-                    android:paddingVertical="@dimen/espacio_1"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_emergencia"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:id="@+id/tvHistEmergencia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_ayudas"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <LinearLayout
-                    android:id="@+id/llHistAyudas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_lugar"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:id="@+id/tvHistLugar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
-
-                <FrameLayout
-                    android:id="@+id/mapHistorialDetalle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mapa_alto"
-                    android:layout_marginTop="@dimen/espacio_2"
-                    android:background="@color/ym_skeleton" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_comentarios"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:id="@+id/tvHistComentarios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            android:layout_marginHorizontal="@dimen/espacio_5"
+            android:layout_marginTop="@dimen/espacio_6"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+            android:textColor="@color/ym_texto_secundario"
+            android:visibility="gone"
+            tools:text="@string/historial_vacio" />
+    </FrameLayout>
+</LinearLayout>

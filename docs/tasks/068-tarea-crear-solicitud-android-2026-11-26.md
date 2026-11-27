@@ -1,6 +1,6 @@
 # 068 — Tarea: Crear solicitud (app)
 
-> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ⬜ Pendiente
+> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ✅ Terminada
 
 ## Objetivo
 Formulario de Inicio conectado a `POST /api/solicitudes` con servicios del catálogo.
@@ -45,3 +45,5 @@ Modelos: `Solicitud` (id, titulo, descripcion, latitud, longitud, ubicacionNombr
 
 ## Resultado
 Commit: `feat(mobile): crea solicitudes con ubicación y servicios`.
+
+Notas: `ServicioSolicitudes`, modelos `Solicitud`, `NuevaSolicitud`, `Persona`. Formulario "Pedir ayuda": ¿Qué pasa? (150), ¿Dónde? (opcional), origen del punto (ubicación actual / domicilio / punto en el mapa) con mini mapa, "Mi domicilio" (solo si tiene) y "Marcar en mapa", chips de servicios (`item_chip_servicio`, estilo filtro con check), aviso "solo avisaremos a tus contactos", comentarios. Suspendido: banner y chips deshabilitados; un 403 refresca el usuario. Sin ubicación al tocar "Pedir ayuda" → `DialogoSinUbicacion`. `dialog_resumen` con chips de los servicios o "Solo tus contactos" y mapa que se libera al cerrar. `Ubicacion`: si la persona rechaza el diálogo de "precisión de ubicación", igual intenta leer (en el emulador funciona). Probado en emulador: Carlos con GPS + Policía y Ambulancia → solicitud 12 con servicios [1, 2]; Luis suspendido → banner, chips sin efecto, envía "solo contactos" (0 servicios); Carlos sin permiso → explicación → diálogo con domicilio → `ubicacion_nombre` "Domicilio: Av. Ignacio Zaragoza 214, Centro, 93820". La vista en el panel se revisa en la tarea 071.

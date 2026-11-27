@@ -1,6 +1,6 @@
 # 070 — Tarea: Historial (app)
 
-> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ⬜ Pendiente
+> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ✅ Terminada
 
 ## Objetivo
 `HistorialActivity` con todas las solicitudes del usuario y filtro por estado.
@@ -28,3 +28,5 @@ Carlos (seeder): Pendiente, Enviado y Cancelado; cada filtro muestra lo correcto
 
 ## Resultado
 Commit: `feat(mobile): muestra el historial de solicitudes con filtro`.
+
+Notas: filtro con `ChipGroup` de opción única (Todas y los 5 estados, en una fila deslizable); el chip elegido lo conserva la vista al rotar. `AdaptadorHistorial` (`ListAdapter` + `DiffUtil`) con `item_solicitud`: badge, fecha, título, lugar e íconos de servicios o "Solo tus contactos", con `contentDescription` completo. Vacío distinto para "todas" y para un filtro. Probado en emulador con Carlos: todas las solicitudes de la más nueva a la más vieja con sus estados; "Cancelado" → "Perro agresivo en la calle" y su detalle con "Motivo: El dueño ya recogió al perro."; "Rechazado" → la #15 rechazada desde el panel.

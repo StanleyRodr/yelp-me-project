@@ -12,6 +12,7 @@ import com.yelpme.app.api.ErrorApi;
 import com.yelpme.app.api.Llamada;
 import com.yelpme.app.api.ServicioAuth;
 import com.yelpme.app.modelos.Usuario;
+import com.yelpme.app.notificaciones.TokenFcm;
 import com.yelpme.app.ui.inicio.InicioActivity;
 import com.yelpme.app.util.Sesion;
 
@@ -40,6 +41,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void alExito(Usuario usuario) {
                 sesion.actualizarUsuario(usuario);
+                // Por si Firebase rotó el token mientras la app estaba cerrada.
+                TokenFcm.sincronizar(getApplicationContext());
                 ir(new Intent(SplashActivity.this, InicioActivity.class));
             }
 

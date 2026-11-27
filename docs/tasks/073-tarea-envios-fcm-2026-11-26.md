@@ -1,6 +1,6 @@
 # 073 — Tarea: Envíos de notificaciones
 
-> Plan: `012-plan-fcm-2026-11-26.md` · Rama: `feature/fcm` · Estado: ⬜ Pendiente
+> Plan: `012-plan-fcm-2026-11-26.md` · Rama: `feature/fcm` · Estado: ✅ Terminada
 
 ## Objetivo
 Push a contactos vinculados al crear una solicitud y al solicitante cuando el admin cambia el estado.
@@ -50,3 +50,5 @@ Con credenciales reales: crear una solicitud con curl y ver la llamada en Logcat
 
 ## Resultado
 Commit: `feat(notificaciones): avisa a contactos y al solicitante con push`.
+
+Notas: `App\Support\Avisos` (`solicitudCreada`, `estadoCambiado`) enganchado con `DB::afterCommit` en `Api/SolicitudController@store` y `Api/Admin/EstadoSolicitudController@update`; si la transacción se revierte (p. ej. 409) no hay aviso. Canales Android: `alertas` (contactos) y `estado` (mis solicitudes), enviados en el mensaje. Cada envío en su `try/catch`. Pruebas en `NotificacionesTest` (6 nuevas; 108 en total): avisos solo a vinculados activos con token, datos como texto, Enviado/Terminado/Rechazado al solicitante con motivo, cancelar del usuario sin aviso, 409 sin aviso y notificador caído sin afectar la respuesta.

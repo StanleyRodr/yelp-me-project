@@ -1,6 +1,6 @@
 # 072 — Tarea: Firebase en el backend
 
-> Plan: `012-plan-fcm-2026-11-26.md` · Rama: `feature/fcm` · Estado: ⬜ Pendiente
+> Plan: `012-plan-fcm-2026-11-26.md` · Rama: `feature/fcm` · Estado: ✅ Terminada
 
 ## Objetivo
 Conectar Laravel con FCM (API v1) detrás de una interfaz que permite funcionar sin Firebase.
@@ -53,3 +53,5 @@ php artisan tinker   # app(\App\Support\Notificador::class) → NotificadorFcm c
 
 ## Resultado
 Commit: `feat(notificaciones): integra Firebase Cloud Messaging en el backend`.
+
+Notas: la persona dueña creó el proyecto de Firebase y dejó los dos archivos (cuenta de servicio en `backend/storage/app/firebase/credenciales.json`, ya ignorado por `backend/storage/app/.gitignore`; `google-services.json` ignorado en `mobile/.gitignore`). `kreait/laravel-firebase` ^6.2 exige la extensión `sodium`: se activó en `C:\xampp\php\php.ini` (respaldo del archivo en el scratchpad). Credenciales leídas desde `config/services.php` (`services.firebase.*`) para que funcionen con `config:cache`. `Notificador::enviar(token, titulo, cuerpo, datos, canal)` (el canal de Android viaja en el mensaje). `TokensFcm::asignar` mueve el token entre cuentas en login, registro y `PUT /api/sesion/fcm`. Pruebas: `tests/Support/NotificadorFalso` registrado en `TestCase` (nunca se llama a Firebase); `NotificacionesTest` con 5 pruebas (102 en total). Con las credenciales locales el contenedor resuelve `NotificadorFcm`; sin ellas, `NotificadorNulo`. `composer audit` avisa de vulnerabilidades en paquetes de Symfony que ya estaban (no de Firebase): revisar con `composer update` antes del despliegue (plan 013).

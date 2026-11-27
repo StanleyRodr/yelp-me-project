@@ -5,11 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -108,6 +110,8 @@ public class PerfilActivity extends BaseActivity {
         vista.btnEditarDatos.setOnClickListener(v -> editarDatos.launch(new Intent(this, EditarPerfilActivity.class)));
         vista.btnFoto.setOnClickListener(v -> opcionesFoto());
         vista.btnDomicilio.setOnClickListener(v -> editarDomicilio.launch(DomicilioActivity.intent(this, domicilio)));
+        vista.btnActivarNotificaciones.setOnClickListener(v -> startActivity(
+                new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName())));
         vista.btnPassword.setOnClickListener(v -> cambiarPassword.launch(new Intent(this, PasswordActivity.class)));
         // Mismo cambio que el menú lateral: muestra el tema al que cambia.
         boolean oscuro = Tema.esOscuro(this);
@@ -129,6 +133,10 @@ public class PerfilActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         cargar();
+        // Sin permiso de notificaciones no llegan las alertas de los contactos.
+        boolean apagadas = !NotificationManagerCompat.from(this).areNotificationsEnabled();
+        vista.tvNotificacionesApagadas.setVisibility(apagadas ? View.VISIBLE : View.GONE);
+        vista.btnActivarNotificaciones.setVisibility(apagadas ? View.VISIBLE : View.GONE);
     }
 
     @Override

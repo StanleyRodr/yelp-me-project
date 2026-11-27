@@ -20,3 +20,6 @@ local.properties
 keystore.properties
 *.jks
 *.keystore
+
+# Firebase (plan 012): cada quien usa su propio archivo; no se sube
+/app/google-services.json

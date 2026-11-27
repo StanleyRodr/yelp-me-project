@@ -157,6 +157,19 @@
         <item name="fontFamily">@font/atkinson</item>
     </style>
 
+    <!-- Badge de estado (BadgeEstado pone color, fondo e ícono) -->
+    <style name="YelpMe.Badge" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/espacio_1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/espacio_2</item>
+        <item name="android:paddingEnd">@dimen/espacio_3</item>
+        <item name="android:paddingTop">@dimen/espacio_1</item>
+        <item name="android:paddingBottom">@dimen/espacio_1</item>
+        <item name="android:textAppearance">@style/TextAppearance.YelpMe.Etiqueta</item>
+    </style>
+
     <!-- Texto sobre la barra de marca -->
     <style name="TextAppearance.YelpMe.Marca" parent="TextAppearance.YelpMe.Subtitulo">
         <item name="android:textColor">@color/ym_sobre_marca</item>
