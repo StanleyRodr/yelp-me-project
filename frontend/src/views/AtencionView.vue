@@ -29,6 +29,7 @@
         <TarjetaSeccion titulo="Detalle">
           <DetalleSolicitud :solicitud="s" :catalogo="catalogos.servicioPorId" />
         </TarjetaSeccion>
+        <TarjetaDomicilio :domicilio="s.usuario?.domicilio ?? null" titulo="Domicilio del solicitante" />
       </div>
 
       <div class="rejilla-lateral">
@@ -49,6 +50,7 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
 import DetalleSolicitud from '../components/solicitudes/DetalleSolicitud.vue'
+import TarjetaDomicilio from '../components/comunes/TarjetaDomicilio.vue'
 import AccionesSolicitud from '../components/solicitudes/AccionesSolicitud.vue'
 import TarjetaSeccion from '../components/comunes/TarjetaSeccion.vue'
 import CabeceraSolicitud from '../components/solicitudes/CabeceraSolicitud.vue'

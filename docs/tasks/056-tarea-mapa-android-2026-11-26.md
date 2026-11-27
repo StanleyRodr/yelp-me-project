@@ -1,6 +1,6 @@
 # 056 — Tarea: Mapa reutilizable Android
 
-> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ⬜ Pendiente
+> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ✅ Terminada
 
 ## Objetivo
 Reemplazar `MapaHelper` por un mapa con ciclo de vida correcto y un selector de punto reutilizable (domicilio ahora, solicitud en el plan 011).
@@ -29,3 +29,5 @@ Los layouts conservan un `FrameLayout` solo donde se muestre mapa (perfil, detal
 
 ## Resultado
 Commit: `refactor(mobile): agrega mapa con ciclo de vida y selector de ubicación`.
+
+Notas: `util/MapaOsm` (ciclo de vida, `centro()`, un marcador teñido con `ym_marca_texto`, filtro oscuro = brightness 0.85 × contrast 1.1 como la web, `CopyrightOverlay`). `ui/mapa/ElegirUbicacionActivity` con `intent(ctx, lat, lng, titulo)`; pin fijo al centro (`ic_place`), "Mi ubicación" pide permiso si falta y usa `getCurrentLocation`; conserva el punto al rotar. StrictMode (`detectActivityLeaks`) en debug desde `YelpMeApp`. Se borró `MapaHelper`; `mapContainer` de Inicio se queda para el plan 011. Ícono `ic_place` generado de la fuente (`place.fill`). Recorrido en emulador en la tarea 060 (la pantalla se abre desde Perfil).

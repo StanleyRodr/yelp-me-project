@@ -1,6 +1,6 @@
 # 059 — Tarea: Domicilio, contraseña y tema (app)
 
-> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ⬜ Pendiente
+> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ✅ Terminada
 
 ## Objetivo
 Formulario de domicilio con pin, cambio de contraseña y selector de tema.
@@ -31,3 +31,5 @@ Formulario de domicilio con pin, cambio de contraseña y selector de tema.
 
 ## Resultado
 Commit: `feat(mobile): agrega domicilio, cambio de contraseña y tema`.
+
+Notas: `DomicilioActivity` (calle, número, colonia, CP, referencia; vista previa del mapa y "Marcar en el mapa"/"Mover el punto" con `ElegirUbicacionActivity`; sin pin → "Marca tu domicilio en el mapa."; "Quitar domicilio" con confirmación). `PasswordActivity` (actual, nueva, confirmación; 422 bajo su campo). El perfil recibe el resultado y muestra el Snackbar. **Tema:** sin diálogo Claro/Oscuro/Sistema; por decisión del 2026-11-27 solo claro y oscuro: botón en la tarjeta "Ajustes" que hace lo mismo que el menú lateral (`Tema.alternar`). Probado en emulador con María: CP de 4 dígitos y falta de pin, pin elegido y guardado (mapa en el perfil), contraseña actual incorrecta bajo el campo, cambio OK y login con la nueva (restaurada después a la de demo), tema oscuro persiste tras cerrar la app (mapa con filtro oscuro), quitar domicilio → invitación a agregarlo. 5 ciclos abrir/cerrar domicilio + selector sin avisos de StrictMode.

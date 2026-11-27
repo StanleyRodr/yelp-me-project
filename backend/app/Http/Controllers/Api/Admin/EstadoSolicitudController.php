@@ -54,6 +54,6 @@ class EstadoSolicitudController extends Controller
 
         $mensaje = self::MENSAJES[$datos['estado']].($conStrike ? ' y strike registrado' : '');
 
-        return $this->respuesta(PresentadorSolicitud::porId($id), $mensaje);
+        return $this->respuesta(PresentadorSolicitud::detalle($id), $mensaje);
     }
 }

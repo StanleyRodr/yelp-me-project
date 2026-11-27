@@ -1,6 +1,7 @@
 package com.yelpme.app;
 
 import android.app.Application;
+import android.os.StrictMode;
 
 import com.yelpme.app.api.ClienteApi;
 import com.yelpme.app.util.Sesion;
@@ -14,6 +15,14 @@ public class YelpMeApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (BuildConfig.DEBUG) {
+            // Fugas de activities (p. ej. el mapa) en Logcat, etiqueta StrictMode.
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectActivityLeaks()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .build());
+        }
         Tema.iniciar(this);
         sesion = new Sesion(this);
         ClienteApi.iniciar(this, sesion);

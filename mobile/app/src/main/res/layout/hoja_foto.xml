@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hoja inferior de la foto de perfil (PerfilActivity). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/espacio_4"
+    android:paddingBottom="@dimen/espacio_5">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/espacio_2"
+        android:accessibilityHeading="true"
+        android:text="@string/perfil_foto_titulo"
+        android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+
+    <Button
+        android:id="@+id/btnGaleria"
+        style="@style/Widget.YelpMe.Boton.Texto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
+        android:text="@string/perfil_foto_galeria"
+        android:textColor="@color/ym_texto"
+        app:icon="@drawable/ic_image"
+        app:iconTint="@color/ym_texto" />
+
+    <Button
+        android:id="@+id/btnQuitarFoto"
+        style="@style/Widget.YelpMe.Boton.Texto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|center_vertical"
+        android:text="@string/perfil_foto_quitar"
+        android:textColor="@color/ym_estado_pendiente_texto"
+        app:icon="@drawable/ic_delete"
+        app:iconTint="@color/ym_estado_pendiente_texto" />
+</LinearLayout>

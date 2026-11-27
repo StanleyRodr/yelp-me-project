@@ -1,6 +1,6 @@
 # 058 — Tarea: Editar perfil y foto (app)
 
-> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ⬜ Pendiente
+> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ✅ Terminada
 
 ## Objetivo
 Editar nombre, apellidos, teléfono y correo; subir y quitar foto.
@@ -31,3 +31,5 @@ La URL cambia de nombre al subir (el backend genera nombre nuevo), así que no h
 
 ## Resultado
 Commit: `feat(mobile): permite editar datos y foto de perfil`.
+
+Notas: `EditarPerfilActivity` envía solo lo que cambió (materno vacío → `""`, la API lo guarda `null`); errores 422 bajo su campo. Barra común `layout_barra_secundaria` (también en `ElegirUbicacionActivity`). Foto: botón "Cambiar foto" → `BottomSheetDialog` (`hoja_foto`) con galería (Photo Picker, sin permisos) y "Quitar foto" (con confirmación, solo si hay foto). `util/Imagenes.comprimir` usa `ImageDecoder` (respeta EXIF), 1024 px, JPEG 80 bajando de 10 en 10 hasta ≤ 1 MB, en un hilo aparte. La URL cambia en cada subida: sin caché que invalidar. Probado en emulador: teléfono ajeno → "El teléfono ya está registrado." bajo el campo; materno vacío → "Luis García"; JPEG de 7.8 MB (4000×3000) subido como 275 KB; quitar foto → iniciales y archivo borrado. Íconos `ic_photo_camera` e `ic_image` de la fuente.

@@ -61,6 +61,21 @@
             android:name=".ui.perfil.PerfilActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.perfil.EditarPerfilActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.perfil.DomicilioActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.perfil.PasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.mapa.ElegirUbicacionActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

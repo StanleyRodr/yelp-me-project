@@ -1,6 +1,6 @@
 # 054 — Tarea: Domicilio en la API
 
-> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ⬜ Pendiente
+> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ✅ Terminada
 
 ## Objetivo
 Domicilio único por usuario y `veces_suspendido` en el usuario.
@@ -70,3 +70,5 @@ php artisan bd:pruebas && php artisan test
 
 ## Resultado
 Commit: `feat(perfil): agrega domicilio del usuario y veces suspendido`.
+
+Notas: 93 pruebas OK (6 nuevas en `DomicilioTest`). El 404 "No tienes un domicilio registrado." va con `throw new HttpException(404, ...)`: el render de `bootstrap/app.php` cambia toda `NotFoundHttpException` (también `abort(404, ...)`) por "Recurso no encontrado.". `GET /api/sesion` devuelve el usuario en `datos` (no `datos.usuario`). En la BD `YelpMe` se agregó la tabla y los domicilios de demo sin recrearla.

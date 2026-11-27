@@ -33,6 +33,6 @@ class SolicitudController extends Controller
     /** GET /api/admin/solicitudes/{id} */
     public function show(int $id): JsonResponse
     {
-        return $this->respuesta(PresentadorSolicitud::porId($id) ?? abort(404));
+        return $this->respuesta(PresentadorSolicitud::detalle($id) ?? abort(404));
     }
 }

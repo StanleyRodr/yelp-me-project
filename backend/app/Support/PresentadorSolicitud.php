@@ -19,6 +19,20 @@ class PresentadorSolicitud
         return $fila ? self::lista(collect([$fila]))[0] : null;
     }
 
+    /**
+     * Detalle para el panel: además trae `usuario.domicilio` (plan 009).
+     * Solo en respuestas de una solicitud; en listados sería una consulta por fila.
+     */
+    public static function detalle(int $id): ?array
+    {
+        $solicitud = self::porId($id);
+        if ($solicitud && $solicitud['usuario']) {
+            $solicitud['usuario']['domicilio'] = PresentadorDomicilio::deUsuario($solicitud['usuario_id']);
+        }
+
+        return $solicitud;
+    }
+
     /** @param  Collection<int, object>  $filas */
     public static function lista(Collection $filas): array
     {

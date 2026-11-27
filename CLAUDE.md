@@ -13,6 +13,7 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - **Un commit por cada tarea terminada** de `docs/tasks/` (incluye el código y la actualización del `.md` de la tarea).
 - **Un PR por cada plan terminado** de `docs/plans/`, **hacia `main`**. Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
 - Cada plan nuevo sale de `main` actualizado. Evitar cadenas de PR apilados: al fusionarlas en desorden, planes enteros quedaron fuera de `main` (corregido con el PR #5). Si un plan depende de otro aún sin fusionar, avisar antes de apilar.
+- **Tandas de 2 planes (desde el plan 009):** 009+010, 011+012, 013 solo. Antes de cada tanda se fusiona el PR anterior. Rama A desde `main`, rama B desde A; PR A → `main`, PR B → rama A (indicar "fusionar después de #A"). Fusionar con **Merge commit** (no squash ni rebase), A primero y borrando su rama: GitHub reapunta B a `main`. Cambios pedidos en A: commit en A y `git merge` de A dentro de B, sin force-push. Recorrido de verificación al cerrar cada plan.
 
 ## Documentación y flujo de trabajo
 
@@ -30,11 +31,11 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
-| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002, 007 y 008) |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006, 008) |
-| `mobile/`   | Android Studio, Java                        | App del usuario final       | Base conectada a la API (plan 008); perfil, contactos y solicitudes en planes 009–011 |
+| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002, 007–009) |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006, 008, 009) |
+| `mobile/`   | Android Studio, Java                        | App del usuario final       | Base y perfil conectados a la API (planes 008–009); contactos y solicitudes en planes 010–011 |
 
-**Planes pendientes ya escritos** (con sus tareas 054–081 en `docs/tasks/`): 009 perfil y domicilio, 010 contactos en Android, 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
+**Planes pendientes ya escritos** (con sus tareas 061–081 en `docs/tasks/`): 010 contactos en Android, 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
 
 Web y Android consumen la **misma API Laravel**.
 
@@ -65,7 +66,8 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 - Pruebas: `$this->como('correo@demo')` en `tests/TestCase.php` autentica con Sanctum sin login.
 - **Proteger rutas nuevas** dentro de los grupos de `routes/api.php`: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` con prefijo `admin` (panel). El `usuario_id` sale de `$request->user()`, nunca del body.
 - Usuario en respuestas: siempre con `App\Support\PresentadorUsuario` (sin `password` ni `fcm_token`). Reglas de strikes/suspensión en `App\Support\ReglasCuenta`; credenciales en `App\Support\Credenciales`.
-- Errores con `abort(código, 'mensaje en español')`: el render de `bootstrap/app.php` los devuelve en el formato estándar.
+- Errores con `abort(código, 'mensaje en español')`: el render de `bootstrap/app.php` los devuelve en el formato estándar. Excepción: un 404 con mensaje propio va con `throw new HttpException(404, '...')`, porque el render cambia toda `NotFoundHttpException` (incluido `abort(404, ...)`) por "Recurso no encontrado.".
+- **Domicilio (plan 009):** `GET|PUT|DELETE /api/perfil/domicilio` (rol usuario, 1:1 en `domicilios`, PUT crea o reemplaza). `App\Support\PresentadorDomicilio` (`deUsuario`, `porUsuarios` en lote, `texto`). `usuario.veces_suspendido` con `ReglasCuenta::vecesSuspendido`.
 
 - **Controladores sin modelos Eloquent**: `DB::table(...)` / Query Builder. **Única excepción:** `App\Models\User`, solo para Sanctum (`HasApiTokens`).
 - Controladores con `index`, `show`, `store`, `update`, `destroy`.
@@ -137,3 +139,9 @@ Base (plan 008):
 - **Pantallas con sesión** heredan de `ui/base/BaseActivity`: `itemMenu()` + `ponerContenido(binding)`; header con saludo, menú lateral (por la derecha), barra de servicios (llamada **simulada**, nunca `ACTION_CALL`) y botón del favorito, insets y `aviso(...)` (Snackbar sobre la barra). Las de acceso usan `Margenes.bordeABorde` + `Margenes.aplicar`.
 - **Tema:** `values/colors.xml` y `values-night/colors.xml` son espejo de `frontend/src/styles/tokens.css` (cambiar ambos); `colorPrimary` = `ym_marca_texto`. Estilos `Widget.YelpMe.*` y `TextAppearance.YelpMe.*` en `themes.xml`; fuente Atkinson variable en `res/font`. Tema en el menú lateral: un item alterna claro ↔ oscuro (`util/Tema`, sin elección guardada sigue al sistema, igual que la web).
 - **Íconos:** vectores generados desde la fuente Material Symbols del frontend (`res/drawable/ic_*.xml`); `IconosServicio.de(icono)` para los servicios.
+
+Perfil (plan 009):
+- **Mapa:** `util/MapaOsm(ctx, FrameLayout, getLifecycle())` envuelve osmdroid con ciclo de vida (sin fugas), filtro oscuro igual que la web, `marcador(...)` (un pin), `soloLectura(true)` para vistas previas y gesto propio dentro de un scroll. Para elegir un punto: `ElegirUbicacionActivity.intent(ctx, lat, lng, titulo)` con `StartActivityForResult` → `EXTRA_LAT`/`EXTRA_LNG` (pin fijo al centro, "Mi ubicación" con permiso). StrictMode (`detectActivityLeaks`) en debug.
+- **Perfil:** `ServicioPerfil` (perfil, foto, contraseña, domicilio). Pantallas secundarias (`EditarPerfilActivity`, `DomicilioActivity`, `PasswordActivity`) con `layout_barra_secundaria` y resultado al perfil para el Snackbar.
+- **Foto:** Photo Picker (sin permisos) + `util/Imagenes.comprimir` (1024 px, JPEG ≤ 1 MB, en hilo aparte) + multipart `foto`. La URL de la foto sale de `APP_URL`: en el emulador se ve con `adb reverse` (`localhost:8000`).
+- **Generar íconos nuevos:** glifo de `frontend/node_modules/material-symbols/material-symbols-outlined.woff2` con fontTools (`TransformPen(pen, (1,0,0,-1,0,960))`, viewport 960), mismo formato que los `ic_*.xml` existentes.

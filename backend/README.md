@@ -232,6 +232,20 @@ Transiciones (plan principal 7.2; tabla en `App\Support\TransicionesSolicitud`, 
 - Teléfono nuevo: se actualiza en las agendas que me tienen vinculado (salvo donde ese número ya estaba guardado aparte) y se vinculan contactos que ya lo tenían.
 - La foto anterior se borra del disco al reemplazarla o quitarla.
 - Cambiar la contraseña cierra las demás sesiones; la actual sigue.
+- `usuario` trae `suspendido`, `strikes_activos`, `limite_strikes` y `veces_suspendido` (historial completo).
+
+### Domicilio (app, rol `usuario`)
+
+Uno por usuario (tabla `domicilios`, 1:1). El `usuario_id` sale del token.
+
+| Método | Ruta | Cuerpo / respuesta |
+|---|---|---|
+| GET | `/api/perfil/domicilio` | domicilio o `null` |
+| PUT | `/api/perfil/domicilio` | `calle`, `numero`, `colonia`, `codigo_postal` (5 dígitos), `referencia` (opcional), `latitud`, `longitud`; crea o reemplaza |
+| DELETE | `/api/perfil/domicilio` | `null`; 404 "No tienes un domicilio registrado." si no hay |
+
+- Respuesta: los campos + `texto` ("Calle Número, Colonia, CP") y `updated_at`.
+- Panel: `domicilio` en `GET /api/admin/usuarios/{id}` y `usuario.domicilio` en `GET /api/admin/solicitudes/{id}` (no en listados).
 
 ## Convenciones
 

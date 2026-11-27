@@ -18,13 +18,14 @@ class PresentadorUsuario
         return $usuario ? self::datos($usuario) : null;
     }
 
-    /** Usuario completo (2 consultas para strikes y suspensión). */
+    /** Usuario completo (3 consultas: strikes, suspensión vigente y veces suspendido). */
     public static function datos(object $u): array
     {
         return self::base($u) + [
             'suspendido' => ReglasCuenta::estaSuspendido($u->id),
             'strikes_activos' => ReglasCuenta::strikesActivos($u->id),
             'limite_strikes' => ReglasCuenta::LIMITE_STRIKES,
+            'veces_suspendido' => ReglasCuenta::vecesSuspendido($u->id),
         ];
     }
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Selector de punto: el pin queda fijo al centro y se mueve el mapa (ElegirUbicacionActivity). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/barra"
+        layout="@layout/layout_barra_secundaria" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <FrameLayout
+            android:id="@+id/contenedorMapa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- La punta del pin marca el centro del mapa -->
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_place"
+            android:translationY="-24dp"
+            app:tint="@color/ym_marca_texto" />
+
+        <Button
+            android:id="@+id/btnMiUbicacion"
+            style="@style/Widget.YelpMe.Boton.Secundario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/espacio_4"
+            android:backgroundTint="@color/ym_superficie"
+            android:text="@string/ubicacion_mia"
+            app:icon="@drawable/ic_my_location"
+            app:iconTint="@color/ym_texto" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/panelUbicacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ym_superficie"
+        android:orientation="vertical"
+        android:padding="@dimen/espacio_4">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ubicacion_ayuda"
+            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno" />
+
+        <Button
+            android:id="@+id/btnUsarUbicacion"
+            style="@style/Widget.YelpMe.Boton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/espacio_3"
+            android:text="@string/ubicacion_usar" />
+    </LinearLayout>
+</LinearLayout>
