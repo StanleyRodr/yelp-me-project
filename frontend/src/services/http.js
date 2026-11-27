@@ -30,7 +30,8 @@ export function registrarSesionExpirada(fn) {
   alExpirarSesion = fn
 }
 
-const ES_LOGIN = /\/(admin\/)?login$/
+// Rutas públicas: un 401 ahí no significa sesión vencida.
+const ES_PUBLICA = /\/((admin\/)?login|recuperacion(\/verificacion)?)$/
 
 http.interceptors.response.use(
   (respuesta) => respuesta,
@@ -43,7 +44,7 @@ http.interceptors.response.use(
 
     const { status, data } = respuesta
     // 401 fuera del login = token inválido o cuenta deshabilitada.
-    if (status === 401 && !ES_LOGIN.test(error.config?.url ?? '')) {
+    if (status === 401 && !ES_PUBLICA.test(error.config?.url ?? '')) {
       alExpirarSesion?.()
     }
 

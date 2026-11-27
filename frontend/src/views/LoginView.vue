@@ -5,7 +5,7 @@
       <FormLogin
         :cargando="auth.cargando"
         :error="auth.error ?? ''"
-        :aviso="route.query.expirada ? 'Tu sesión terminó. Inicia sesión de nuevo para continuar.' : ''"
+        :aviso="aviso"
         :ayuda-demo="esDesarrollo"
         @enviar="entrar"
       />
@@ -24,6 +24,10 @@ const auth = useAuthStore()
 const router = useRouter()
 const route = useRoute()
 const esDesarrollo = import.meta.env.DEV
+
+const aviso = route.query.recuperada
+  ? 'Contraseña actualizada. Inicia sesión.'
+  : route.query.expirada ? 'Tu sesión terminó. Inicia sesión de nuevo para continuar.' : ''
 
 // Un error de un intento anterior no debe aparecer al volver al login.
 onMounted(() => auth.limpiarError())

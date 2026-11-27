@@ -7,7 +7,13 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('../views/LoginView.vue'),
-    meta: { titulo: 'Iniciar sesión', publica: true },
+    meta: { titulo: 'Iniciar sesión', publica: true, soloSinSesion: true },
+  },
+  {
+    path: '/recuperar',
+    name: 'recuperar',
+    component: () => import('../views/RecuperarView.vue'),
+    meta: { titulo: 'Recuperar contraseña', publica: true, soloSinSesion: true },
   },
   {
     path: '/',
@@ -35,7 +41,7 @@ router.beforeEach((to) => {
   if (!to.meta.publica && !auth.autenticado) {
     return { name: 'login', query: to.fullPath !== '/' ? { redirigir: to.fullPath } : {} }
   }
-  if (to.name === 'login' && auth.autenticado) return { name: 'inicio' }
+  if (to.meta.soloSinSesion && auth.autenticado) return { name: 'inicio' }
   return true
 })
 
