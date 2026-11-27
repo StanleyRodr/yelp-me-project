@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="match_parent"
+    android:layout_gravity="end"
+    android:background="#F7D05C"
+    android:orientation="vertical"
+    android:paddingVertical="32dp">
+
+    <TextView
+        android:id="@+id/menuSolicitudes"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="Solicitudes"
+        android:textColor="#1E1E2C"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="#997A28" />
+
+    <TextView
+        android:id="@+id/menuContactos"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="#E8B938"
+        android:gravity="center"
+        android:text="Contactos"
+        android:textColor="#1E1E2C"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="#997A28" />
+
+    <TextView
+        android:id="@+id/menuHistorial"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="Historial"
+        android:textColor="#1E1E2C"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="#997A28" />
+
+    <TextView
+        android:id="@+id/menuPerfil"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="Perfil"
+        android:textColor="#1E1E2C"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="#997A28" />
+
+    <!-- Espacio flexible para empujar Cerrar sesión hacia abajo -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="24dp"
+        android:background="#997A28" />
+
+    <TextView
+        android:id="@+id/menuCerrarSesion"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:text="Cerrar sesión"
+        android:textColor="#D32F2F"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

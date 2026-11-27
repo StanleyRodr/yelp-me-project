@@ -1,6 +1,6 @@
 # 042 — Tarea: Importar proyecto Android
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Proyecto Android de la otra persona a git **tal como llegó**, sin datos personales ni archivos de máquina. Base para ver en el historial qué se cambió después.
@@ -64,3 +64,5 @@ Nada de `build/`, `local.properties` ni `.idea/workspace.xml`.
 
 ## Resultado
 Commit: `chore(mobile): agrega proyecto Android base del diseño`.
+
+Notas: también se quitaron los metadatos XMP/EXIF/C2PA de los PNG (traían el nombre de la autora). `.gitattributes` mantiene `gradlew` con LF.
