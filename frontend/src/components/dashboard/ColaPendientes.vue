@@ -17,7 +17,7 @@
           <span class="cola-titulo">{{ item.titulo }}</span>
           <span class="cola-meta">
             <span><i class="bi bi-person" aria-hidden="true"></i> {{ nombreCompleto(item.usuario) }}</span>
-            <span><i class="bi bi-geo-alt" aria-hidden="true"></i> {{ item.ubicacion_nombre }}</span>
+            <span><i class="bi bi-geo-alt" aria-hidden="true"></i> {{ item.ubicacion_nombre || 'Sin referencia' }}</span>
           </span>
         </span>
 
