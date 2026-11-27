@@ -34,16 +34,16 @@ Cumplir el **CRUD obligatorio desde Android**: el usuario agrega, consulta, modi
 | 063 | [Crear y editar contacto](../tasks/063-tarea-form-contacto-2026-11-26.md) | Formulario con verificación de teléfono y errores de la API. | ✅ |
 | 064 | [Detalle, llamada y favorito](../tasks/064-tarea-detalle-contacto-2026-11-26.md) | Detalle, eliminar, marcar favorito, llamar; barra activa. | ✅ |
 | 065 | [Vínculos y bloqueos](../tasks/065-tarea-vinculos-bloqueos-android-2026-11-26.md) | Quién me tiene (con domicilio), desvincular, bloquear, desbloquear. | ✅ |
-| 066 | [Verificación del plan 010](../tasks/066-tarea-verificacion-010-2026-11-26.md) | CRUD de punta a punta, propiedad, documentación. | ⬜ |
+| 066 | [Verificación del plan 010](../tasks/066-tarea-verificacion-010-2026-11-26.md) | CRUD de punta a punta, propiedad, documentación. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] Crear → consultar → modificar → eliminar contactos desde Android contra la API.
-- [ ] Vinculación automática visible (contacto con cuenta muestra "Vinculado").
-- [ ] Favorito único; la barra llama al favorito con `ACTION_CALL`/`ACTION_DIAL`.
-- [ ] Vínculos con domicilio; desvincular, bloquear y desbloquear funcionan.
-- [ ] Un usuario no ve ni toca contactos ajenos (404).
-- [ ] `php artisan test` y `./gradlew assembleDebug` sin errores.
-- [ ] Commits por tarea, sin atribución; PR a `main`.
+- [x] Crear → consultar → modificar → eliminar contactos desde Android contra la API.
+- [x] Vinculación automática visible (contacto con cuenta muestra "Vinculado").
+- [x] Favorito único; la barra llama al favorito con `ACTION_CALL`/`ACTION_DIAL`.
+- [x] Vínculos con domicilio; desvincular, bloquear y desbloquear funcionan.
+- [x] Un usuario no ve ni toca contactos ajenos (404).
+- [x] `php artisan test` y `./gradlew assembleDebug` sin errores.
+- [x] Commits por tarea, sin atribución; PR a `main`.

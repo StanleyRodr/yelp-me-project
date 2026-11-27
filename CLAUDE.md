@@ -32,10 +32,10 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
 | `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002, 007–009) |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006, 008, 009) |
-| `mobile/`   | Android Studio, Java                        | App del usuario final       | Base y perfil conectados a la API (planes 008–009); contactos y solicitudes en planes 010–011 |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006, 008–010) |
+| `mobile/`   | Android Studio, Java                        | App del usuario final       | Base, perfil y contactos conectados a la API (planes 008–010); solicitudes en el plan 011 |
 
-**Planes pendientes ya escritos** (con sus tareas 061–081 en `docs/tasks/`): 010 contactos en Android, 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
+**Planes pendientes ya escritos** (con sus tareas 067–081 en `docs/tasks/`): 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
 
 Web y Android consumen la **misma API Laravel**.
 
@@ -144,4 +144,10 @@ Perfil (plan 009):
 - **Mapa:** `util/MapaOsm(ctx, FrameLayout, getLifecycle())` envuelve osmdroid con ciclo de vida (sin fugas), filtro oscuro igual que la web, `marcador(...)` (un pin), `soloLectura(true)` para vistas previas y gesto propio dentro de un scroll. Para elegir un punto: `ElegirUbicacionActivity.intent(ctx, lat, lng, titulo)` con `StartActivityForResult` → `EXTRA_LAT`/`EXTRA_LNG` (pin fijo al centro, "Mi ubicación" con permiso). StrictMode (`detectActivityLeaks`) en debug.
 - **Perfil:** `ServicioPerfil` (perfil, foto, contraseña, domicilio). Pantallas secundarias (`EditarPerfilActivity`, `DomicilioActivity`, `PasswordActivity`) con `layout_barra_secundaria` y resultado al perfil para el Snackbar.
 - **Foto:** Photo Picker (sin permisos) + `util/Imagenes.comprimir` (1024 px, JPEG ≤ 1 MB, en hilo aparte) + multipart `foto`. La URL de la foto sale de `APP_URL`: en el emulador se ve con `adb reverse` (`localhost:8000`).
+Contactos (plan 010):
+- **Pantallas:** `ui/contactos` (`ContactosActivity` lista con búsqueda sin acentos, `DetalleContactoActivity`, `FormContactoActivity.nuevo/editar` con verificación del teléfono a los 600 ms) y `ui/vinculos` (`VinculosActivity` "Quién me tiene" con domicilio en mapa, `BloqueosActivity`). Las pantallas secundarias devuelven `EXTRA_MENSAJE` para el Snackbar de quien las abrió. `ServicioContactos` cubre contactos, favorito, teléfonos, vínculos y bloqueos.
+- **Llamadas:** `util/Llamadas` (crear en `onCreate`): `ACTION_CALL` con `CALL_PHONE`, si se niega `ACTION_DIAL`. Solo para contactos; los servicios de la barra siguen simulados.
+- **Favorito:** `api/Favorito` en memoria por usuario (la lista lo actualiza; detalle y formulario lo invalidan). La barra muestra su nombre y lo llama; sin favorito abre Contactos.
+- Mapa dentro de un diálogo: meterlo en un marco de alto fijo y llamar `MapaOsm.liberar()` al cerrar.
+
 - **Generar íconos nuevos:** glifo de `frontend/node_modules/material-symbols/material-symbols-outlined.woff2` con fontTools (`TransformPen(pen, (1,0,0,-1,0,960))`, viewport 960), mismo formato que los `ic_*.xml` existentes.
