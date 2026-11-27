@@ -252,6 +252,8 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 | `strikes` | Se anulan (`activo = 0` + quién, cuándo y por qué). |
 | `suspensiones` | Historial; nunca se borran. |
 | `contactos` | **Se borran** (decisión del usuario sobre su agenda). |
+| `domicilios` | **Se borra** cuando el usuario lo quita (dato propio, sin historial). |
+| `codigos_recuperacion` | Nunca se borran; se marcan usados (`usado_en`) o vencen. |
 | `bloqueos` | **Se borran** al desbloquear. |
 | `solicitud_servicio` | **Se borra** la fila al quitar un servicio. |
 | `personal_access_tokens` | Se borran al cerrar sesión (Sanctum). |
