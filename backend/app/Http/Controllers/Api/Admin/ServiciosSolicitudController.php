@@ -39,6 +39,6 @@ class ServiciosSolicitudController extends Controller
             DB::table('solicitudes')->where('id', $id)->update(['updated_at' => now()]);
         });
 
-        return $this->respuesta(PresentadorSolicitud::porId($id), 'Servicios actualizados');
+        return $this->respuesta(PresentadorSolicitud::detalle($id), 'Servicios actualizados');
     }
 }

@@ -102,6 +102,16 @@ class DomicilioTest extends TestCase
 
         $this->getJson("/api/admin/solicitudes/{$solicitud}")->assertOk()
             ->assertJsonPath('datos.usuario.domicilio.calle', 'Av. Ignacio Zaragoza');
+
+        // Las acciones del panel devuelven el mismo detalle (el panel reemplaza la solicitud con la respuesta).
+        $pendiente = DB::table('solicitudes')->where('usuario_id', $carlos)->where('estado', 'Pendiente')->value('id');
+        $this->putJson("/api/admin/solicitudes/{$pendiente}/servicios", ['servicios' => [1]])->assertOk()
+            ->assertJsonPath('datos.usuario.domicilio.calle', 'Av. Ignacio Zaragoza');
+        $this->putJson("/api/admin/solicitudes/{$pendiente}/estado", ['estado' => 'Enviado'])->assertOk()
+            ->assertJsonPath('datos.usuario.domicilio.calle', 'Av. Ignacio Zaragoza');
+
+        // Los listados no lo traen.
+        $this->getJson('/api/admin/solicitudes')->assertOk()->assertJsonMissingPath('datos.0.usuario.domicilio');
     }
 
     public function test_sesion_trae_veces_suspendido(): void

@@ -26,6 +26,7 @@
       </TarjetaSeccion>
 
       <div class="rejilla-lateral">
+        <TarjetaDomicilio :domicilio="u.domicilio" />
         <TarjetaSeccion titulo="Strikes" sin-relleno>
           <HistorialStrikes :strikes="u.strikes" @anular="pedirAnulacion" />
         </TarjetaSeccion>
@@ -46,6 +47,7 @@ import HistorialSolicitudes from '../components/usuarios/HistorialSolicitudes.vu
 import HistorialStrikes from '../components/usuarios/HistorialStrikes.vue'
 import HistorialSuspensiones from '../components/usuarios/HistorialSuspensiones.vue'
 import TarjetaSeccion from '../components/comunes/TarjetaSeccion.vue'
+import TarjetaDomicilio from '../components/comunes/TarjetaDomicilio.vue'
 import EstadoVacio from '../components/comunes/EstadoVacio.vue'
 import SkeletonDetalle from '../components/comunes/SkeletonDetalle.vue'
 import ModalMotivo from '../components/modals/ModalMotivo.vue'

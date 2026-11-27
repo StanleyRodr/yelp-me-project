@@ -17,6 +17,11 @@
         <dt>Ubicación</dt>
         <dd>
           {{ solicitud.ubicacion_nombre || 'Sin referencia' }}
+          <span v-if="desdeDomicilio" class="d-block">
+            <span class="etiqueta-domicilio">
+              <span class="material-symbols-outlined" aria-hidden="true">home</span>Enviada desde su domicilio
+            </span>
+          </span>
           <span class="d-block secundario ym-cifras">{{ solicitud.latitud }}, {{ solicitud.longitud }}</span>
         </dd>
       </div>
@@ -41,13 +46,17 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import ListaServicios from '../comunes/ListaServicios.vue'
 import { fechaHora, nombreCompleto } from '../../utils/formato'
 
-defineProps({
+const props = defineProps({
   solicitud: { type: Object, required: true },
   catalogo: { type: Object, required: true },
 })
+
+// La app pone "Domicilio: …" en ubicacion_nombre cuando usa el domicilio en lugar del GPS (plan 011).
+const desdeDomicilio = computed(() => (props.solicitud.ubicacion_nombre ?? '').startsWith('Domicilio:'))
 </script>
 
 <style scoped>
@@ -93,5 +102,21 @@ dd {
   .datos {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+.etiqueta-domicilio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ym-espacio-1);
+  margin-top: var(--ym-espacio-1);
+  padding: 0 var(--ym-espacio-2);
+  border-radius: var(--ym-radio);
+  background: var(--ym-marca-suave);
+  color: var(--ym-marca-texto);
+  font-size: var(--ym-texto-sm);
+  font-weight: var(--ym-peso-medio);
+}
+
+.etiqueta-domicilio .material-symbols-outlined {
+  font-size: 1rem;
 }
 </style>

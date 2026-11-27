@@ -10,7 +10,7 @@ import L from 'leaflet'
 import { ESTADO_POR_CLAVE } from '../../constantes/estados'
 
 const props = defineProps({
-  /** [{ id, latitud, longitud, estado, titulo }] */
+  /** [{ id, latitud, longitud, estado, titulo }]; con `icono` (sin estado) usa el color de marca */
   marcadores: { type: Array, default: () => [] },
   seleccionadoId: { type: Number, default: null },
   /** Centro inicial: Misantla, Ver. */
@@ -31,7 +31,9 @@ let capa = null
 const porId = new Map()
 
 function icono(marcador, seleccionado) {
-  const estado = ESTADO_POR_CLAVE[marcador.estado] ?? { token: 'cancelado', icono: 'place' }
+  const estado = marcador.icono
+    ? { token: 'marca', icono: marcador.icono }
+    : ESTADO_POR_CLAVE[marcador.estado] ?? { token: 'cancelado', icono: 'place' }
   return L.divIcon({
     className: '',
     html: `<span class="marcador marcador-${estado.token}${seleccionado ? ' marcador-seleccionado' : ''}">`
@@ -48,7 +50,7 @@ function pintar() {
   for (const m of props.marcadores) {
     const marcador = L.marker([m.latitud, m.longitud], {
       icon: icono(m, m.id === props.seleccionadoId),
-      title: `${m.titulo} (${m.estado})`,
+      title: m.estado ? `${m.titulo} (${m.estado})` : m.titulo,
       keyboard: true,
       riseOnHover: true,
     })
@@ -164,6 +166,7 @@ onBeforeUnmount(() => {
 .mapa :deep(.marcador-terminado) { --m: var(--ym-estado-terminado); }
 .mapa :deep(.marcador-rechazado) { --m: var(--ym-estado-rechazado); }
 .mapa :deep(.marcador-cancelado) { --m: var(--ym-estado-cancelado); }
+.mapa :deep(.marcador-marca) { --m: var(--ym-marca); }
 
 .mapa :deep(.leaflet-marker-icon:focus-visible) {
   outline: 2px solid var(--ym-foco);

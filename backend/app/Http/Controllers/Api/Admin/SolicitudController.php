@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Support\PresentadorDomicilio;
 use App\Support\PresentadorSolicitud;
 use App\Support\Solicitudes;
 use Illuminate\Http\JsonResponse;
@@ -34,10 +33,6 @@ class SolicitudController extends Controller
     /** GET /api/admin/solicitudes/{id} */
     public function show(int $id): JsonResponse
     {
-        $solicitud = PresentadorSolicitud::porId($id) ?? abort(404);
-        // Solo en el detalle (en el listado sería una consulta extra por fila).
-        $solicitud['usuario']['domicilio'] = PresentadorDomicilio::deUsuario($solicitud['usuario_id']);
-
-        return $this->respuesta($solicitud);
+        return $this->respuesta(PresentadorSolicitud::detalle($id) ?? abort(404));
     }
 }

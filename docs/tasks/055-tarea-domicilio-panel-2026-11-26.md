@@ -1,6 +1,6 @@
 # 055 — Tarea: Domicilio en el panel
 
-> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ⬜ Pendiente
+> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ✅ Terminada
 
 ## Objetivo
 El admin ve el domicilio del usuario en su detalle y en el detalle de cada solicitud.
@@ -29,3 +29,5 @@ Sin domicilio (los admins no tienen).
 
 ## Resultado
 Commit: `feat(frontend): muestra el domicilio en usuarios y solicitudes`.
+
+Notas: `TarjetaDomicilio` en el lateral del detalle de usuario y debajo del detalle en Atención. `MapaBase` acepta marcadores con `icono` propio (color de marca, sin estado). Las acciones del panel (`/estado`, `/servicios`) devuelven `PresentadorSolicitud::detalle` con `usuario.domicilio`: el store reemplaza la solicitud con la respuesta y sin esto el domicilio desaparecía tras actuar (prueba en `DomicilioTest`). `npm run build` OK. **Pendiente:** revisión visual en navegador (extensión de Chrome sin conexión).
