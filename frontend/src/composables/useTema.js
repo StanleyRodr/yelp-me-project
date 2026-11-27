@@ -1,8 +1,9 @@
-import { readonly, ref } from 'vue'
+import { computed, readonly, ref } from 'vue'
 
 /**
- * Tema del panel: 'claro' | 'oscuro' | 'sistema' (por defecto).
- * Se guarda en localStorage['ym_tema'] y se aplica en <html> con
+ * Tema del panel: 'claro' | 'oscuro'.
+ * Sin elección guardada sigue al sistema (prefers-color-scheme); al elegir
+ * se guarda en localStorage['ym_tema'] y se aplica en <html> con
  * data-theme (tokens.css) y data-bs-theme (Bootstrap 5.3).
  * index.html repite la lectura inicial para evitar el parpadeo al cargar.
  */
@@ -10,33 +11,36 @@ export const CLAVE_TEMA = 'ym_tema'
 export const TEMAS = [
   { valor: 'claro', etiqueta: 'Claro', icono: 'bi-sun' },
   { valor: 'oscuro', etiqueta: 'Oscuro', icono: 'bi-moon' },
-  { valor: 'sistema', etiqueta: 'Sistema', icono: 'bi-circle-half' },
 ]
 
-const preferencia = ref('sistema')
+/** null = sin elección: sigue al sistema */
+const preferencia = ref(null)
+const sistemaOscuro = ref(false)
 const consulta = typeof window !== 'undefined' && window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null
+
+const tema = computed(() => preferencia.value ?? (sistemaOscuro.value ? 'oscuro' : 'claro'))
 
 function leer() {
   try {
     const guardado = localStorage.getItem(CLAVE_TEMA)
-    return TEMAS.some((t) => t.valor === guardado) ? guardado : 'sistema'
+    return TEMAS.some((t) => t.valor === guardado) ? guardado : null
   } catch {
-    return 'sistema'
+    return null
   }
 }
 
 function aplicar() {
-  const oscuro = preferencia.value === 'oscuro' || (preferencia.value === 'sistema' && Boolean(consulta?.matches))
-  const tema = oscuro ? 'dark' : 'light'
-  document.documentElement.dataset.theme = tema
-  document.documentElement.dataset.bsTheme = tema
+  sistemaOscuro.value = Boolean(consulta?.matches)
+  const valor = tema.value === 'oscuro' ? 'dark' : 'light'
+  document.documentElement.dataset.theme = valor
+  document.documentElement.dataset.bsTheme = valor
 }
 
 /** Llamar una vez en main.js antes de montar. */
 export function iniciarTema() {
   preferencia.value = leer()
   aplicar()
-  // Con "Sistema", el panel sigue el cambio del sistema sin recargar.
+  // Sin elección guardada, el panel sigue el cambio del sistema sin recargar.
   consulta?.addEventListener('change', aplicar)
 }
 
@@ -51,5 +55,5 @@ export function useTema() {
     aplicar()
   }
 
-  return { preferencia: readonly(preferencia), elegir, TEMAS }
+  return { tema: readonly(tema), elegir, TEMAS }
 }

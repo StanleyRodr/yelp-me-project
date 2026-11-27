@@ -1,5 +1,5 @@
 <template>
-  <!-- Un clic pasa al siguiente tema: Claro → Oscuro → Sistema → Claro -->
+  <!-- Un clic alterna Claro ↔ Oscuro -->
   <button
     type="button"
     class="btn selector"
@@ -16,14 +16,14 @@
 import { computed } from 'vue'
 import { useTema } from '../../composables/useTema'
 
-/** Botón de ícono que cicla Claro / Oscuro / Sistema. */
+/** Botón de ícono que alterna Claro / Oscuro. */
 defineProps({
   /** true sobre la barra de marca (navbar) */
   sobreMarca: { type: Boolean, default: false },
 })
 
-const { preferencia, elegir, TEMAS } = useTema()
-const indice = computed(() => Math.max(0, TEMAS.findIndex((t) => t.valor === preferencia.value)))
+const { tema, elegir, TEMAS } = useTema()
+const indice = computed(() => Math.max(0, TEMAS.findIndex((t) => t.valor === tema.value)))
 const actual = computed(() => TEMAS[indice.value])
 const siguiente = computed(() => TEMAS[(indice.value + 1) % TEMAS.length])
 const descripcion = computed(() => `Tema: ${actual.value.etiqueta}. Cambiar a ${siguiente.value.etiqueta}`)
