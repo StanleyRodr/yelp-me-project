@@ -259,6 +259,15 @@ Uno por usuario (tabla `domicilios`, 1:1). El `usuario_id` sale del token.
 - La librería necesita la extensión PHP `sodium` (en XAMPP: quitar el `;` de `extension=sodium` en `php.ini`).
 - `PUT /api/sesion/fcm` `{ fcm_token }` (rol usuario): guarda el token del dispositivo; si otra cuenta tenía el mismo token, se le quita (también al iniciar sesión y al registrarse).
 - Un token que FCM rechaza (no existe o inválido) se borra del usuario; los errores van al log y no cambian la respuesta.
+- **Eventos** (en `App\Support\Avisos`, después del commit de la transacción):
+
+| Evento | Destino | Título / cuerpo | Datos | Canal |
+|---|---|---|---|---|
+| El usuario crea una solicitud | Contactos vinculados del creador con cuenta activa y token | "Carlos pidió ayuda" / título | `tipo=alerta_contacto`, `nombre`, `telefono`, `titulo`, `latitud`, `longitud`, `ubicacion_nombre` | `alertas` |
+| El admin la pasa a Enviado / Terminado | Solicitante | "Tu ayuda va en camino" / "Tu solicitud se marcó como terminada" + título | `tipo=estado`, `solicitud_id`, `estado` | `estado` |
+| El admin la rechaza | Solicitante | "Tu solicitud fue rechazada" / motivo | ídem | `estado` |
+
+Los cambios que hace el propio usuario (cancelar, terminar) no avisan.
 
 ## Convenciones
 

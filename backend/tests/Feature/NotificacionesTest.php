@@ -75,4 +75,118 @@ class NotificacionesTest extends TestCase
 
         $this->assertInstanceOf(NotificadorNulo::class, $this->app->make(Notificador::class));
     }
+
+    // ---------- Envíos (tarea 073) ----------
+
+    private function ponerToken(string $correo, ?string $token): void
+    {
+        DB::table('usuarios')->where('correo', $correo)->update(['fcm_token' => $token]);
+    }
+
+    private function crearSolicitud(array $cambios = []): int
+    {
+        return $this->postJson('/api/solicitudes', array_merge([
+            'titulo' => 'Me caí en la calle',
+            'latitud' => 19.9311,
+            'longitud' => -96.8519,
+            'ubicacion_nombre' => 'Frente al parque',
+            'servicios' => [2],
+        ], $cambios))->assertCreated()->json('datos.id');
+    }
+
+    public function test_crear_solicitud_avisa_a_los_contactos_vinculados_con_token(): void
+    {
+        // Carlos tiene a María y José (vinculados) y a "Mamá" (sin cuenta).
+        $this->ponerToken(self::MARIA, 'token-maria');
+        $this->ponerToken('jose@correo.com', 'token-jose');
+        $this->ponerToken('ana@correo.com', 'token-ana'); // no es contacto de Carlos
+
+        $this->como(self::CARLOS);
+        $this->crearSolicitud();
+
+        $this->assertCount(2, $this->notificador->enviados);
+        $alerta = $this->notificador->a('token-maria')[0];
+        $this->assertSame('Carlos pidió ayuda', $alerta['titulo']);
+        $this->assertSame('Me caí en la calle', $alerta['cuerpo']);
+        $this->assertSame('alertas', $alerta['canal']);
+        $this->assertSame('alerta_contacto', $alerta['datos']['tipo']);
+        $this->assertSame('Carlos Ramírez Soto', $alerta['datos']['nombre']);
+        $this->assertSame('2351000001', $alerta['datos']['telefono']);
+        $this->assertSame('Frente al parque', $alerta['datos']['ubicacion_nombre']);
+        $this->assertSame(19.9311, (float) $alerta['datos']['latitud']);
+        $this->assertIsString($alerta['datos']['longitud']);
+        $this->assertCount(1, $this->notificador->a('token-jose'));
+        $this->assertSame([], $this->notificador->a('token-ana'));
+    }
+
+    public function test_no_avisa_a_cuentas_deshabilitadas_ni_sin_token(): void
+    {
+        $this->ponerToken(self::MARIA, 'token-maria');
+        $this->ponerToken('jose@correo.com', null);
+        DB::table('usuarios')->where('correo', self::MARIA)->update(['activo' => false]);
+
+        $this->como(self::CARLOS);
+        $this->crearSolicitud(['servicios' => []]);
+
+        $this->assertSame([], $this->notificador->enviados);
+    }
+
+    public function test_cambios_del_admin_avisan_al_solicitante(): void
+    {
+        $this->ponerToken(self::CARLOS, 'token-carlos');
+        $this->como(self::CARLOS);
+        $enviar = $this->crearSolicitud();
+        $rechazar = $this->crearSolicitud();
+        $this->notificador->enviados = [];
+
+        $this->como('admin@yelpme.com');
+        $this->putJson("/api/admin/solicitudes/{$enviar}/estado", ['estado' => 'Enviado'])->assertOk();
+        $this->putJson("/api/admin/solicitudes/{$enviar}/estado", ['estado' => 'Terminado'])->assertOk();
+        $this->putJson("/api/admin/solicitudes/{$rechazar}/estado", ['estado' => 'Rechazado', 'motivo' => 'Era una prueba'])->assertOk();
+
+        $avisos = $this->notificador->a('token-carlos');
+        $this->assertSame(['Tu ayuda va en camino', 'Tu solicitud se marcó como terminada', 'Tu solicitud fue rechazada'],
+            array_column($avisos, 'titulo'));
+        $this->assertSame('Era una prueba', $avisos[2]['cuerpo']);
+        $this->assertSame(['tipo' => 'estado', 'solicitud_id' => (string) $enviar, 'estado' => 'Enviado'], $avisos[0]['datos']);
+        $this->assertSame('estado', $avisos[0]['canal']);
+    }
+
+    public function test_cambios_del_propio_usuario_no_avisan(): void
+    {
+        $this->ponerToken(self::CARLOS, 'token-carlos');
+        $this->como(self::CARLOS);
+        $id = $this->crearSolicitud();
+        $this->putJson("/api/solicitudes/{$id}/estado", ['estado' => 'Cancelado', 'motivo' => 'Ya estoy bien'])->assertOk();
+
+        $this->assertSame([], $this->notificador->a('token-carlos'));
+    }
+
+    public function test_si_el_cambio_falla_no_hay_aviso(): void
+    {
+        $this->ponerToken(self::CARLOS, 'token-carlos');
+        $this->como(self::CARLOS);
+        $id = $this->crearSolicitud(['servicios' => []]);
+        $this->notificador->enviados = [];
+
+        // Sin servicios el admin no puede enviar: 409 y nada que avisar.
+        $this->como('admin@yelpme.com');
+        $this->putJson("/api/admin/solicitudes/{$id}/estado", ['estado' => 'Enviado'])->assertStatus(409);
+
+        $this->assertSame([], $this->notificador->enviados);
+    }
+
+    public function test_un_notificador_que_falla_no_cambia_la_respuesta(): void
+    {
+        $this->ponerToken(self::MARIA, 'token-maria');
+        $this->app->instance(Notificador::class, new class implements Notificador {
+            public function enviar(string $token, string $titulo, string $cuerpo, array $datos = [], string $canal = 'estado'): bool
+            {
+                throw new \RuntimeException('FCM caído');
+            }
+        });
+
+        $this->como(self::CARLOS);
+        $this->crearSolicitud();
+    }
 }
