@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Support\Notificador;
+use App\Support\NotificadorFcm;
+use App\Support\NotificadorNulo;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Kreait\Firebase\Contract\Messaging;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +18,37 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Notificaciones push (plan 012): FCM si hay credenciales; si no, no se envía nada.
+        $this->app->singleton(Notificador::class, function ($app) {
+            $credenciales = self::credencialesFirebase();
+            if ($credenciales === null) {
+                return new NotificadorNulo();
+            }
+            config(['firebase.projects.app.credentials' => $credenciales]);
+
+            return new NotificadorFcm($app->make(Messaging::class));
+        });
+    }
+
+    /**
+     * Producción: FIREBASE_CREDENTIALS_BASE64 (JSON en base64, tiene prioridad).
+     * Local: archivo FIREBASE_CREDENTIALS (por defecto storage/app/firebase/credenciales.json).
+     * Devuelve el arreglo o la ruta absoluta, o null si no hay credenciales usables.
+     */
+    private static function credencialesFirebase(): array|string|null
+    {
+        $base64 = config('services.firebase.credenciales_base64');
+        if ($base64) {
+            $json = json_decode((string) base64_decode($base64, true), true);
+
+            return is_array($json) && isset($json['private_key']) ? $json : null;
+        }
+
+        $ruta = (string) config('services.firebase.credenciales');
+        $esAbsoluta = str_starts_with($ruta, '/') || preg_match('/^[A-Za-z]:/', $ruta) === 1;
+        $absoluta = $esAbsoluta ? $ruta : base_path($ruta);
+
+        return is_readable($absoluta) ? $absoluta : null;
     }
 
     /**

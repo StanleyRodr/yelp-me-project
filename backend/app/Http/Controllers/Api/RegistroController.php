@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Support\Credenciales;
 use App\Support\Normalizar;
 use App\Support\PresentadorUsuario;
+use App\Support\TokensFcm;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -47,11 +48,12 @@ class RegistroController extends Controller
                 'correo' => $datos['correo'],
                 'password' => Hash::make($datos['password']),
                 'rol' => 'usuario',
-                'fcm_token' => $datos['fcm_token'] ?? null,
                 'activo' => true,
                 'created_at' => $ahora,
                 'updated_at' => $ahora,
             ]);
+
+            TokensFcm::asignar($id, $datos['fcm_token'] ?? null);
 
             // Plan principal 6.1: los contactos de otros usuarios con este
             // teléfono quedan vinculados a la cuenta nueva.
