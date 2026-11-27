@@ -17,11 +17,13 @@ use App\Http\Controllers\Api\FotoPerfilController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\PerfilController;
 use App\Http\Controllers\Api\PingController;
+use App\Http\Controllers\Api\RecuperacionController;
 use App\Http\Controllers\Api\RegistroController;
 use App\Http\Controllers\Api\ServicioController;
 use App\Http\Controllers\Api\SesionController;
 use App\Http\Controllers\Api\SolicitudController;
 use App\Http\Controllers\Api\TelefonoController;
+use App\Http\Controllers\Api\VerificacionRecuperacionController;
 use App\Http\Controllers\Api\VinculoController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,11 @@ Route::middleware('throttle:acceso')->group(function () {
     Route::post('/registro', [RegistroController::class, 'store']);
     Route::post('/login', [SesionController::class, 'store']);
     Route::post('/admin/login', [AdminSesionController::class, 'store']);
+
+    // Recuperar contraseña (cualquier rol, plan principal 5.1)
+    Route::post('/recuperacion', [RecuperacionController::class, 'store']);
+    Route::post('/recuperacion/verificacion', [VerificacionRecuperacionController::class, 'store']);
+    Route::put('/recuperacion', [RecuperacionController::class, 'update']);
 });
 
 // Con token y cuenta activa: cualquier rol

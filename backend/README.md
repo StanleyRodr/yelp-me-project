@@ -119,6 +119,20 @@ Una cuenta **suspendida** sí inicia sesión (`suspendido: true`); la app bloque
 
 Middlewares para rutas nuevas: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` (panel, prefijo `/api/admin`). Los grupos ya están en `routes/api.php`.
 
+### Recuperación de contraseña (cualquier rol)
+
+Públicas, con `throttle:acceso` (5 por minuto por correo + IP). Lógica en `App\Support\Recuperacion`; tabla `codigos_recuperacion` (se guarda el hash del código).
+
+| Método | Ruta | Cuerpo | Respuesta |
+|---|---|---|---|
+| POST | `/api/recuperacion` | `correo` | 200 "Si el correo está registrado, te enviamos un código." (igual si no existe o está deshabilitada) |
+| POST | `/api/recuperacion/verificacion` | `correo`, `codigo` | 200 `{ valido: true }` · 422 `errores.codigo` "El código no es válido o ya venció." |
+| PUT | `/api/recuperacion` | `correo`, `codigo`, `password`, `password_confirmation` | 200 "Contraseña actualizada. Inicia sesión." · 422 |
+
+- Código de 6 dígitos, vence en 15 min, 5 intentos fallidos lo invalidan. Pedir otro anula el anterior.
+- Al cambiar la contraseña se borran **todos** los tokens de la cuenta.
+- En desarrollo (`MAIL_MAILER=log`) el correo queda en `storage/logs/laravel.log`: buscar "Tu código de YelpMe". Para SMTP ver el comentario en `.env.example`.
+
 ## Contactos de confianza (app, rol `usuario`)
 
 | Método | Ruta | Cuerpo | Respuesta (`datos`) |

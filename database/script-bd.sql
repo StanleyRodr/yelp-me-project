@@ -211,6 +211,24 @@ CREATE TABLE personal_access_tokens (
     INDEX idx_pat_expires_at (expires_at)
 ) ENGINE=InnoDB;
 
+-- ---------------------------------------------------------------------
+-- 10. codigos_recuperacion: códigos de 6 dígitos para recuperar la contraseña
+--     (plan principal 5.1). Se guarda el hash, nunca el código. No se borran:
+--     vigente = usado_en IS NULL AND expira_en > ahora AND intentos < 5.
+--     Pedir otro código marca los anteriores como usados.
+-- ---------------------------------------------------------------------
+CREATE TABLE codigos_recuperacion (
+    id          BIGINT UNSIGNED  AUTO_INCREMENT PRIMARY KEY,
+    usuario_id  BIGINT UNSIGNED  NOT NULL,
+    codigo      VARCHAR(255)     NOT NULL,
+    intentos    TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    expira_en   TIMESTAMP        NOT NULL,
+    usado_en    TIMESTAMP        NULL,
+    created_at  TIMESTAMP        NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_codrec_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE RESTRICT,
+    INDEX idx_codrec_usuario (usuario_id, usado_en)
+) ENGINE=InnoDB;
+
 -- =====================================================================
 --  Datos iniciales
 -- =====================================================================

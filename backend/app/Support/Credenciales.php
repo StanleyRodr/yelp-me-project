@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
  */
 class Credenciales
 {
+    /** Contraseña nueva (registro y recuperación). Espera `password_confirmation`. */
+    public const REGLAS_PASSWORD = ['required', 'string', 'min:8', 'max:72', 'confirmed'];
+
     public const MENSAJE_INCORRECTAS = 'Correo, teléfono o contraseña incorrectos.';
 
     /** Hash bcrypt (cost 12) de un valor aleatorio descartado: nunca coincide con nada. */

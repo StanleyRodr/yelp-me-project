@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Credenciales;
 use App\Support\Normalizar;
 use App\Support\PresentadorUsuario;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +32,7 @@ class RegistroController extends Controller
             'apellido_materno' => ['nullable', 'string', 'max:60'],
             'telefono' => ['required', 'digits:10', 'unique:usuarios,telefono'],
             'correo' => ['required', 'email', 'max:150', 'unique:usuarios,correo'],
-            'password' => ['required', 'string', 'min:8', 'max:72', 'confirmed'],
+            'password' => Credenciales::REGLAS_PASSWORD,
             'fcm_token' => ['nullable', 'string', 'max:255'],
         ]);
 
