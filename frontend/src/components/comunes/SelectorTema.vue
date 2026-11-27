@@ -1,59 +1,52 @@
 <template>
-  <!-- Dentro de un dropdown existente (menú del usuario) -->
-  <template v-if="modo === 'items'">
-    <li><h6 class="dropdown-header">Tema</h6></li>
-    <li v-for="t in TEMAS" :key="t.valor">
-      <button
-        type="button"
-        class="dropdown-item"
-        role="menuitemradio"
-        :aria-checked="preferencia === t.valor"
-        :class="{ active: preferencia === t.valor }"
-        @click="elegir(t.valor)"
-      >
-        <i :class="['bi', t.icono, 'me-2']" aria-hidden="true"></i>{{ t.etiqueta }}
-      </button>
-    </li>
-  </template>
-
-  <!-- Botón propio con su menú (login y recuperación) -->
-  <div v-else class="dropdown">
-    <button
-      type="button"
-      class="btn btn-outline-secondary btn-sm"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      <i :class="['bi', actual.icono]" aria-hidden="true"></i>
-      <span class="visually-hidden">Tema: {{ actual.etiqueta }}</span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li v-for="t in TEMAS" :key="t.valor">
-        <button
-          type="button"
-          class="dropdown-item"
-          role="menuitemradio"
-          :aria-checked="preferencia === t.valor"
-          :class="{ active: preferencia === t.valor }"
-          @click="elegir(t.valor)"
-        >
-          <i :class="['bi', t.icono, 'me-2']" aria-hidden="true"></i>{{ t.etiqueta }}
-        </button>
-      </li>
-    </ul>
-  </div>
+  <!-- Un clic pasa al siguiente tema: Claro → Oscuro → Sistema → Claro -->
+  <button
+    type="button"
+    class="btn selector"
+    :class="sobreMarca ? 'selector-marca' : 'btn-outline-secondary'"
+    :title="descripcion"
+    :aria-label="descripcion"
+    @click="elegir(siguiente.valor)"
+  >
+    <i :class="['bi', actual.icono]" aria-hidden="true"></i>
+  </button>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import { useTema } from '../../composables/useTema'
 
-/** Selector Claro / Oscuro / Sistema. */
+/** Botón de ícono que cicla Claro / Oscuro / Sistema. */
 defineProps({
-  /** 'items': opciones sueltas para un dropdown existente; 'boton': botón con menú propio */
-  modo: { type: String, default: 'boton' },
+  /** true sobre la barra de marca (navbar) */
+  sobreMarca: { type: Boolean, default: false },
 })
 
 const { preferencia, elegir, TEMAS } = useTema()
-const actual = computed(() => TEMAS.find((t) => t.valor === preferencia.value) ?? TEMAS[2])
+const indice = computed(() => Math.max(0, TEMAS.findIndex((t) => t.valor === preferencia.value)))
+const actual = computed(() => TEMAS[indice.value])
+const siguiente = computed(() => TEMAS[(indice.value + 1) % TEMAS.length])
+const descripcion = computed(() => `Tema: ${actual.value.etiqueta}. Cambiar a ${siguiente.value.etiqueta}`)
 </script>
+
+<style scoped>
+.selector {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: var(--ym-texto-lg);
+}
+
+.selector-marca {
+  color: var(--ym-sobre-marca);
+  border: 1px solid transparent;
+}
+
+.selector-marca:hover,
+.selector-marca:focus-visible {
+  color: var(--ym-sobre-marca);
+  border-color: var(--ym-sobre-marca-tenue);
+}
+</style>

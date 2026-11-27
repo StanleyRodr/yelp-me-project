@@ -38,6 +38,8 @@
           </li>
         </ul>
 
+        <SelectorTema sobre-marca class="me-2" />
+
         <div v-if="admin" class="dropdown">
           <button
             class="btn usuario dropdown-toggle"
@@ -54,8 +56,6 @@
                 <i class="bi bi-person me-2" aria-hidden="true"></i>Mi perfil
               </RouterLink>
             </li>
-            <li><hr class="dropdown-divider" /></li>
-            <SelectorTema modo="items" />
             <li><hr class="dropdown-divider" /></li>
             <li>
               <button type="button" class="dropdown-item" @click="$emit('cerrar-sesion')">
