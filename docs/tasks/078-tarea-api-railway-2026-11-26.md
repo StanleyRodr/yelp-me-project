@@ -1,6 +1,6 @@
 # 078 — Tarea: API en Railway
 
-> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ⬜ Pendiente
+> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ✅ Hecha
 
 ## Objetivo
 Servicio `api` de Railway desde GitHub, con variables, volumen para fotos y dominio público.
@@ -49,8 +49,19 @@ curl -X POST https://<api>/api/login -H "Accept: application/json" -d "correo=ca
 ```
 Subir una foto (curl multipart o desde el panel) → la URL `https://…/storage/perfiles/…` responde 200. Redesplegar → la foto sigue.
 
+## Cómo se hizo (2026-11-27)
+- `railway add --service api --repo StanleyRodr/yelp-me-project --branch feature/despliegue` con las variables no secretas (`APP_KEY` generada con `key:generate --show`, `DB_*` como referencias `${{MySQL.*}}`, `LOG_CHANNEL=stderr`, `RAILPACK_SKIP_MIGRATIONS=true`, `MAIL_MAILER=brevo`).
+- `railway domain --service api` → `https://api-production-9782e676.up.railway.app` (en `APP_URL`).
+- **(Tú) en el panel:** Root Directory `/backend`, Healthcheck `/api/ping` (el CLI `environment edit` no los aplicó) y secretos: `BREVO_API_KEY`, `MAIL_FROM_ADDRESS`, `ADMIN_PASSWORD`, `DEMO_PASSWORD`, `FIREBASE_CREDENTIALS_BASE64` (PowerShell: `[Convert]::ToBase64String([IO.File]::ReadAllBytes("<ruta absoluta>"))`, con ruta **absoluta**).
+- Railpack: PHP 8.2, FrankenPHP, `sodium` instalada, config en caché.
+- Demo: `railway ssh --service api -- php artisan db:seed --force`.
+- **Volumen:** el plan Free da un solo volumen (0.5 GB) y lo usa MySQL → sin volumen en `api`, las fotos de perfil se pierden al redesplegar. Con Hobby: volumen en `/app/storage/app/public`.
+
 ## Verificación
-Ping, login, foto persistente, logs sin errores (`railway logs --service api`).
+- `/api/ping` 200 con el dominio de Railway; 7 usuarios y 11 solicitudes de demo.
+- `Notificador` = `NotificadorFcm` (credenciales base64 válidas); mailer `brevo`.
+- `admin/login` con `Admin123*` → 401 (`ADMIN_PASSWORD` aplicada).
+- Pendiente: foto persistente (depende del volumen) y correo real (tarea 081).
 
 ## Resultado
 Commit: `docs(despliegue): documenta la API en Railway`.
