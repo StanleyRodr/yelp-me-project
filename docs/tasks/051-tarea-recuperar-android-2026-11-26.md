@@ -1,6 +1,6 @@
 # 051 — Tarea: Recuperar contraseña (app)
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 `RecuperarContrasenaActivity` con los 3 pasos del diseño conectados a la API (tarea 044).
@@ -31,3 +31,5 @@ Emulador + `MAIL_MAILER=log`: pedir código para `maria@correo.com`, leer en `st
 
 ## Resultado
 Commit: `feat(mobile): conecta recuperación de contraseña`.
+
+Notas: probado en emulador con `maria@correo.com`: mensaje neutro, código malo bajo el campo, código del `laravel.log`, contraseña nueva, aviso en el login y entrada con la nueva. Si el código vence entre el paso 2 y el 3, la app regresa al paso 2 con el error. El botón atrás del encabezado y el de sistema regresan un paso.

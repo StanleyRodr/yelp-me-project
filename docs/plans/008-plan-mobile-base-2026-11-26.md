@@ -47,7 +47,7 @@ Dejar la app Android lista para crecer: el proyecto de la otra persona entra a g
 | 048 | [Tema y recursos Android](../tasks/048-tarea-tema-android-2026-11-26.md) | colors claro/oscuro, Atkinson, dimens, strings, Material Symbols, limpieza de PNG. | ✅ |
 | 049 | [Cliente API Android](../tasks/049-tarea-cliente-api-android-2026-11-26.md) | Retrofit, token, errores uniformes, 401 global, sesión guardada. | ✅ |
 | 050 | [Login, registro y sesión](../tasks/050-tarea-login-registro-android-2026-11-26.md) | Entrada automática, login correo/teléfono, registro, cerrar sesión. | ✅ |
-| 051 | [Recuperar contraseña: app](../tasks/051-tarea-recuperar-android-2026-11-26.md) | Los 3 pasos del diseño conectados a la API. | ⬜ |
+| 051 | [Recuperar contraseña: app](../tasks/051-tarea-recuperar-android-2026-11-26.md) | Los 3 pasos del diseño conectados a la API. | ✅ |
 | 052 | [BaseActivity y barra inferior](../tasks/052-tarea-base-activity-2026-11-26.md) | Menú lateral, insets, barra con servicios simulados y botón del favorito. | ⬜ |
 | 053 | [Verificación del plan 008](../tasks/053-tarea-verificacion-008-2026-11-26.md) | Pruebas, build, recorrido en emulador y documentación. | ⬜ |
 
