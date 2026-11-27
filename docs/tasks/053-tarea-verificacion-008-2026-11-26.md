@@ -1,6 +1,6 @@
 # 053 — Tarea: Verificación del plan 008
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Probar el plan completo, actualizar documentación y abrir el PR.
@@ -43,3 +43,5 @@ Título "Plan 008: base mobile y ajustes transversales", cuerpo con resumen, tab
 
 ## Resultado
 Commit: `docs(mobile): documenta la base mobile y cierra el plan 008`.
+
+Resultado de la verificación (2026-11-26): `php artisan test` 88 en verde; `npm run build` OK; `./gradlew testDebugUnitTest assembleDebug assembleRelease` OK; sin `findViewById`, hex ni textos fijos en layouts. Recorrido en emulador (API 37): registro con materno vacío, login por correo y teléfono, entrada automática, sesión expirada, recuperación en la app, tema oscuro, barra simulada, favorito → Contactos, cerrar sesión desde el menú. **Pendiente manual:** recorrido visual del panel (recuperación y modo oscuro) en navegador; no hubo navegador disponible en la sesión.

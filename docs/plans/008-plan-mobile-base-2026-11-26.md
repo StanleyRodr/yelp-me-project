@@ -49,18 +49,18 @@ Dejar la app Android lista para crecer: el proyecto de la otra persona entra a g
 | 050 | [Login, registro y sesión](../tasks/050-tarea-login-registro-android-2026-11-26.md) | Entrada automática, login correo/teléfono, registro, cerrar sesión. | ✅ |
 | 051 | [Recuperar contraseña: app](../tasks/051-tarea-recuperar-android-2026-11-26.md) | Los 3 pasos del diseño conectados a la API. | ✅ |
 | 052 | [BaseActivity y barra inferior](../tasks/052-tarea-base-activity-2026-11-26.md) | Menú lateral, insets, barra con servicios simulados y botón del favorito. | ✅ |
-| 053 | [Verificación del plan 008](../tasks/053-tarea-verificacion-008-2026-11-26.md) | Pruebas, build, recorrido en emulador y documentación. | ⬜ |
+| 053 | [Verificación del plan 008](../tasks/053-tarea-verificacion-008-2026-11-26.md) | Pruebas, build, recorrido en emulador y documentación. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] `mobile/` en git sin datos personales; `local.properties`, `build/` y archivos de máquina ignorados.
-- [ ] Apellidos en dos columnas en BD, API, panel y app; `php artisan test` en verde.
-- [ ] Recuperación de contraseña funciona en panel y app (código en `laravel.log`).
-- [ ] Web y app con tema claro, oscuro y sistema; colores iguales a los tokens.
-- [ ] Android: ViewBinding en todo, sin `findViewById`, sin textos ni colores hardcodeados en lo tocado.
-- [ ] Registro, login (correo o teléfono), entrada automática y cierre de sesión contra la API.
-- [ ] Barra inferior con servicios del catálogo y aviso simulado.
-- [ ] `./gradlew assembleDebug` y `npm run build` sin errores.
-- [ ] Commits por tarea, en español, sin atribución; PR a `main` al terminar.
+- [x] `mobile/` en git sin datos personales; `local.properties`, `build/` y archivos de máquina ignorados.
+- [x] Apellidos en dos columnas en BD, API, panel y app; `php artisan test` en verde.
+- [x] Recuperación de contraseña funciona en panel y app (código en `laravel.log`).
+- [x] Web y app con tema claro, oscuro y sistema; colores iguales a los tokens.
+- [x] Android: ViewBinding en todo, sin `findViewById`, sin textos ni colores hardcodeados en lo tocado.
+- [x] Registro, login (correo o teléfono), entrada automática y cierre de sesión contra la API.
+- [x] Barra inferior con servicios del catálogo y aviso simulado.
+- [x] `./gradlew assembleDebug` y `npm run build` sin errores.
+- [x] Commits por tarea, en español, sin atribución; PR a `main` al terminar.
