@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.yelpme.app.R;
 import com.yelpme.app.api.ClienteApi;
 import com.yelpme.app.api.ErrorApi;
+import com.yelpme.app.api.Favorito;
 import com.yelpme.app.api.Llamada;
 import com.yelpme.app.api.ServicioContactos;
 import com.yelpme.app.databinding.ActivityContactosBinding;
@@ -127,6 +128,9 @@ public class ContactosActivity extends BaseActivity {
                 cargado = true;
                 todos = contactos != null ? contactos : new ArrayList<>();
                 filtrar();
+                // La lista ya trae el favorito: actualiza la barra sin otra petición.
+                Favorito.desdeLista(todos);
+                actualizarFavorito();
             }
 
             @Override
