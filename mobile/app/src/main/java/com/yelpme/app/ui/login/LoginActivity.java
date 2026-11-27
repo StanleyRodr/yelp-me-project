@@ -1,4 +1,4 @@
-package com.yelpme.app;
+package com.yelpme.app.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +13,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import com.yelpme.app.R;
+import com.yelpme.app.ui.inicio.InicioActivity;
+import com.yelpme.app.ui.recuperar.RecuperarContrasenaActivity;
+import com.yelpme.app.ui.registro.RegistroActivity;
+
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -43,20 +48,20 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            Intent intent = new Intent(MainActivity.this, SolicitudesActivity.class);
+            Intent intent = new Intent(LoginActivity.this, InicioActivity.class);
             startActivity(intent);
             finish();
         });
 
         // 2. Ir a Registro
         btnRegistrate.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, Registro.class);
+            Intent intent = new Intent(LoginActivity.this, RegistroActivity.class);
             startActivity(intent);
         });
 
         // 3. Ir a Recuperar Contraseña
         tvOlvidaste.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, RecuperarContrasena.class);
+            Intent intent = new Intent(LoginActivity.this, RecuperarContrasenaActivity.class);
             startActivity(intent);
         });
     }

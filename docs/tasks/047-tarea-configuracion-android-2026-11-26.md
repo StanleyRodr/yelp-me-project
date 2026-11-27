@@ -1,6 +1,6 @@
 # 047 — Tarea: Configuración Android
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Gradle, dependencias, BuildConfig, manifest y red listos para todo el MVP. Renombrar activities.
@@ -68,3 +68,5 @@ Las pantallas que aún no se conectan (contactos, historial, perfil) quedan comp
 
 ## Resultado
 Commit: `chore(mobile): configura dependencias, BuildConfig y red`.
+
+Notas: versiones de Maven al 2026-11-26 (Retrofit 3.0.0, OkHttp logging 4.12.0 —la de Retrofit—, Glide 5.0.10, location 21.4.0, recyclerview 1.4.0, swiperefresh 1.2.0, core-splashscreen 1.2.0). Las pantallas de contenido quedan como esqueleto que solo carga su layout; la lógica vieja (datos fijos y `SesionManager`) se borró. El launcher sigue en `LoginActivity` hasta la tarea 050.

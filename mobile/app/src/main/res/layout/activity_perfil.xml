@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayoutPerfil"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PerfilActivity">
+    tools:context=".ui.perfil.PerfilActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"

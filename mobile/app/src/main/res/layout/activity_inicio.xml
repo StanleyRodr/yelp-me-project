@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayoutSolicitudes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SolicitudesActivity">
+    tools:context=".ui.inicio.InicioActivity">
 
     <!-- CONTENIDO PRINCIPAL DE LA PANTALLA -->
     <androidx.constraintlayout.widget.ConstraintLayout

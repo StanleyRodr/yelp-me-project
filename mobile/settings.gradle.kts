@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "YelpME"
+rootProject.name = "YelpMe"
 include(":app")
  

@@ -1,4 +1,4 @@
-package com.yelpme.app;
+package com.yelpme.app.util;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

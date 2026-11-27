@@ -43,7 +43,7 @@ Dejar la app Android lista para crecer: el proyecto de la otra persona entra a g
 | 044 | [Recuperar contraseña: API](../tasks/044-tarea-recuperar-api-2026-11-26.md) | Tabla de códigos, 3 endpoints, correo y pruebas. | ✅ |
 | 045 | [Recuperar contraseña: panel](../tasks/045-tarea-recuperar-panel-2026-11-26.md) | Vista de 3 pasos en el panel web. | ✅ |
 | 046 | [Modo oscuro en la web](../tasks/046-tarea-modo-oscuro-web-2026-11-26.md) | Tokens oscuros, selector de tema, Bootstrap, SweetAlert y mapa. | ✅ |
-| 047 | [Configuración Android](../tasks/047-tarea-configuracion-android-2026-11-26.md) | Gradle, dependencias, BuildConfig, manifest, red y renombres. | ⬜ |
+| 047 | [Configuración Android](../tasks/047-tarea-configuracion-android-2026-11-26.md) | Gradle, dependencias, BuildConfig, manifest, red y renombres. | ✅ |
 | 048 | [Tema y recursos Android](../tasks/048-tarea-tema-android-2026-11-26.md) | colors claro/oscuro, Atkinson, dimens, strings, Material Symbols, limpieza de PNG. | ⬜ |
 | 049 | [Cliente API Android](../tasks/049-tarea-cliente-api-android-2026-11-26.md) | Retrofit, token, errores uniformes, 401 global, sesión guardada. | ⬜ |
 | 050 | [Login, registro y sesión](../tasks/050-tarea-login-registro-android-2026-11-26.md) | Entrada automática, login correo/teléfono, registro, cerrar sesión. | ⬜ |

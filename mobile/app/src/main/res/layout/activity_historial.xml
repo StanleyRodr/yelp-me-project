@@ -5,7 +5,7 @@
     android:id="@+id/drawerLayoutHistorial"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistorialActivity">
+    tools:context=".ui.historial.HistorialActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
