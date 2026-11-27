@@ -195,9 +195,11 @@
     <string name="contactos_elige_favorito">Toca un contacto y márcalo como favorito.</string>
 
     <!-- Historial -->
-    <string name="historial_titulo">Historial</string>
+    <string name="historial_titulo">Mis solicitudes</string>
     <string name="historial_filtro">Filtrar por estado</string>
     <string name="historial_vacio">Aún no has pedido ayuda.</string>
+    <string name="historial_vacio_filtro">No tienes solicitudes con este estado.</string>
+    <string name="historial_todas">Todas</string>
     <string name="historial_volver">Volver al historial</string>
     <string name="historial_emergencia">Emergencia</string>
     <string name="historial_ayudas">Ayudas</string>
