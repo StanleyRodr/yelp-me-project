@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Barra de marca de las pantallas secundarias (editar perfil, domicilio,
+     contraseña, elegir ubicación): regresar + título. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/barraSecundaria"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ym_marca"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/espacio_2">
+
+    <Button
+        android:id="@+id/btnAtras"
+        style="@style/Widget.YelpMe.BotonIcono.Marca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cd_atras"
+        app:icon="@drawable/ic_arrow_back" />
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/espacio_2"
+        android:layout_weight="1"
+        android:accessibilityHeading="true"
+        android:textAppearance="@style/TextAppearance.YelpMe.Marca" />
+</LinearLayout>

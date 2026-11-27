@@ -7,33 +7,9 @@
     android:background="?android:attr/colorBackground"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/barraUbicacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/ym_marca"
-        android:gravity="center_vertical"
-        android:minHeight="56dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/espacio_2">
-
-        <Button
-            android:id="@+id/btnAtras"
-            style="@style/Widget.YelpMe.BotonIcono.Marca"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/cd_atras"
-            app:icon="@drawable/ic_arrow_back" />
-
-        <TextView
-            android:id="@+id/tvTituloUbicacion"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/espacio_2"
-            android:layout_weight="1"
-            android:text="@string/ubicacion_titulo"
-            android:textAppearance="@style/TextAppearance.YelpMe.Marca" />
-    </LinearLayout>
+    <include
+        android:id="@+id/barra"
+        layout="@layout/layout_barra_secundaria" />
 
     <FrameLayout
         android:layout_width="match_parent"

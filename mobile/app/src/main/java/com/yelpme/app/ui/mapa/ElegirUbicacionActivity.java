@@ -64,12 +64,10 @@ public class ElegirUbicacionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         vista = ActivityElegirUbicacionBinding.inflate(getLayoutInflater());
         setContentView(vista.getRoot());
-        Margenes.aplicar(vista.barraUbicacion, vista.panelUbicacion);
+        Margenes.aplicar(vista.barra.getRoot(), vista.panelUbicacion);
 
         String titulo = getIntent().getStringExtra(EXTRA_TITULO);
-        if (titulo != null) {
-            vista.tvTituloUbicacion.setText(titulo);
-        }
+        vista.barra.tvTitulo.setText(titulo != null ? titulo : getString(R.string.ubicacion_titulo));
 
         mapa = new MapaOsm(this, vista.contenedorMapa, getLifecycle());
         // Al rotar se conserva el punto que se estaba eligiendo.
@@ -81,7 +79,7 @@ public class ElegirUbicacionActivity extends AppCompatActivity {
                     entrada.getDoubleExtra(EXTRA_LNG, MapaOsm.LNG_INICIAL), MapaOsm.ZOOM_CALLE);
         }
 
-        vista.btnAtras.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        vista.barra.btnAtras.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
         vista.btnMiUbicacion.setOnClickListener(v -> {
             if (tienePermiso()) {
                 irAMiUbicacion();
