@@ -13,6 +13,9 @@ import com.yelpme.app.ui.registro.RegistroActivity;
 /** Inicio de sesión. Se conecta a la API en la tarea 050. */
 public class LoginActivity extends AppCompatActivity {
 
+    /** Extra: la sesión terminó (401) y se muestra el aviso. */
+    public static final String EXTRA_EXPIRADA = "expirada";
+
     private ActivityLoginBinding vista;
 
     @Override
