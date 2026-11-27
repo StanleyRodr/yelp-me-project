@@ -55,6 +55,7 @@ CREATE TABLE contactos (
     telefono             VARCHAR(15)     NOT NULL,
     parentesco           VARCHAR(50)     NOT NULL,
     usuario_contacto_id  BIGINT UNSIGNED NULL,
+    favorito             BOOLEAN         NOT NULL DEFAULT FALSE,  -- máximo uno por usuario (plan 010)
     created_at           TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at           TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT uq_contactos_usuario_telefono UNIQUE (usuario_id, telefono),
@@ -62,7 +63,8 @@ CREATE TABLE contactos (
         FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE RESTRICT,
     CONSTRAINT fk_contactos_usuario_contacto
         FOREIGN KEY (usuario_contacto_id) REFERENCES usuarios (id) ON DELETE RESTRICT,
-    INDEX idx_contactos_usuario_contacto (usuario_contacto_id)
+    INDEX idx_contactos_usuario_contacto (usuario_contacto_id),
+    INDEX idx_contactos_usuario_favorito (usuario_id, favorito)
 ) ENGINE=InnoDB;
 
 -- ---------------------------------------------------------------------

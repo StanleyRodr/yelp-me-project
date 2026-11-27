@@ -111,4 +111,23 @@ class VinculosTest extends TestCase
         $this->getJson('/api/vinculos')->assertForbidden();
         $this->getJson('/api/bloqueos')->assertForbidden();
     }
+
+    public function test_vinculos_traen_el_domicilio_de_quien_me_tiene(): void
+    {
+        // Ana (con domicilio) guarda a Carlos.
+        $this->como('ana@correo.com');
+        $this->postJson('/api/contactos', ['nombre' => 'Carlos', 'telefono' => '2351000001', 'parentesco' => 'Amistad'])->assertCreated();
+
+        $this->como(self::CARLOS);
+        $lista = $this->getJson('/api/vinculos')->assertOk()->json('datos');
+        $porNombre = array_column($lista, 'domicilio', 'nombre');
+        $this->assertSame('Calle Comonfort 37-B, Ojite, 93821', $porNombre['Ana']['texto']);
+        $this->assertNull($porNombre['María']); // María no registró domicilio
+        $this->assertCount(3, $lista); // Ana, José y María; nadie más
+
+        // Bloquear a Ana la saca de la lista (y su domicilio con ella).
+        $vinculoAna = collect($lista)->firstWhere('nombre', 'Ana')['id'];
+        $this->postJson('/api/bloqueos', ['contacto_id' => $vinculoAna])->assertSuccessful();
+        $this->assertNotContains('Ana', array_column($this->getJson('/api/vinculos')->json('datos'), 'nombre'));
+    }
 }

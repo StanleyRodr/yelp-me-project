@@ -29,7 +29,7 @@ Cumplir el **CRUD obligatorio desde Android**: el usuario agrega, consulta, modi
 
 | # | Tarea | Resumen | Estado |
 |---|---|---|---|
-| 061 | [Favorito y vínculos con domicilio (API)](../tasks/061-tarea-favorito-api-2026-11-26.md) | Columna, endpoints, orden, domicilio en vínculos, pruebas. | ⬜ |
+| 061 | [Favorito y vínculos con domicilio (API)](../tasks/061-tarea-favorito-api-2026-11-26.md) | Columna, endpoints, orden, domicilio en vínculos, pruebas. | ✅ |
 | 062 | [Lista de contactos](../tasks/062-tarea-lista-contactos-2026-11-26.md) | RecyclerView, búsqueda, favorito primero, vinculado. | ⬜ |
 | 063 | [Crear y editar contacto](../tasks/063-tarea-form-contacto-2026-11-26.md) | Formulario con verificación de teléfono y errores de la API. | ⬜ |
 | 064 | [Detalle, llamada y favorito](../tasks/064-tarea-detalle-contacto-2026-11-26.md) | Detalle, eliminar, marcar favorito, llamar; barra activa. | ⬜ |

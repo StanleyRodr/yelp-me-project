@@ -18,11 +18,12 @@ use Illuminate\Validation\ValidationException;
  */
 class ContactoController extends Controller
 {
-    /** GET /api/contactos */
+    /** GET /api/contactos — el favorito primero. */
     public function index(Request $request): JsonResponse
     {
         $contactos = DB::table('contactos')
             ->where('usuario_id', $request->user()->id)
+            ->orderByDesc('favorito')
             ->orderBy('nombre')
             ->get()
             ->map(fn ($c) => PresentadorContacto::datos($c));

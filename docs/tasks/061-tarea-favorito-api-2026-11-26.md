@@ -1,6 +1,6 @@
 # 061 — Tarea: Favorito y vínculos con domicilio (API)
 
-> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ⬜ Pendiente
+> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ✅ Terminada
 
 ## Objetivo
 Contacto favorito único por usuario y domicilio en `GET /api/vinculos`.
@@ -40,3 +40,5 @@ php artisan bd:pruebas && php artisan test
 
 ## Resultado
 Commit: `feat(contactos): agrega contacto favorito y domicilio en vínculos`.
+
+Notas: 97 pruebas OK (4 nuevas). `FavoritoController` bloquea la agenda con `lockForUpdate` antes de desmarcar/marcar (dos marcados a la vez no dejan dos favoritos); `DELETE` responde 404 solo si el contacto no es mío. Seeder: María es el favorito de Carlos. La prueba de vínculos usa a Ana (con domicilio) guardando a Carlos. En la BD `YelpMe` se agregó la columna e índice con `ALTER TABLE` (sin recrearla).
