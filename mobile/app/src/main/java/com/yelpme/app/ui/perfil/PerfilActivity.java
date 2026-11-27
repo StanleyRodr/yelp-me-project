@@ -28,6 +28,7 @@ import com.yelpme.app.modelos.Usuario;
 import com.yelpme.app.ui.base.BaseActivity;
 import com.yelpme.app.util.Imagenes;
 import com.yelpme.app.util.MapaOsm;
+import com.yelpme.app.util.Tema;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +52,8 @@ public class PerfilActivity extends BaseActivity {
     private Llamada<Usuario> llamadaUsuario;
     private Llamada<Domicilio> llamadaDomicilio;
     private Llamada<Usuario> llamadaFoto;
+    /** Último domicilio recibido (se pasa al formulario). */
+    private Domicilio domicilio;
     /** Respuestas pendientes de la recarga en curso (sesión + domicilio). */
     private int pendientes;
     private final ExecutorService fondo = Executors.newSingleThreadExecutor();
@@ -60,6 +63,21 @@ public class PerfilActivity extends BaseActivity {
             new ActivityResultContracts.StartActivityForResult(), resultado -> {
                 if (resultado.getResultCode() == RESULT_OK) {
                     aviso(R.string.perfil_datos_guardados).show();
+                }
+            });
+
+    private final ActivityResultLauncher<Intent> editarDomicilio = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), resultado -> {
+                Intent datos = resultado.getData();
+                if (resultado.getResultCode() == RESULT_OK && datos != null) {
+                    aviso(datos.getStringExtra(DomicilioActivity.EXTRA_MENSAJE)).show();
+                }
+            });
+
+    private final ActivityResultLauncher<Intent> cambiarPassword = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), resultado -> {
+                if (resultado.getResultCode() == RESULT_OK) {
+                    aviso(R.string.password_cambiada).show();
                 }
             });
 
@@ -89,6 +107,13 @@ public class PerfilActivity extends BaseActivity {
 
         vista.btnEditarDatos.setOnClickListener(v -> editarDatos.launch(new Intent(this, EditarPerfilActivity.class)));
         vista.btnFoto.setOnClickListener(v -> opcionesFoto());
+        vista.btnDomicilio.setOnClickListener(v -> editarDomicilio.launch(DomicilioActivity.intent(this, domicilio)));
+        vista.btnPassword.setOnClickListener(v -> cambiarPassword.launch(new Intent(this, PasswordActivity.class)));
+        // Mismo cambio que el menú lateral: muestra el tema al que cambia.
+        boolean oscuro = Tema.esOscuro(this);
+        vista.btnTema.setText(oscuro ? R.string.menu_tema_claro : R.string.menu_tema_oscuro);
+        vista.btnTema.setIconResource(oscuro ? R.drawable.ic_light_mode : R.drawable.ic_dark_mode);
+        vista.btnTema.setOnClickListener(v -> Tema.alternar(this));
 
         mapa = new MapaOsm(this, vista.mapPerfilPrincipal, getLifecycle());
         mapa.soloLectura(true);
@@ -284,6 +309,8 @@ public class PerfilActivity extends BaseActivity {
     // ---------- Domicilio ----------
 
     private void mostrar(Domicilio d) {
+        domicilio = d;
+        vista.btnDomicilio.setText(d == null ? R.string.domicilio_agregar : R.string.domicilio_editar);
         if (d == null) {
             vista.tvPerfilDomicilio.setText(R.string.perfil_sin_domicilio);
             vista.tvPerfilReferencia.setVisibility(View.GONE);

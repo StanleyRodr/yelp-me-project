@@ -168,6 +168,38 @@
     <string name="menu_cerrar_sesion">Cerrar sesión</string>
     <string name="menu_pronto">Esta sección llega en la siguiente versión de la app.</string>
 
+    <!-- Domicilio -->
+    <string name="domicilio_titulo">Mi domicilio</string>
+    <string name="domicilio_calle">Calle</string>
+    <string name="domicilio_numero">Número</string>
+    <string name="domicilio_colonia">Colonia</string>
+    <string name="domicilio_cp">Código postal</string>
+    <string name="domicilio_referencia">Referencia (opcional)</string>
+    <string name="domicilio_referencia_ayuda">Algo que ayude a encontrarlo: color de la casa, entre qué calles.</string>
+    <string name="domicilio_punto">Punto en el mapa</string>
+    <string name="domicilio_marcar">Marcar en el mapa</string>
+    <string name="domicilio_mover">Mover el punto</string>
+    <string name="domicilio_falta_punto">Marca tu domicilio en el mapa.</string>
+    <string name="domicilio_error_cp">Escribe los 5 dígitos del código postal.</string>
+    <string name="domicilio_guardar">Guardar domicilio</string>
+    <string name="domicilio_quitar">Quitar domicilio</string>
+    <string name="domicilio_quitar_pregunta">¿Quitar tu domicilio? Ya no se podrá usar si el GPS falla.</string>
+    <string name="domicilio_agregar">Agregar domicilio</string>
+    <string name="domicilio_editar">Editar domicilio</string>
+    <string name="domicilio_guardado">Domicilio guardado.</string>
+    <string name="domicilio_quitado">Domicilio eliminado.</string>
+
+    <!-- Contraseña -->
+    <string name="password_titulo">Cambiar contraseña</string>
+    <string name="password_ayuda">Al guardarla se cerrarán tus sesiones en otros teléfonos. En este sigues dentro.</string>
+    <string name="password_actual">Contraseña actual</string>
+    <string name="password_nueva">Contraseña nueva</string>
+    <string name="password_guardar">Cambiar contraseña</string>
+    <string name="password_cambiada">Contraseña actualizada.</string>
+
+    <!-- Ajustes del perfil -->
+    <string name="perfil_ajustes">Ajustes</string>
+
     <!-- Elegir ubicación (mapa) -->
     <string name="ubicacion_titulo">Elige la ubicación</string>
     <string name="ubicacion_ayuda">Mueve el mapa hasta que el pin quede en el lugar correcto.</string>

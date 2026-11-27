@@ -263,6 +263,59 @@
                         android:layout_marginTop="@dimen/espacio_3"
                         android:background="@color/ym_skeleton"
                         android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btnDomicilio"
+                        style="@style/Widget.YelpMe.Boton.Secundario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_4"
+                        android:text="@string/domicilio_agregar"
+                        app:icon="@drawable/ic_home"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/ym_texto" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Ajustes: contraseña y tema -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/espacio_4">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:accessibilityHeading="true"
+                        android:text="@string/perfil_ajustes"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+
+                    <Button
+                        android:id="@+id/btnPassword"
+                        style="@style/Widget.YelpMe.Boton.Secundario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:text="@string/password_titulo"
+                        app:icon="@drawable/ic_lock_reset"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/ym_texto" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTema"
+                        style="@style/Widget.YelpMe.Boton.Secundario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_2"
+                        android:text="@string/menu_tema_oscuro"
+                        app:icon="@drawable/ic_dark_mode"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/ym_texto" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
