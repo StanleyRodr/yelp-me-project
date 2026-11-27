@@ -32,10 +32,10 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
 | `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002, 007–009) |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006, 008–010) |
-| `mobile/`   | Android Studio, Java                        | App del usuario final       | Base, perfil, contactos y solicitudes conectados a la API (planes 008–011); push en el plan 012 |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP con push FCM (planes 001, 003–006, 008–012) |
+| `mobile/`   | Android Studio, Java                        | App del usuario final       | Completa contra la API, con push (planes 008–012); falta publicar el APK (plan 013) |
 
-**Planes pendientes ya escritos** (con sus tareas 072–081 en `docs/tasks/`): 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
+**Plan pendiente ya escrito** (tareas 076–081 en `docs/tasks/`): 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: crear su rama desde `main` y ejecutar sus tareas en orden.
 
 Web y Android consumen la **misma API Laravel**.
 
@@ -75,7 +75,7 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 - Disco para fotos de perfil en `config/filesystems.php` + `php artisan storage:link`.
 - BD: MySQL `localhost:3306`, base **`YelpMe`**. **El esquema vive en `database/script-bd.sql`** (fuente oficial, sin migraciones de Laravel); cualquier cambio de tablas se hace ahí. Por eso `User` usa `protected $table = 'usuarios'` y `.env` va con `SESSION_DRIVER=file` / `CACHE_STORE=file`.
 - **Deshabilitar, no borrar:** usuarios, servicios, strikes, suspensiones y solicitudes nunca se borran (`activo = 0`, anulación o estado final). Solo se borran físicamente contactos, bloqueos, filas de `solicitud_servicio` y tokens. Todas las FK son `ON DELETE RESTRICT`.
-- FCM (fase final) con la API v1; librería sugerida `kreait/laravel-firebase`.
+- **Push (plan 012):** `App\Support\Notificador` (`NotificadorFcm` con `kreait/laravel-firebase`, API v1; `NotificadorNulo` sin credenciales: todo funciona igual). Qué avisar y a quién en `App\Support\Avisos`, llamado con `DB::afterCommit` (si se revierte, no avisa). Mensajes **solo de datos** (`aviso_titulo`, `aviso_cuerpo`, `canal`). Token del dispositivo con `TokensFcm::asignar` (login, registro y `PUT /api/sesion/fcm`). Credenciales en `config/services.php` (`FIREBASE_CREDENTIALS` local en `storage/app/firebase/credenciales.json`, `FIREBASE_CREDENTIALS_BASE64` en producción); nunca en git. La librería pide la extensión PHP `sodium` (en XAMPP, `extension=sodium` en `php.ini`). En pruebas `TestCase` registra `Tests\Support\NotificadorFalso` (`$this->notificador->enviados`).
 
 ## Frontend (`frontend/`)
 
@@ -154,5 +154,8 @@ Solicitudes (plan 011):
 - **Formulario:** `layout_form_solicitud` + `ui/inicio/FormularioSolicitud` (crear en `onCreate`) lo comparten Inicio (crear, con resumen antes de enviar) y `ui/solicitudes/FormSolicitudActivity` (editar en Pendiente). Ubicación con `util/Ubicacion` (permisos, encender ubicación, 10 s, última conocida) y respaldo `DialogoSinUbicacion` (domicilio, reintentar, mapa); sin "Lugar" escrito y con domicilio, `ubicacion_nombre` = "Domicilio: …" (el panel lo marca). Suspendido: chips deshabilitados; al editar puede quitar servicios, no agregar. Inicio refresca el usuario (`GET /sesion`) al volver, para ver suspensiones o rehabilitaciones.
 - **Estado:** Inicio muestra la solicitud activa (Pendiente o Enviado) y `DetalleSolicitudActivity` (acciones según `TransicionesSolicitud`, cancelar con motivo); ambas se recargan cada 15 s mientras están visibles (`Handler` que se detiene en `onPause`). Historial con filtro por estado (`HistorialActivity`). `ui/comunes/BadgeEstado` = mismos colores e íconos que `EstadoBadge` del panel.
 - **Ojo con los ids:** un layout que incluye `layout_barra_secundaria` no puede tener otro `@+id/tvTitulo` (ViewBinding toma el de la barra).
+
+Push (plan 012):
+- `mobile/app/google-services.json` fuera de git; sin él la app compila sin push (`BuildConfig.FCM_ACTIVO`). Paquete `notificaciones`: `TokenFcm` (manda el token a la API), `Canales` (`alertas`, `estado`, mismos ids que `Avisos`), `ServicioMensajes` (arma la notificación; alerta → `ui/alertas/AlertaContactoActivity`, estado → detalle). Pasos de Firebase en `mobile/README.md`. Emulador con imagen Google Play.
 
 - **Generar íconos nuevos:** glifo de `frontend/node_modules/material-symbols/material-symbols-outlined.woff2` con fontTools (`TransformPen(pen, (1,0,0,-1,0,960))`, viewport 960), mismo formato que los `ic_*.xml` existentes.
