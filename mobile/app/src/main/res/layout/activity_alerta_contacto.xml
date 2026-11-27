@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Alerta de un contacto que pidió ayuda (AlertaContactoActivity). Los datos vienen
+     en la notificación: la solicitud es de otra persona y no se consulta en la API. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/raiz"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:orientation="vertical"
+    tools:context=".ui.alertas.AlertaContactoActivity">
+
+    <include
+        android:id="@+id/barra"
+        layout="@layout/layout_barra_secundaria" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/desplazable"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/espacio_4">
+
+            <TextView
+                android:id="@+id/tvQuien"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_aviso_peligro"
+                android:drawablePadding="@dimen/espacio_2"
+                android:gravity="center_vertical"
+                android:padding="@dimen/espacio_3"
+                android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo"
+                android:textColor="@color/ym_estado_pendiente_texto"
+                app:drawableStartCompat="@drawable/ic_emergency"
+                app:drawableTint="@color/ym_estado_pendiente_texto"
+                tools:text="Carlos Ramírez Soto pidió ayuda" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/espacio_4"
+                android:text="@string/historial_emergencia"
+                android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+            <TextView
+                android:id="@+id/tvTituloAlerta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                android:textStyle="bold"
+                tools:text="Me caí en la calle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/espacio_3"
+                android:text="@string/historial_lugar"
+                android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+            <TextView
+                android:id="@+id/tvLugar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                tools:text="Frente al parque" />
+
+            <FrameLayout
+                android:id="@+id/contenedorMapa"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mapa_dialogo"
+                android:layout_marginTop="@dimen/espacio_2"
+                android:background="@color/ym_skeleton" />
+
+            <Button
+                android:id="@+id/btnLlamar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/espacio_4"
+                app:icon="@drawable/ic_call"
+                app:iconGravity="textStart"
+                tools:text="Llamar a Carlos" />
+
+            <Button
+                android:id="@+id/btnComoLlegar"
+                style="@style/Widget.YelpMe.Boton.Secundario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/espacio_2"
+                android:text="@string/alerta_como_llegar"
+                app:icon="@drawable/ic_place"
+                app:iconGravity="textStart"
+                app:iconTint="@color/ym_texto" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

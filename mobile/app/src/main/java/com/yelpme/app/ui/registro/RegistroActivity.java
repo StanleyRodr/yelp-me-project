@@ -15,6 +15,7 @@ import com.yelpme.app.api.Llamada;
 import com.yelpme.app.api.ServicioAuth;
 import com.yelpme.app.databinding.ActivityRegistroBinding;
 import com.yelpme.app.modelos.RespuestaSesion;
+import com.yelpme.app.notificaciones.TokenFcm;
 import com.yelpme.app.ui.inicio.InicioActivity;
 import com.yelpme.app.util.Formularios;
 import com.yelpme.app.util.Margenes;
@@ -95,6 +96,7 @@ public class RegistroActivity extends AppCompatActivity {
             @Override
             public void alExito(RespuestaSesion r) {
                 ((YelpMeApp) getApplication()).getSesion().guardar(r.token, r.usuario);
+                TokenFcm.sincronizar(getApplicationContext());
                 startActivity(new Intent(RegistroActivity.this, InicioActivity.class)
                         .putExtra(InicioActivity.EXTRA_VINCULADOS, r.contactosVinculados)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));

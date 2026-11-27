@@ -9,7 +9,6 @@ use Kreait\Firebase\Exception\Messaging\InvalidMessage;
 use Kreait\Firebase\Exception\Messaging\NotFound;
 use Kreait\Firebase\Messaging\AndroidConfig;
 use Kreait\Firebase\Messaging\CloudMessage;
-use Kreait\Firebase\Messaging\Notification;
 use Throwable;
 
 /**
@@ -25,15 +24,17 @@ class NotificadorFcm implements Notificador
 
     public function enviar(string $token, string $titulo, string $cuerpo, array $datos = [], string $canal = 'estado'): bool
     {
+        // Solo datos (sin bloque "notification"): la app arma la notificación siempre,
+        // también en segundo plano, y así al tocarla abre la pantalla correcta.
         $mensaje = CloudMessage::new()
             ->toToken($token)
-            ->withNotification(Notification::create($titulo, $cuerpo))
-            ->withData(array_map('strval', $datos))
-            ->withAndroidConfig(AndroidConfig::fromArray([
-                'priority' => 'high',
+            ->withData(array_map('strval', $datos) + [
+                'aviso_titulo' => $titulo,
+                'aviso_cuerpo' => $cuerpo,
                 // Canal de Android (los crea la app): alertas de contactos o estado de mis solicitudes.
-                'notification' => ['channel_id' => $canal],
-            ]));
+                'canal' => $canal,
+            ])
+            ->withAndroidConfig(AndroidConfig::fromArray(['priority' => 'high']));
 
         try {
             $this->messaging->send($mensaje);

@@ -1,6 +1,6 @@
 # 074 — Tarea: FCM en Android
 
-> Plan: `012-plan-fcm-2026-11-26.md` · Rama: `feature/fcm` · Estado: ⬜ Pendiente
+> Plan: `012-plan-fcm-2026-11-26.md` · Rama: `feature/fcm` · Estado: ✅ Terminada
 
 ## Objetivo
 Recibir y mostrar las notificaciones; mandar el token al backend.
@@ -43,3 +43,5 @@ Recibir y mostrar las notificaciones; mandar el token al backend.
 
 ## Resultado
 Commit: `feat(mobile): recibe notificaciones push de alertas y estados`.
+
+Notas: catálogo con `google-services` 4.4.4 y `firebase-bom` 34.6.0 (`firebase-messaging`). El plugin se aplica **solo si existe** `app/google-services.json` (`BuildConfig.FCM_ACTIVO`); sin el archivo compila y corre sin push. **Cambio respecto al plan:** los mensajes son solo de datos (`aviso_titulo`, `aviso_cuerpo`, `canal` + datos) y la app arma siempre la notificación; con bloque `notification`, en segundo plano Android la mostraba solo y al tocarla abría el launcher. Paquete `notificaciones`: `TokenFcm` (manda el token al iniciar sesión, registrarse y abrir la app con sesión), `Canales` (`alertas` alta, `estado`), `ServicioMensajes`. `AlertaContactoActivity` (quién, qué pasa, lugar, mapa, llamar, cómo llegar con `geo:`; sin sesión → login). Permiso `POST_NOTIFICATIONS` una vez con explicación desde Inicio; aviso con botón a ajustes en Perfil. `mobile/README.md` nuevo con los pasos de Firebase. Probado con dos emuladores (segundo AVD temporal, borrado después por falta de disco): Carlos pide ayuda → María recibe "Carlos pidió ayuda" con acción Llamar (app en primer plano) y al tocar abre la alerta con mapa; el admin rechaza la solicitud de Carlos con su app en segundo plano → "Tu solicitud fue rechazada" con el motivo y al tocar abre el detalle; el admin envía otra → "Tu ayuda va en camino". El caso "app cerrada" no quedó probado con rigor (`am kill` no terminó el proceso). Nota: cerrar sesión en otro dispositivo borra el token FCM del usuario (un dispositivo por usuario, plan 003); el teléfono lo vuelve a mandar al abrir la app.

@@ -306,6 +306,30 @@
                         app:iconGravity="textStart"
                         app:iconTint="@color/ym_texto" />
 
+                    <TextView
+                        android:id="@+id/tvNotificacionesApagadas"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:background="@drawable/bg_aviso_peligro"
+                        android:padding="@dimen/espacio_3"
+                        android:text="@string/notificaciones_apagadas"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                        android:textColor="@color/ym_estado_pendiente_texto"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btnActivarNotificaciones"
+                        style="@style/Widget.YelpMe.Boton.Secundario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_2"
+                        android:text="@string/notificaciones_activar"
+                        android:visibility="gone"
+                        app:icon="@drawable/ic_notificacion"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/ym_texto" />
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnTema"
                         style="@style/Widget.YelpMe.Boton.Secundario"

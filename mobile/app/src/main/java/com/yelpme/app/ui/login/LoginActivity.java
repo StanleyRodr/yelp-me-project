@@ -16,6 +16,7 @@ import com.yelpme.app.api.Llamada;
 import com.yelpme.app.api.ServicioAuth;
 import com.yelpme.app.databinding.ActivityLoginBinding;
 import com.yelpme.app.modelos.RespuestaSesion;
+import com.yelpme.app.notificaciones.TokenFcm;
 import com.yelpme.app.ui.inicio.InicioActivity;
 import com.yelpme.app.ui.recuperar.RecuperarContrasenaActivity;
 import com.yelpme.app.ui.registro.RegistroActivity;
@@ -103,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void alExito(RespuestaSesion r) {
                 ((YelpMeApp) getApplication()).getSesion().guardar(r.token, r.usuario);
+                TokenFcm.sincronizar(getApplicationContext());
                 startActivity(new Intent(LoginActivity.this, InicioActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 finish();
