@@ -6,6 +6,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -35,6 +37,16 @@ public class ContactosActivity extends BaseActivity {
     private List<Contacto> todos = new ArrayList<>();
     private boolean cargado;
 
+    /** Formulario y detalle devuelven un mensaje para el Snackbar. */
+    private final ActivityResultLauncher<Intent> abrir = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), resultado -> {
+                Intent datos = resultado.getData();
+                String mensaje = datos != null ? datos.getStringExtra(FormContactoActivity.EXTRA_MENSAJE) : null;
+                if (resultado.getResultCode() == RESULT_OK && mensaje != null) {
+                    aviso(mensaje).show();
+                }
+            });
+
     @Override
     protected int itemMenu() {
         return R.id.menu_contactos;
@@ -46,14 +58,14 @@ public class ContactosActivity extends BaseActivity {
         vista = ActivityContactosBinding.inflate(getLayoutInflater());
         ponerContenido(vista);
 
-        adaptador = new AdaptadorContactos(c -> startActivity(DetalleContactoActivity.intent(this, c.id)));
+        adaptador = new AdaptadorContactos(c -> abrir.launch(DetalleContactoActivity.intent(this, c.id)));
         vista.rvContactos.setLayoutManager(new LinearLayoutManager(this));
         vista.rvContactos.setAdapter(adaptador);
 
         vista.recargaContactos.setColorSchemeResources(R.color.ym_marca_texto);
         vista.recargaContactos.setProgressBackgroundColorSchemeResource(R.color.ym_superficie);
         vista.recargaContactos.setOnRefreshListener(this::cargar);
-        vista.btnAgregarContacto.setOnClickListener(v -> startActivity(FormContactoActivity.nuevo(this)));
+        vista.btnAgregarContacto.setOnClickListener(v -> abrir.launch(FormContactoActivity.nuevo(this)));
         vista.etBuscar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int inicio, int cuenta, int despues) {

@@ -111,6 +111,16 @@
     <string name="contactos_sin_resultados">Ningún contacto coincide con la búsqueda.</string>
     <string name="contactos_agregar">Agregar contacto</string>
     <string name="contactos_vinculado">Vinculado</string>
+    <string name="contactos_agregar_titulo">Agregar contacto</string>
+    <string name="contactos_editar_titulo">Editar contacto</string>
+    <string name="contactos_telefono_ayuda">10 dígitos. Si tiene cuenta en YelpMe, recibirá tus alertas.</string>
+    <string name="contactos_parentesco_ayuda">Elige una opción o escribe otra.</string>
+    <string name="contactos_tel_con_cuenta">Tiene cuenta en YelpMe: recibirá tus alertas.</string>
+    <string name="contactos_tel_sin_cuenta">Sin cuenta en YelpMe: solo podrás llamarle.</string>
+    <string name="contactos_tel_en_agenda">Ya tienes este número en tu agenda.</string>
+    <string name="contactos_guardado">Contacto guardado.</string>
+    <string name="contactos_guardado_vinculado">Contacto guardado y vinculado con su cuenta de YelpMe.</string>
+    <string name="contactos_error_obtener">No se pudo cargar el contacto.</string>
     <string name="contactos_error_cargar">No se pudieron cargar tus contactos.</string>
     <string name="cd_fila_contacto">%1$s, %2$s</string>
     <string name="cd_fila_vinculado">vinculado</string>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sugerencias de parentesco (el campo acepta texto libre). -->
+    <string-array name="parentescos">
+        <item>Mamá</item>
+        <item>Papá</item>
+        <item>Pareja</item>
+        <item>Hermano/a</item>
+        <item>Hijo/a</item>
+        <item>Amistad</item>
+        <item>Familia</item>
+        <item>Otro</item>
+    </string-array>
+</resources>
