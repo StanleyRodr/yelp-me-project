@@ -34,7 +34,7 @@ Publicar el MVP completo: panel en Vercel, API y MySQL en Railway, y la app Andr
 | 077 | [MySQL en Railway](../tasks/077-tarea-mysql-railway-2026-11-26.md) | Servicio MySQL (plan Free), esquema por túnel SSH; demo en la 078. | ✅ |
 | 078 | [API en Railway](../tasks/078-tarea-api-railway-2026-11-26.md) | Servicio desde GitHub, variables, dominio, demo cargada (sin volumen en Free). | ✅ |
 | 079 | [Panel en Vercel](../tasks/079-tarea-panel-vercel-2026-11-26.md) | `yelp-me-project.vercel.app`, rewrite, CORS al dominio principal. | ✅ |
-| 080 | [APK de release](../tasks/080-tarea-apk-release-2026-11-26.md) | Firma, URL de producción, versión y GitHub Release. | ⬜ |
+| 080 | [APK de release](../tasks/080-tarea-apk-release-2026-11-26.md) | Firma con keystore propia, URL de Railway, `v1.0.0` en GitHub Releases. | ✅ |
 | 081 | [Verificación en la nube](../tasks/081-tarea-verificacion-nube-2026-11-26.md) | Los 11 criterios en producción; documentación final. | ⬜ |
 
 ---
