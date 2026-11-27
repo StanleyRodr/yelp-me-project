@@ -145,6 +145,14 @@
     <string name="menu_cerrar_sesion">Cerrar sesión</string>
     <string name="menu_pronto">Esta sección llega en la siguiente versión de la app.</string>
 
+    <!-- Elegir ubicación (mapa) -->
+    <string name="ubicacion_titulo">Elige la ubicación</string>
+    <string name="ubicacion_ayuda">Mueve el mapa hasta que el pin quede en el lugar correcto.</string>
+    <string name="ubicacion_usar">Usar esta ubicación</string>
+    <string name="ubicacion_mia">Mi ubicación</string>
+    <string name="ubicacion_sin_permiso">Sin permiso de ubicación. Mueve el mapa a mano o actívalo en Ajustes.</string>
+    <string name="ubicacion_sin_gps">No se pudo obtener tu ubicación. Revisa que el GPS esté encendido.</string>
+
     <!-- Sesión -->
     <string name="sesion_cerrar_titulo">¿Cerrar sesión?</string>
     <string name="sesion_cerrar_mensaje">Tendrás que volver a iniciar sesión en este teléfono.</string>
