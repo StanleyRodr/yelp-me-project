@@ -21,6 +21,14 @@ class Normalizar
         return $valor === null || $valor === '' ? null : mb_strtolower(trim((string) $valor));
     }
 
+    /** Texto opcional: recorta espacios; vacío → null. */
+    public static function opcional(mixed $valor): ?string
+    {
+        $texto = $valor === null ? '' : trim((string) $valor);
+
+        return $texto === '' ? null : $texto;
+    }
+
     /** Fecha de MySQL ("2026-11-19 20:47:45") → ISO 8601 con zona. */
     public static function fecha(mixed $valor): ?string
     {

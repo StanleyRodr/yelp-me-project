@@ -19,7 +19,8 @@ class UsuarioController extends Controller
         $usuarios = DB::table('usuarios')
             ->where('rol', 'usuario')
             ->orderBy('nombre')
-            ->orderBy('apellidos')
+            ->orderBy('apellido_paterno')
+            ->orderBy('apellido_materno')
             ->get();
 
         return $this->respuesta(PresentadorCuenta::resumenes($usuarios));

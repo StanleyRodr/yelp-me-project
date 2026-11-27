@@ -115,6 +115,25 @@ class PerfilTest extends TestCase
     public function test_admin_tambien_edita_su_perfil(): void
     {
         $this->como('admin@yelpme.com');
-        $this->patchJson('/api/perfil', ['apellidos' => 'Principal'])->assertOk()->assertJsonPath('datos.apellidos', 'Principal');
+        $this->patchJson('/api/perfil', ['apellido_paterno' => 'Principal'])->assertOk()->assertJsonPath('datos.apellido_paterno', 'Principal');
+    }
+
+    public function test_cambio_solo_el_apellido_materno(): void
+    {
+        $this->como(self::CARLOS);
+        $this->patchJson('/api/perfil', ['apellido_materno' => '  Luna '])
+            ->assertOk()
+            ->assertJsonPath('datos.apellido_paterno', 'Ramírez')
+            ->assertJsonPath('datos.apellido_materno', 'Luna');
+
+        $this->patchJson('/api/perfil', ['apellido_materno' => ''])
+            ->assertOk()
+            ->assertJsonPath('datos.apellido_materno', null);
+    }
+
+    public function test_el_apellido_paterno_no_se_puede_vaciar(): void
+    {
+        $this->como(self::CARLOS);
+        $this->patchJson('/api/perfil', ['apellido_paterno' => ''])->assertUnprocessable()->assertJsonValidationErrors('apellido_paterno', 'errores');
     }
 }

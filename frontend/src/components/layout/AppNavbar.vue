@@ -46,7 +46,7 @@
             aria-expanded="false"
           >
             <span class="avatar" aria-hidden="true">{{ iniciales }}</span>
-            <span class="usuario-nombre">{{ admin.nombre }}</span>
+            <span class="usuario-nombre">{{ [admin.nombre, admin.apellido_paterno].filter(Boolean).join(' ') }}</span>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
@@ -85,7 +85,7 @@ const SECCION = { solicitud: 'solicitudes', usuario: 'usuarios' }
 const esActivo = (nombre) => (SECCION[route.name] ?? route.name) === nombre
 
 const iniciales = computed(() =>
-  [props.admin?.nombre, props.admin?.apellidos]
+  [props.admin?.nombre, props.admin?.apellido_paterno]
     .filter(Boolean)
     .map((p) => p[0])
     .join('')

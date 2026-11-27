@@ -39,7 +39,7 @@ class PresentadorSolicitud
 
         $personas = DB::table('usuarios')
             ->whereIn('id', $idsPersonas)
-            ->get(['id', 'nombre', 'apellidos', 'telefono'])
+            ->get(['id', 'nombre', 'apellido_paterno', 'apellido_materno', 'telefono'])
             ->keyBy('id');
 
         $persona = function (?int $id, bool $conTelefono = false) use ($personas) {
@@ -47,7 +47,7 @@ class PresentadorSolicitud
             if (! $p) {
                 return null;
             }
-            $datos = ['id' => $p->id, 'nombre' => $p->nombre, 'apellidos' => $p->apellidos];
+            $datos = ['id' => $p->id, 'nombre' => $p->nombre, 'apellido_paterno' => $p->apellido_paterno, 'apellido_materno' => $p->apellido_materno];
 
             return $conTelefono ? $datos + ['telefono' => $p->telefono] : $datos;
         };

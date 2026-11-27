@@ -39,7 +39,7 @@ Dejar la app Android lista para crecer: el proyecto de la otra persona entra a g
 | # | Tarea | Resumen | Estado |
 |---|---|---|---|
 | 042 | [Importar proyecto Android](../tasks/042-tarea-importar-android-2026-11-26.md) | Proyecto original a git sin datos personales ni archivos de máquina. | ✅ |
-| 043 | [Apellidos en dos columnas](../tasks/043-tarea-apellidos-2026-11-26.md) | BD, seeder, API, pruebas y panel con paterno/materno. | ⬜ |
+| 043 | [Apellidos en dos columnas](../tasks/043-tarea-apellidos-2026-11-26.md) | BD, seeder, API, pruebas y panel con paterno/materno. | ✅ |
 | 044 | [Recuperar contraseña: API](../tasks/044-tarea-recuperar-api-2026-11-26.md) | Tabla de códigos, 3 endpoints, correo y pruebas. | ⬜ |
 | 045 | [Recuperar contraseña: panel](../tasks/045-tarea-recuperar-panel-2026-11-26.md) | Vista de 3 pasos en el panel web. | ⬜ |
 | 046 | [Modo oscuro en la web](../tasks/046-tarea-modo-oscuro-web-2026-11-26.md) | Tokens oscuros, selector de tema, Bootstrap, SweetAlert y mapa. | ⬜ |

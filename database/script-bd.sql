@@ -27,7 +27,8 @@ USE YelpMe;
 CREATE TABLE usuarios (
     id                BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre            VARCHAR(100)  NOT NULL,
-    apellidos         VARCHAR(100)  NOT NULL,
+    apellido_paterno  VARCHAR(60)   NOT NULL,
+    apellido_materno  VARCHAR(60)   NULL,
     telefono          VARCHAR(15)   NOT NULL,
     correo            VARCHAR(150)  NOT NULL,
     password          VARCHAR(255)  NOT NULL,
@@ -217,8 +218,8 @@ CREATE TABLE personal_access_tokens (
 -- Administrador inicial
 --   correo:     admin@yelpme.com
 --   contraseña: Admin123*   (CAMBIARLA tras el primer inicio de sesión)
-INSERT INTO usuarios (nombre, apellidos, telefono, correo, password, rol)
-VALUES ('Administrador', 'General', '0000000000', 'admin@yelpme.com',
+INSERT INTO usuarios (nombre, apellido_paterno, apellido_materno, telefono, correo, password, rol)
+VALUES ('Administrador', 'General', NULL, '0000000000', 'admin@yelpme.com',
         '$2y$10$IYbySxhJpZ3.OXhDwz0b/egNNxS1lsCzgcrPNwqvmHakwLON.D31e', 'admin');
 
 -- Catálogo de servicios (íconos de Material Symbols)

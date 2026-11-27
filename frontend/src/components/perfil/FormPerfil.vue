@@ -70,7 +70,8 @@ const emit = defineEmits(['guardar'])
 
 const CAMPOS = [
   { clave: 'nombre', etiqueta: 'Nombre', tipo: 'text', autocompletar: 'given-name' },
-  { clave: 'apellidos', etiqueta: 'Apellidos', tipo: 'text', autocompletar: 'family-name' },
+  { clave: 'apellido_paterno', etiqueta: 'Apellido paterno', tipo: 'text', autocompletar: 'family-name' },
+  { clave: 'apellido_materno', etiqueta: 'Apellido materno (opcional)', tipo: 'text', autocompletar: 'additional-name' },
   { clave: 'telefono', etiqueta: 'Teléfono', tipo: 'tel', autocompletar: 'tel', modo: 'numeric' },
   { clave: 'correo', etiqueta: 'Correo', tipo: 'email', autocompletar: 'email' },
 ]
@@ -89,7 +90,8 @@ watch(
   (admin) => {
     Object.assign(datos, {
       nombre: admin.nombre,
-      apellidos: admin.apellidos,
+      apellido_paterno: admin.apellido_paterno,
+      apellido_materno: admin.apellido_materno ?? '',
       telefono: admin.telefono,
       correo: admin.correo,
       foto_perfil: admin.foto_perfil,
@@ -108,7 +110,7 @@ watch(
   },
 )
 
-const iniciales = computed(() => [datos.nombre, datos.apellidos].map((p) => p?.[0] ?? '').join('').toUpperCase())
+const iniciales = computed(() => [datos.nombre, datos.apellido_paterno].map((p) => p?.[0] ?? '').join('').toUpperCase())
 
 function elegirFoto(evento) {
   const archivo = evento.target.files?.[0]
@@ -133,7 +135,7 @@ function elegirFoto(evento) {
 
 function validar() {
   errores.nombre = datos.nombre ? '' : 'Escribe tu nombre.'
-  errores.apellidos = datos.apellidos ? '' : 'Escribe tus apellidos.'
+  errores.apellido_paterno = datos.apellido_paterno ? '' : 'Escribe tu apellido paterno.'
   errores.telefono = /^\d{10}$/.test(datos.telefono ?? '') ? '' : 'Escribe un teléfono de 10 dígitos, sin espacios.'
   errores.correo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(datos.correo ?? '') ? '' : 'Escribe un correo válido, por ejemplo nombre@dominio.com.'
   return CAMPOS.every((c) => !errores[c.clave])
@@ -147,8 +149,8 @@ function quitarFoto() {
 
 function enviar() {
   if (!validar()) return
-  const { nombre, apellidos, telefono, correo } = datos
-  emit('guardar', { datos: { nombre, apellidos, telefono, correo }, foto: archivoFoto, quitarFoto: quitar })
+  const { nombre, apellido_paterno, apellido_materno, telefono, correo } = datos
+  emit('guardar', { datos: { nombre, apellido_paterno, apellido_materno: apellido_materno || null, telefono, correo }, foto: archivoFoto, quitarFoto: quitar })
 }
 </script>
 

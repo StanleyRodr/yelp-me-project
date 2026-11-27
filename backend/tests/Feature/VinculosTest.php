@@ -39,7 +39,8 @@ class VinculosTest extends TestCase
         $vinculos = $this->getJson('/api/vinculos')->assertOk()->json('datos');
 
         $this->assertSame(['José', 'María'], array_column($vinculos, 'nombre'));
-        $this->assertSame('López Díaz', $vinculos[1]['apellidos']);
+        $this->assertSame('López', $vinculos[1]['apellido_paterno']);
+        $this->assertSame('Díaz', $vinculos[1]['apellido_materno']);
     }
 
     public function test_desvincularme_me_borra_de_su_agenda_sin_bloquear(): void

@@ -99,13 +99,13 @@ Token en el header `Authorization: Bearer <token>`. Los endpoints de acceso tien
 
 | Método | Ruta | Quién | Cuerpo | Respuesta (`datos`) |
 |---|---|---|---|---|
-| POST | `/api/registro` | Público (app) | `nombre`, `apellidos`, `telefono` (10 dígitos), `correo`, `password`, `password_confirmation`, `fcm_token`? | `token`, `usuario`, `contactos_vinculados` (201) |
+| POST | `/api/registro` | Público (app) | `nombre`, `apellido_paterno`, `apellido_materno`? (vacío → `null`), `telefono` (10 dígitos), `correo`, `password`, `password_confirmation`, `fcm_token`? | `token`, `usuario`, `contactos_vinculados` (201) |
 | POST | `/api/login` | Público (app, rol usuario) | `correo` **o** `telefono`, `password`, `fcm_token`? | `token`, `usuario` |
 | POST | `/api/admin/login` | Público (panel, rol admin) | `correo`, `password` | `token`, `usuario` |
 | GET | `/api/sesion` | Con token | — | `usuario` |
 | DELETE | `/api/sesion` | Con token | — | `null` (borra solo el token actual) |
 
-`usuario` = `id, nombre, apellidos, telefono, correo, rol, foto_perfil (URL), activo, suspendido, strikes_activos, limite_strikes, created_at`. Nunca incluye `password` ni `fcm_token`.
+`usuario` = `id, nombre, apellido_paterno, apellido_materno, telefono, correo, rol, foto_perfil (URL), activo, suspendido, strikes_activos, limite_strikes, created_at`. Nunca incluye `password` ni `fcm_token`.
 
 | Situación | Código | Mensaje |
 |---|---|---|
@@ -129,9 +129,9 @@ Middlewares para rutas nuevas: `auth:sanctum` + `cuenta.activa` + `rol:usuario` 
 | PUT/PATCH | `/api/contactos/{id}` | Campos a cambiar | Contacto |
 | DELETE | `/api/contactos/{id}` | — | `null` |
 | GET | `/api/telefonos/{telefono}` | — | `{ telefono, vinculable, en_agenda }` (30/min) |
-| GET | `/api/vinculos` | — | Quién me tiene: `[{ id, nombre, apellidos, telefono, desde }]` |
+| GET | `/api/vinculos` | — | Quién me tiene: `[{ id, nombre, apellido_paterno, apellido_materno, telefono, desde }]` |
 | DELETE | `/api/vinculos/{id}` | — | `null` (me borra de su agenda) |
-| GET | `/api/bloqueos` | — | `[{ id, nombre, apellidos, telefono, desde }]` |
+| GET | `/api/bloqueos` | — | `[{ id, nombre, apellido_paterno, apellido_materno, telefono, desde }]` |
 | POST | `/api/bloqueos` | `contacto_id` (id de un vínculo) | Bloqueo (201) |
 | DELETE | `/api/bloqueos/{id}` | — | `null` |
 
@@ -145,7 +145,7 @@ Contacto = `id, nombre, telefono, parentesco, vinculado, created_at, updated_at`
 
 ## Solicitudes de ayuda
 
-Solicitud = columnas de `solicitudes` (`id, usuario_id, titulo, descripcion, latitud, longitud, ubicacion_nombre, estado, admin_id, cerrado_por_id, motivo, enviado_en, cerrado_en, created_at, updated_at`) + `servicios` (ids) + `usuario` `{ id, nombre, apellidos, telefono }` + `admin` y `cerrado_por` `{ id, nombre, apellidos }` o `null`. Misma forma que usa el frontend.
+Solicitud = columnas de `solicitudes` (`id, usuario_id, titulo, descripcion, latitud, longitud, ubicacion_nombre, estado, admin_id, cerrado_por_id, motivo, enviado_en, cerrado_en, created_at, updated_at`) + `servicios` (ids) + `usuario` `{ id, nombre, apellido_paterno, apellido_materno, telefono }` + `admin` y `cerrado_por` `{ id, nombre, apellido_paterno, apellido_materno }` o `null`. Misma forma que usa el frontend.
 
 | Método | Ruta | Quién | Cuerpo |
 |---|---|---|---|
@@ -210,7 +210,7 @@ Transiciones (plan principal 7.2; tabla en `App\Support\TransicionesSolicitud`, 
 | Método | Ruta | Cuerpo |
 |---|---|---|
 | GET | `/api/sesion` | — (consultar el perfil) |
-| PUT/PATCH | `/api/perfil` | `nombre`, `apellidos`, `telefono`, `correo` (los que cambian) |
+| PUT/PATCH | `/api/perfil` | `nombre`, `apellido_paterno`, `apellido_materno` (vacío o `null` lo quita), `telefono`, `correo` (los que cambian) |
 | POST | `/api/perfil/foto` | multipart `foto` (JPG/PNG/WEBP, máx. 1 MB) |
 | DELETE | `/api/perfil/foto` | — |
 | PUT | `/api/perfil/password` | `actual`, `nueva`, `nueva_confirmation` |

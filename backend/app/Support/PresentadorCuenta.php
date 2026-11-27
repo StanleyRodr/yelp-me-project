@@ -79,8 +79,8 @@ class PresentadorCuenta
 
         $nombres = fn (Collection $ids) => DB::table('usuarios')
             ->whereIn('id', $ids->filter()->unique())
-            ->get(['id', 'nombre', 'apellidos'])
-            ->mapWithKeys(fn ($p) => [$p->id => trim("{$p->nombre} {$p->apellidos}")]);
+            ->get(['id', 'nombre', 'apellido_paterno', 'apellido_materno'])
+            ->mapWithKeys(fn ($p) => [$p->id => PresentadorUsuario::nombreCompleto($p)]);
 
         $strikes = DB::table('strikes')->where('usuario_id', $id)->orderByDesc('created_at')->orderByDesc('id')->get();
         $suspensiones = DB::table('suspensiones')->where('usuario_id', $id)->orderByDesc('fecha_suspension')->orderByDesc('id')->get();

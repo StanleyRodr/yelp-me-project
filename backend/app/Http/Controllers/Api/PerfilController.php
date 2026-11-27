@@ -28,12 +28,13 @@ class PerfilController extends Controller
 
         $datos = $request->validate([
             'nombre' => ['sometimes', 'required', 'string', 'max:100'],
-            'apellidos' => ['sometimes', 'required', 'string', 'max:100'],
+            'apellido_paterno' => ['sometimes', 'required', 'string', 'max:60'],
+            'apellido_materno' => ['sometimes', 'nullable', 'string', 'max:60'],
             'telefono' => ['sometimes', 'required', 'digits:10', Rule::unique('usuarios', 'telefono')->ignore($yo->id)],
             'correo' => ['sometimes', 'required', 'email', 'max:150', Rule::unique('usuarios', 'correo')->ignore($yo->id)],
         ]);
 
-        $datos = array_map(fn ($v) => trim($v), $datos);
+        $datos = array_map(fn ($v) => Normalizar::opcional($v), $datos);
 
         DB::transaction(function () use ($yo, $datos) {
             // Valores actuales desde la BD ($request->user() puede estar desactualizado).
