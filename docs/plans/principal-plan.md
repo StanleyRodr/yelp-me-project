@@ -1,7 +1,7 @@
 # Plan principal — YelpMe
 
 > Sistema de contactos y solicitudes de emergencia.
-> Creado: 2026-11-19 · Última actualización: 2026-11-19
+> Creado: 2026-11-19 · Última actualización: 2026-11-26
 > Tipo: prototipo académico (MVP). **No se conecta con servicios reales de emergencia.**
 
 Este documento reúne el contexto general del proyecto: objetivo, alcance, reglas de negocio, stack y decisiones de diseño. Los planes específicos (`docs/plans/`) y sus tareas (`docs/tasks/`) se derivan de aquí. **No contiene tareas.**
@@ -49,8 +49,11 @@ La app Android debe realizar al menos un CRUD completo (**Crear → Consultar �
 ## 4. Actores y funcionalidades
 
 ### 4.1 Usuario (Android)
-- **Cuenta:** registrarse (teléfono obligatorio), iniciar sesión, cerrar sesión, editar perfil (nombre, foto, teléfono).
-- **Contactos de confianza:** agregar, consultar, modificar, eliminar; llamar con un botón.
+- **Cuenta:** registrarse (teléfono obligatorio), iniciar sesión, cerrar sesión, recuperar contraseña con código por correo, editar perfil (nombre, apellidos, foto, teléfono, correo, contraseña).
+- **Domicilio:** uno por usuario, opcional (sección 6.5).
+- **Contactos de confianza:** agregar, consultar, modificar, eliminar; llamar con un botón; marcar uno como **favorito** (sección 6.4).
+- **Barra inferior de llamadas rápidas:** servicios del catálogo con llamada **simulada** y botón de llamada real al contacto favorito (sección 6.4).
+- **Tema:** claro, oscuro o el del sistema.
 - **Quién me tiene como contacto:** ver la lista y desvincularse o bloquear.
 - **Solicitudes de ayuda:**
   - Crear solicitud con ubicación GPS y servicios (opcionales).
@@ -62,7 +65,9 @@ La app Android debe realizar al menos un CRUD completo (**Crear → Consultar �
 - **Perfil:** ver sus strikes activos y cuántas veces ha sido suspendido.
 
 ### 4.2 Administrador (Web)
-- Iniciar y cerrar sesión (sin registro público).
+- Iniciar y cerrar sesión (sin registro público); recuperar contraseña con el mismo flujo de código por correo.
+- Ver el domicilio del usuario en su detalle y en el de sus solicitudes.
+- Tema claro, oscuro o el del sistema.
 - Dashboard con solicitudes y su ubicación en mapa; actualización automática por consulta periódica.
 - Consultar incidentes y su detalle.
 - Editar los servicios requeridos (en `Pendiente` y `Enviado`).
@@ -89,6 +94,16 @@ La app Android debe realizar al menos un CRUD completo (**Crear → Consultar �
 - **Logout** elimina el token de Sanctum y el token FCM del dispositivo.
 - Rutas de login con **límite de intentos** (`throttle`).
 - Las cuentas **no se eliminan, se deshabilitan** (`activo = 0`), y solo un admin puede hacerlo y reactivarlas. Una cuenta deshabilitada no inicia sesión, no recibe notificaciones y conserva su teléfono y correo reservados; sus solicitudes y vínculos se mantienen.
+- **Nombre:** `nombre`, `apellido_paterno` (obligatorio) y `apellido_materno` (opcional). En pantalla: "Nombre Paterno Materno" (sin espacio extra si falta el materno). Las búsquedas del panel buscan en ambos apellidos.
+
+### 5.1 Recuperación de contraseña (app y panel)
+- Tres pasos: correo → código → contraseña nueva. Sirve a cualquier rol.
+- Código de **6 dígitos**, vigencia **15 min**, máximo **5 intentos** (luego se invalida). Solo un código vigente por cuenta: pedir otro anula el anterior.
+- Respuesta neutra: "Si el correo está registrado, te enviamos un código." (no revela qué correos existen).
+- Cuentas deshabilitadas no reciben código.
+- Al cambiar la contraseña se **borran todos los tokens** de la cuenta (se cierran todas las sesiones).
+- Rutas con `throttle:acceso`.
+- Correo con Laravel Mail: `MAIL_MAILER=log` en desarrollo (el código queda en `storage/logs/laravel.log`); SMTP en producción. Credenciales fuera de git.
 
 ---
 
@@ -110,6 +125,22 @@ La app Android debe realizar al menos un CRUD completo (**Crear → Consultar �
 
 ### 6.3 Llamada directa
 - Botón que llama al teléfono del contacto: `Intent ACTION_CALL` con permiso `CALL_PHONE`; si no se concede, `ACTION_DIAL`.
+
+### 6.4 Contacto favorito y barra de llamadas rápidas
+- Cada usuario puede marcar **un** contacto como favorito (vinculado o no). Marcar otro desmarca el anterior. Si se borra, el usuario queda sin favorito.
+- El favorito sale primero en la lista con un distintivo. No tiene otro trato especial: las solicitudes avisan igual a todos los vinculados.
+- **Barra inferior** de la app (en las pantallas principales):
+  - Un botón por servicio activo de `GET /api/servicios`, con su ícono Material Symbols. Al tocarlo: aviso "Llamada simulada a <servicio>. YelpMe es un prototipo y no contacta servicios reales." **No marca ningún número.**
+  - Botón del favorito: **llamada real** (`ACTION_CALL`; si se niega `CALL_PHONE`, `ACTION_DIAL`). Sin favorito → lleva a Contactos para elegir uno.
+
+### 6.5 Domicilio
+- **Uno por usuario, opcional** (no se pide en el registro; se agrega desde el perfil).
+- Campos: calle, número, colonia, código postal, referencia (opcional) y coordenadas (pin en el mapa, obligatorias si hay domicilio).
+- Lo ven:
+  - El propio usuario (perfil).
+  - Los admins (detalle del usuario y de sus solicitudes).
+  - **Las personas que el usuario guardó como contactos vinculados** (lo ven en "Quién me tiene como contacto"). Si las borra o bloquea, dejan de verlo.
+- Respaldo del GPS al crear una solicitud (sección 7.5).
 
 ---
 
@@ -164,6 +195,12 @@ Cualquier otra transición se rechaza en el backend.
 - Antes de aplicar una acción, el backend **valida el estado actual**; si ya cambió, la rechaza. Así dos administradores no atienden la misma solicitud.
 - Cada solicitud registra **qué administrador la atendió** (el que la despacha o la rechaza) y el historial lo muestra.
 - Se guarda quién cerró la solicitud y el motivo, cuando aplica.
+
+### 7.5 Ubicación de la solicitud
+- Por defecto, la **ubicación actual** con `FusedLocationProviderClient`.
+- Si el GPS falla o se niega el permiso: diálogo "No pudimos obtener tu ubicación" con **Usar mi domicilio**, **Reintentar** o **Marcar en el mapa**. Sin domicilio, solo Reintentar y Mapa.
+- El formulario también tiene "Usar mi domicilio" (para cuando la persona está en casa).
+- Con domicilio, `ubicacion_nombre` se llena con "Domicilio: calle número, colonia".
 
 ---
 
@@ -249,9 +286,30 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 - Estilo: clases internas anónimas cuando sea posible y constructores.
 - Colores en `colors.xml` y textos en `strings.xml`; nada hardcodeado.
 
+- **Mapas con osmdroid** (OpenStreetMap, mismas teselas que Leaflet en la web; sin API key).
+- **Navegación:** activities con una `BaseActivity` común (menú lateral + barra inferior + insets). Detalle y formularios en activities propias para que Atrás funcione.
+- **URL de la API** por tipo de build (`BuildConfig.API_URL`): debug → `http://10.0.2.2:8000/api/`; release → la API en Railway. HTTP sin cifrar solo en debug (`network_security_config` en `src/debug/`).
+- **Diseños de la otra persona:** se conserva la estructura (pantallas, orden de secciones, tarjetas, menú lateral); el estilo pasa al de la web (10.5).
+
 ### 10.5 Identidad visual común
 - Web y Android comparten **paleta de colores, tipografía e íconos** (Material Symbols para servicios).
-- La paleta parte de los colores ya usados en la web (secciones y estados) y se replica en `colors.xml`. Las diferencias que aparezcan se corrigen.
+- Paleta: los tokens `--ym-*` de `frontend/src/styles/tokens.css` se replican en `res/values/colors.xml` (claro) y `res/values-night/colors.xml` (oscuro).
+- Tipografía: **Atkinson Hyperlegible Next** en ambos (en Android, archivo de fuente incluido en `res/font`, no descargable).
+- Íconos: Material Symbols (web: npm; Android: Vector Asset). Sin PNG de servicios.
+- Estado de solicitud con **badge** (color + texto), nunca solo color de fondo.
+- Accesibilidad: objetivos táctiles ≥ 48dp, `contentDescription` en todo ícono accionable, contraste ≥ 4.5:1.
+- **Tema claro y oscuro** en web y Android: por defecto sigue al sistema; selector Claro / Oscuro / Sistema (web: `localStorage`; Android: `SharedPreferences` + `AppCompatDelegate`).
+
+### 10.6 Despliegue (plan 013)
+| Parte | Dónde |
+|---|---|
+| Panel Vue | **Vercel** (raíz `frontend/`, subdominio `*.vercel.app`) |
+| API Laravel | **Railway** (raíz `backend/`, subdominio `*.up.railway.app`, volumen en `storage/app/public` para fotos) |
+| BD | **MySQL en Railway** (mismo proyecto que la API) |
+| App Android | **APK firmado en GitHub Releases**; el build release apunta a la API en Railway |
+
+- Despliegue automático al fusionar en `main`. El esquema (`script-bd.sql`) se aplica a mano una vez; luego `db:seed` (demo). El admin de producción toma su contraseña de una variable de entorno.
+- Secretos (SMTP, Firebase, keystore, contraseñas) solo en variables de entorno o archivos ignorados.
 
 ---
 
@@ -261,7 +319,7 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 |----------|--------|
 | Frontend | Planes 002 y 007: panel completo (rutas con login, dashboard con recarga cada 15 s, solicitudes, usuarios, perfil) conectado a la API real. Sin datos de ejemplo. |
 | Backend  | Planes 001 y 003–006: base, autenticación, contactos, solicitudes, gestión de usuarios (strikes, suspensiones, cuentas) y perfil propio. Pruebas sobre `YelpMe_pruebas`. Falta FCM. |
-| Mobile   | Vacío; diseños en proceso por otra persona. |
+| Mobile   | Diseños entregados por otra persona (prototipo visual sin API, sin ViewBinding). Planes 008–011 los integran. |
 | BD       | Creada con `database/script-bd.sql`: 9 tablas, admin inicial y catálogo de servicios. |
 
 ### Pendiente en el frontend
@@ -276,8 +334,10 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 
 | Tabla | Función | Relaciones |
 |---|---|---|
-| `usuarios` | Cuentas de usuarios y admins (`rol`, `activo`). | — |
-| `contactos` | Agenda del usuario (CRUD móvil). | usuarios 1:M (dueño) · usuarios 1:M (vinculado, opcional) |
+| `usuarios` | Cuentas de usuarios y admins (`rol`, `activo`, `apellido_paterno`, `apellido_materno`). | — |
+| `codigos_recuperacion` | Código de recuperación de contraseña (hash, vigencia, intentos). | usuarios 1:M |
+| `domicilios` | Domicilio único del usuario (calle, número, colonia, CP, referencia, coordenadas). | usuarios 1:1 |
+| `contactos` | Agenda del usuario (CRUD móvil); `favorito` (máx. uno por usuario). | usuarios 1:M (dueño) · usuarios 1:M (vinculado, opcional) |
 | `bloqueos` | B bloquea a A; impide volver a vincular. | usuarios M:N usuarios |
 | `servicios` | Catálogo con nombre, ícono Material Symbols y color. | — |
 | `solicitudes` | Petición de ayuda con ubicación, estado, admin que atendió, quién cerró, motivo y fechas. | usuarios 1:M (creador / admin / cerró) |
@@ -306,15 +366,19 @@ El día de la presentación debe poder demostrarse:
 6. El admin corrige servicios, despacha y termina una solicitud; el historial muestra quién la atendió.
 7. Rechazo por broma con strike; al tercer strike el usuario no puede pedir servicios, y el admin lo rehabilita.
 8. Notificación push al contacto vinculado y al solicitante.
+9. Recuperar contraseña con código por correo (app y panel).
+10. Solicitud sin GPS usando el domicilio; llamada al contacto favorito desde la barra.
+11. Todo funcionando en la nube: panel en Vercel, API y BD en Railway, APK de release instalado en un teléfono.
 
 ---
 
 ## 14. Fuera de alcance (MVP)
 
-- Conexión con servicios reales de emergencia.
+- Conexión con servicios reales de emergencia (la barra de llamadas a servicios es simulada).
 - Registro de administradores desde la web o la API.
 - Seguimiento de ubicación en tiempo real (la ubicación se toma al crear la solicitud).
-- Recuperación de contraseña.
+- Más de un domicilio por usuario.
+- Publicación en Google Play.
 
 ---
 
@@ -339,5 +403,9 @@ El día de la presentación debe poder demostrarse:
 5. ✅ Plan 005 — API de solicitudes y servicios (estados, transiciones, motivos, admin que atiende).
 6. ✅ Plan 006 — Gestión de usuarios (strikes, suspensiones, cuentas) y perfil propio.
 7. ✅ Plan 007 — Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
-8. Mobile: integración de diseños, Retrofit, CRUD de contactos, solicitudes con GPS, llamadas.
-9. Notificaciones FCM (backend + Android).
+8. Plan 008 — Base mobile y ajustes transversales: proyecto Android importado y limpio, tema claro/oscuro (web y Android), apellidos en dos columnas, recuperación de contraseña (API, panel, app), Retrofit y sesión, login/registro, `BaseActivity` y barra simulada.
+9. Plan 009 — Perfil: datos, foto, contraseña, strikes y domicilio (API, panel, app).
+10. Plan 010 — Contactos en Android: CRUD, favorito, vínculos (con domicilio), bloqueos, llamadas.
+11. Plan 011 — Solicitudes en Android: GPS con respaldo de domicilio, servicios, estados, historial.
+12. Plan 012 — Notificaciones FCM (backend + Android).
+13. Plan 013 — Despliegue: Vercel, Railway (API + MySQL), APK en GitHub Releases.
