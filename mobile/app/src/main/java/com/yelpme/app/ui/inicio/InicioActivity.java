@@ -1,5 +1,8 @@
 package com.yelpme.app.ui.inicio;
 
+import android.Manifest;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -7,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
@@ -49,6 +54,7 @@ public class InicioActivity extends BaseActivity {
     public static final String EXTRA_VINCULADOS = "vinculados";
 
     private static final long RECARGA_MS = 15_000;
+    private static final String PERMISO_NOTIFICACIONES_PEDIDO = "permiso_notificaciones_pedido";
 
     private ActivityInicioBinding vista;
     private FormularioSolicitud formulario;
@@ -64,6 +70,11 @@ public class InicioActivity extends BaseActivity {
             recarga.postDelayed(this, RECARGA_MS);
         }
     };
+
+    /** Android 13+: permiso para mostrar notificaciones (alertas de contactos y estados). */
+    private final ActivityResultLauncher<String> permisoNotificaciones = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(), concedido -> {
+            });
 
     @Override
     protected int itemMenu() {
@@ -90,7 +101,26 @@ public class InicioActivity extends BaseActivity {
         }
         if (savedInstanceState == null) {
             avisosDeEntrada();
+            pedirPermisoNotificaciones();
         }
+    }
+
+    /** Una sola vez, con explicación antes del diálogo del sistema. Si lo niega, Perfil lo recuerda. */
+    private void pedirPermisoNotificaciones() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        SharedPreferences ajustes = getSharedPreferences("ym_ajustes", MODE_PRIVATE);
+        if (ajustes.getBoolean(PERMISO_NOTIFICACIONES_PEDIDO, false)) {
+            return;
+        }
+        ajustes.edit().putBoolean(PERMISO_NOTIFICACIONES_PEDIDO, true).apply();
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.notificaciones_permiso_titulo)
+                .setMessage(R.string.notificaciones_permiso_explicacion)
+                .setNegativeButton(R.string.comun_cancelar, null)
+                .setPositiveButton(R.string.comun_continuar, (d, i) -> permisoNotificaciones.launch(Manifest.permission.POST_NOTIFICATIONS))
+                .show();
     }
 
     @Override

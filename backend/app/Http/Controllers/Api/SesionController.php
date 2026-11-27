@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Support\Credenciales;
 use App\Support\Normalizar;
 use App\Support\PresentadorUsuario;
+use App\Support\TokensFcm;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -35,12 +36,7 @@ class SesionController extends Controller
         $usuario = Credenciales::verificar($datos, $datos['password']);
         Credenciales::exigirAcceso($usuario, 'usuario', 'Esta cuenta es de administrador. Inicia sesión en el panel web.');
 
-        if (! empty($datos['fcm_token'])) {
-            DB::table('usuarios')->where('id', $usuario->id)->update([
-                'fcm_token' => $datos['fcm_token'],
-                'updated_at' => now(),
-            ]);
-        }
+        TokensFcm::asignar($usuario->id, $datos['fcm_token'] ?? null);
 
         $token = User::findOrFail($usuario->id)->createToken('app')->plainTextToken;
 

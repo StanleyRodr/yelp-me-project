@@ -94,8 +94,31 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ui.alertas.AlertaContactoActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
+        <activity
             android:name=".ui.mapa.ElegirUbicacionActivity"
             android:exported="false" />
+
+        <!-- Push (plan 012): mensajes solo de datos; la app arma la notificación. -->
+        <service
+            android:name=".notificaciones.ServicioMensajes"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="estado" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notificacion" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/ym_marca" />
     </application>
 
 </manifest>

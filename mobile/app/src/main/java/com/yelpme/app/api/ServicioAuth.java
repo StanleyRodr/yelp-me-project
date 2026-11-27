@@ -31,6 +31,10 @@ public interface ServicioAuth {
     @DELETE("sesion")
     Call<Respuesta<Void>> cerrarSesion(@Header("Authorization") String bearer);
 
+    /** { fcm_token }: token de notificaciones del dispositivo (plan 012). */
+    @PUT("sesion/fcm")
+    Call<Respuesta<Void>> actualizarFcm(@Body Map<String, String> cuerpo);
+
     /** { correo } → mensaje neutro */
     @POST("recuperacion")
     Call<Respuesta<Void>> pedirCodigo(@Body Map<String, String> cuerpo);

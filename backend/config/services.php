@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    // Notificaciones push (plan 012). Sin credenciales se usa NotificadorNulo.
+    'firebase' => [
+        // Producción: JSON de la cuenta de servicio en base64 (tiene prioridad).
+        'credenciales_base64' => env('FIREBASE_CREDENTIALS_BASE64'),
+        // Local: ruta al JSON (relativa a backend/ o absoluta).
+        'credenciales' => env('FIREBASE_CREDENTIALS', 'storage/app/firebase/credenciales.json'),
+    ],
+
 ];

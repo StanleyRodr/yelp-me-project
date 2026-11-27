@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.StrictMode;
 
 import com.yelpme.app.api.ClienteApi;
+import com.yelpme.app.notificaciones.Canales;
 import com.yelpme.app.util.Sesion;
 import com.yelpme.app.util.Tema;
 
@@ -26,6 +27,7 @@ public class YelpMeApp extends Application {
         Tema.iniciar(this);
         sesion = new Sesion(this);
         ClienteApi.iniciar(this, sesion);
+        Canales.crear(this);
     }
 
     public Sesion getSesion() {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Support\Avisos;
 use App\Support\PresentadorSolicitud;
 use App\Support\Solicitudes;
 use Illuminate\Http\JsonResponse;
@@ -58,6 +59,9 @@ class SolicitudController extends Controller
             if ($servicios) {
                 Solicitudes::reemplazarServicios($id, $servicios);
             }
+
+            // Push a los contactos vinculados, solo si la transacción se confirma (plan 012).
+            DB::afterCommit(fn () => Avisos::solicitudCreada($id));
 
             return $id;
         });

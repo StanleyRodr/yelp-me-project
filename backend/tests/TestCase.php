@@ -7,11 +7,15 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
+use Tests\Support\NotificadorFalso;
+use App\Support\Notificador;
 
 abstract class TestCase extends BaseTestCase
 {
     // Cada prueba corre en una transacción que se revierte al terminar.
     use DatabaseTransactions;
+
+    protected NotificadorFalso $notificador;
 
     protected function setUp(): void
     {
@@ -22,6 +26,10 @@ abstract class TestCase extends BaseTestCase
         if (! str_ends_with($bd, '_pruebas')) {
             $this->fail("Las pruebas deben usar una BD terminada en _pruebas (actual: {$bd}). Ejecuta `php artisan bd:pruebas`.");
         }
+
+        // Push (plan 012): nunca se llama a Firebase en pruebas; los envíos quedan aquí.
+        $this->notificador = new NotificadorFalso();
+        $this->app->instance(Notificador::class, $this->notificador);
     }
 
     /** Olvida el usuario autenticado entre peticiones de una misma prueba. */

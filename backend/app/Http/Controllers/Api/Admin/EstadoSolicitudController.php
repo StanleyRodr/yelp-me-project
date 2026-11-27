@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Support\Avisos;
 use App\Support\PresentadorSolicitud;
 use App\Support\ReglasCuenta;
 use App\Support\Solicitudes;
@@ -50,6 +51,9 @@ class EstadoSolicitudController extends Controller
             if ($conStrike) {
                 ReglasCuenta::darStrike($solicitud->usuario_id, $adminId, self::MOTIVO_STRIKE, $solicitud->id);
             }
+
+            // Push al solicitante con el estado nuevo (plan 012); los cambios del propio usuario no avisan.
+            DB::afterCommit(fn () => Avisos::estadoCambiado($id));
         });
 
         $mensaje = self::MENSAJES[$datos['estado']].($conStrike ? ' y strike registrado' : '');

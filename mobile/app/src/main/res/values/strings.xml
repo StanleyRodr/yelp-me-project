@@ -319,6 +319,22 @@
     <string name="ubicacion_prefijo_domicilio">Domicilio: %1$s</string>
     <string name="ubicacion_sin_gps">No se pudo obtener tu ubicación. Revisa que el GPS esté encendido.</string>
 
+    <!-- Notificaciones (plan 012) -->
+    <string name="canal_alertas">Alertas de contactos</string>
+    <string name="canal_alertas_descripcion">Cuando alguien que te eligió como contacto pide ayuda.</string>
+    <string name="canal_estado">Estado de mis solicitudes</string>
+    <string name="canal_estado_descripcion">Cuando un administrador envía, rechaza o termina tu solicitud.</string>
+    <string name="notificaciones_permiso_titulo">Activa las notificaciones</string>
+    <string name="notificaciones_permiso_explicacion">Para avisarte cuando un contacto pida ayuda y cuando cambie el estado de tus solicitudes.</string>
+    <string name="notificaciones_apagadas">Las notificaciones están apagadas: no te enterarás si un contacto pide ayuda.</string>
+    <string name="notificaciones_activar">Activar notificaciones</string>
+    <string name="alerta_titulo">Alerta de un contacto</string>
+    <string name="alerta_quien">%1$s pidió ayuda</string>
+    <string name="alerta_llamar">Llamar a %1$s</string>
+    <string name="alerta_llamar_corto">Llamar</string>
+    <string name="alerta_como_llegar">Cómo llegar</string>
+    <string name="alerta_sin_mapas">No hay una app de mapas para abrir la ubicación.</string>
+
     <!-- Sesión -->
     <string name="sesion_cerrar_titulo">¿Cerrar sesión?</string>
     <string name="sesion_cerrar_mensaje">Tendrás que volver a iniciar sesión en este teléfono.</string>

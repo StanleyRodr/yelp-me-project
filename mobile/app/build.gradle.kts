@@ -10,6 +10,12 @@ val propiedadesLocales = Properties().apply {
 }
 val apiDebug: String = propiedadesLocales.getProperty("api.url", "http://10.0.2.2:8000/api/")
 
+// Push (plan 012): sin google-services.json (no se sube a git) la app compila y corre sin notificaciones.
+val conFirebase = file("google-services.json").exists()
+if (conFirebase) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 android {
     namespace = "com.yelpme.app"
     compileSdk {
@@ -24,6 +30,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("boolean", "FCM_ACTIVO", conFirebase.toString())
     }
 
     buildFeatures {
@@ -62,6 +69,8 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.play.services.location)
     implementation(libs.osmdroid)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

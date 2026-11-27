@@ -251,6 +251,24 @@ Uno por usuario (tabla `domicilios`, 1:1). El `usuario_id` sale del token.
 - Respuesta: los campos + `texto` ("Calle Número, Colonia, CP") y `updated_at`.
 - Panel: `domicilio` en `GET /api/admin/usuarios/{id}` y `usuario.domicilio` en `GET /api/admin/solicitudes/{id}` (no en listados).
 
+## Notificaciones push (Firebase Cloud Messaging)
+
+- `App\Support\Notificador` con `NotificadorFcm` (API v1, `kreait/laravel-firebase`) o `NotificadorNulo` si no hay credenciales: la API funciona igual, sin push.
+- Credenciales: local en `storage/app/firebase/credenciales.json` (`FIREBASE_CREDENTIALS`, ignorado por git); producción con `FIREBASE_CREDENTIALS_BASE64` (el mismo JSON en base64). Se leen desde `config/services.php`.
+- Para obtener el JSON: consola de Firebase → Configuración del proyecto → Cuentas de servicio → Generar nueva clave privada.
+- La librería necesita la extensión PHP `sodium` (en XAMPP: quitar el `;` de `extension=sodium` en `php.ini`).
+- `PUT /api/sesion/fcm` `{ fcm_token }` (rol usuario): guarda el token del dispositivo; si otra cuenta tenía el mismo token, se le quita (también al iniciar sesión y al registrarse).
+- Un token que FCM rechaza (no existe o inválido) se borra del usuario; los errores van al log y no cambian la respuesta.
+- **Eventos** (en `App\Support\Avisos`, después del commit de la transacción):
+
+| Evento | Destino | Título / cuerpo | Datos | Canal |
+|---|---|---|---|---|
+| El usuario crea una solicitud | Contactos vinculados del creador con cuenta activa y token | "Carlos pidió ayuda" / título | `tipo=alerta_contacto`, `nombre`, `telefono`, `titulo`, `latitud`, `longitud`, `ubicacion_nombre` | `alertas` |
+| El admin la pasa a Enviado / Terminado | Solicitante | "Tu ayuda va en camino" / "Tu solicitud se marcó como terminada" + título | `tipo=estado`, `solicitud_id`, `estado` | `estado` |
+| El admin la rechaza | Solicitante | "Tu solicitud fue rechazada" / motivo | ídem | `estado` |
+
+Los cambios que hace el propio usuario (cancelar, terminar) no avisan.
+
 ## Convenciones
 
 - Controladores **sin modelos Eloquent**: acceso a datos con `DB::table(...)`. Única excepción: `App\Models\User`, solo para autenticación con Sanctum.
