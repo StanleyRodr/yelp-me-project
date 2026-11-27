@@ -38,6 +38,27 @@
         <item name="borderlessButtonStyle">@style/Widget.YelpMe.Boton.Texto</item>
         <item name="textInputStyle">@style/Widget.YelpMe.Campo</item>
         <item name="materialCardViewStyle">@style/Widget.YelpMe.Tarjeta</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.YelpMe.Dialogo</item>
+        <!-- Sin tinte de elevación: superficies con el color exacto del token (como la web) -->
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
+
+    <!-- Diálogos: superficie y tipografía de la marca -->
+    <style name="ThemeOverlay.YelpMe.Dialogo" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:fontFamily">@font/atkinson</item>
+        <item name="fontFamily">@font/atkinson</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/YelpMe.Dialogo.Titulo</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/YelpMe.Dialogo.Cuerpo</item>
+    </style>
+
+    <style name="YelpMe.Dialogo.Titulo" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textAppearance">@style/TextAppearance.YelpMe.Subtitulo</item>
+        <item name="android:textColor">@color/ym_texto</item>
+    </style>
+
+    <style name="YelpMe.Dialogo.Cuerpo" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textAppearance">@style/TextAppearance.YelpMe.Cuerpo</item>
+        <item name="android:textColor">@color/ym_texto_secundario</item>
     </style>
 
     <!-- Splash (SplashActivity): logo sobre la marca mientras se confirma la sesión -->

@@ -2,16 +2,21 @@ package com.yelpme.app.ui.historial;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.yelpme.app.R;
+import com.yelpme.app.databinding.ActivityHistorialBinding;
+import com.yelpme.app.ui.base.BaseActivity;
 
-/** Pantalla del diseño, aún sin datos (se conecta en los planes 009–011). */
-public class HistorialActivity extends AppCompatActivity {
+/** Historial de solicitudes. Se conecta en el plan 011. */
+public class HistorialActivity extends BaseActivity {
+
+    @Override
+    protected int itemMenu() {
+        return R.id.menu_historial;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_historial);
+        ponerContenido(ActivityHistorialBinding.inflate(getLayoutInflater()));
     }
 }

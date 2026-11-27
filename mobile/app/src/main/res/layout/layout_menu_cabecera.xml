@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Cabecera del menú lateral: nombre y correo de la cuenta. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ym_marca"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/espacio_5"
+    android:paddingTop="@dimen/espacio_6"
+    android:paddingBottom="@dimen/espacio_4">
+
+    <TextView
+        android:id="@+id/tvNombreMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.YelpMe.Marca"
+        tools:text="Carlos Ramírez Soto" />
+
+    <TextView
+        android:id="@+id/tvCorreoMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+        android:textColor="@color/ym_sobre_marca_tenue"
+        tools:text="carlos@correo.com" />
+</LinearLayout>

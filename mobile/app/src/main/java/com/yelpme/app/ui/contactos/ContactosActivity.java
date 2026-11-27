@@ -1,17 +1,44 @@
 package com.yelpme.app.ui.contactos;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.yelpme.app.R;
+import com.yelpme.app.databinding.ActivityContactosBinding;
+import com.yelpme.app.ui.base.BaseActivity;
 
-/** Pantalla del diseño, aún sin datos (se conecta en los planes 009–011). */
-public class ContactosActivity extends AppCompatActivity {
+/** Contactos de confianza. El CRUD contra la API llega en el plan 010. */
+public class ContactosActivity extends BaseActivity {
+
+    @Override
+    protected int itemMenu() {
+        return R.id.menu_contactos;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contactos);
+        ponerContenido(ActivityContactosBinding.inflate(getLayoutInflater()));
+        if (savedInstanceState == null) {
+            avisoFavorito(getIntent());
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        avisoFavorito(intent);
+    }
+
+    /** Llegó desde el botón del favorito de la barra. */
+    private void avisoFavorito(Intent intent) {
+        if (intent.getBooleanExtra(EXTRA_ELEGIR_FAVORITO, false)) {
+            aviso(R.string.contactos_elige_favorito).show();
+        }
+    }
+
+    @Override
+    protected void favorito() {
+        aviso(R.string.contactos_elige_favorito).show();
     }
 }
