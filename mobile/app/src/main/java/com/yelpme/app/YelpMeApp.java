@@ -14,7 +14,7 @@ public class YelpMeApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Tema.aplicar(Tema.actual(this));
+        Tema.iniciar(this);
         sesion = new Sesion(this);
         ClienteApi.iniciar(this, sesion);
     }

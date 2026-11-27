@@ -30,7 +30,7 @@
         <item
             android:id="@+id/menu_tema"
             android:icon="@drawable/ic_dark_mode"
-            android:title="@string/menu_tema" />
+            android:title="@string/menu_tema_oscuro" />
         <item
             android:id="@+id/menu_cerrar_sesion"
             android:icon="@drawable/ic_logout"

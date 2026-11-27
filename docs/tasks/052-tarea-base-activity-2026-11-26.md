@@ -41,3 +41,5 @@ protected void ponerContenido(ViewBinding vista) // infla dentro de contenido
 Commit: `refactor(mobile): unifica menú lateral y barra en BaseActivity`.
 
 Notas: probado en emulador: saludo con el nombre, barra con los 6 servicios del catálogo (`Catalogo` en memoria), diálogo de llamada simulada, favorito → Contactos con aviso, menú lateral por la derecha con cabecera (nombre y correo), "Quién me tiene" avisa que llega después (plan 010), selector de tema (Claro/Oscuro/Sistema) y sin conexión la barra se oculta. "Ayuda de:" de Inicio muestra los servicios del catálogo como chips. Sin tinte de elevación en el tema (`elevationOverlayEnabled=false`) para que diálogos y menú usen `ym_superficie`.
+
+Ajuste posterior (`refactor(mobile)`): sin opción "Sistema". El item del menú lateral alterna claro ↔ oscuro sin diálogo y muestra el tema al que cambia ("Cambiar a tema oscuro/claro", íconos `ic_dark_mode`/`ic_light_mode`). Sin elección guardada sigue al sistema, como el panel.

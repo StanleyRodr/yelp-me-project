@@ -3,6 +3,7 @@ package com.yelpme.app.ui.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.activity.OnBackPressedCallback;
@@ -132,6 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void configurarMenu() {
         base.header.btnMenu.setOnClickListener(v -> base.drawerBase.openDrawer(GravityCompat.END));
+        mostrarItemTema();
 
         base.navegacion.setNavigationItemSelectedListener(item -> {
             base.drawerBase.closeDrawer(GravityCompat.END);
@@ -151,7 +153,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 aviso(R.string.menu_pronto).show();
                 return false;
             } else if (id == R.id.menu_tema) {
-                elegirTema();
+                Tema.alternar(this);
                 return false;
             } else if (id == R.id.menu_cerrar_sesion) {
                 CerrarSesion.ejecutar(this);
@@ -186,18 +188,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(new Intent(this, destino).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
     }
 
-    private void elegirTema() {
-        String[] valores = {Tema.CLARO, Tema.OSCURO, Tema.SISTEMA};
-        String[] etiquetas = {getString(R.string.tema_claro), getString(R.string.tema_oscuro), getString(R.string.tema_sistema)};
-        int actual = java.util.Arrays.asList(valores).indexOf(Tema.actual(this));
-        new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.tema_titulo)
-                .setSingleChoiceItems(etiquetas, actual, (dialogo, i) -> {
-                    dialogo.dismiss();
-                    Tema.elegir(this, valores[i]);
-                })
-                .setNegativeButton(R.string.comun_cancelar, null)
-                .show();
+    /** El item del menú muestra el tema al que cambia (se recrea al alternar). */
+    private void mostrarItemTema() {
+        boolean oscuro = Tema.esOscuro(this);
+        MenuItem item = base.navegacion.getMenu().findItem(R.id.menu_tema);
+        item.setTitle(oscuro ? R.string.menu_tema_claro : R.string.menu_tema_oscuro);
+        item.setIcon(oscuro ? R.drawable.ic_light_mode : R.drawable.ic_dark_mode);
     }
 
     // ---------- Barra de servicios ----------

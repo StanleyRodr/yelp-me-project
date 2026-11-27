@@ -140,15 +140,10 @@
     <string name="menu_vinculos">Quién me tiene</string>
     <string name="menu_historial">Historial</string>
     <string name="menu_perfil">Perfil</string>
-    <string name="menu_tema">Tema</string>
+    <string name="menu_tema_oscuro">Cambiar a tema oscuro</string>
+    <string name="menu_tema_claro">Cambiar a tema claro</string>
     <string name="menu_cerrar_sesion">Cerrar sesión</string>
     <string name="menu_pronto">Esta sección llega en la siguiente versión de la app.</string>
-
-    <!-- Tema -->
-    <string name="tema_titulo">Tema de la app</string>
-    <string name="tema_claro">Claro</string>
-    <string name="tema_oscuro">Oscuro</string>
-    <string name="tema_sistema">Igual que el sistema</string>
 
     <!-- Sesión -->
     <string name="sesion_cerrar_titulo">¿Cerrar sesión?</string>
