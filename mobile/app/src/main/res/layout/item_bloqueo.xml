@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Persona bloqueada (AdaptadorBloqueos). -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/espacio_2"
+    app:contentPadding="@dimen/espacio_3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                android:textStyle="bold"
+                tools:text="Ana Torres Vega" />
+
+            <TextView
+                android:id="@+id/tvDetalle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                tools:text="2351000004, desde 26 nov 2026" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDesbloquear"
+            style="@style/Widget.YelpMe.Boton.Secundario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/espacio_2"
+            android:text="@string/bloqueos_desbloquear"
+            app:icon="@drawable/ic_lock_open"
+            app:iconTint="@color/ym_texto" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

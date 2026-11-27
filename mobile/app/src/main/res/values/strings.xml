@@ -197,7 +197,26 @@
     <string name="menu_tema_oscuro">Cambiar a tema oscuro</string>
     <string name="menu_tema_claro">Cambiar a tema claro</string>
     <string name="menu_cerrar_sesion">Cerrar sesión</string>
-    <string name="menu_pronto">Esta sección llega en la siguiente versión de la app.</string>
+
+    <!-- Quién me tiene y bloqueos -->
+    <string name="vinculos_titulo">Quién me tiene</string>
+    <string name="vinculos_explicacion">Estas personas te eligieron como contacto de confianza. Recibirás sus alertas.</string>
+    <string name="vinculos_vacio">Nadie te tiene como contacto todavía.</string>
+    <string name="vinculos_desde">%1$s, desde %2$s</string>
+    <string name="vinculos_ver_mapa">Ver mapa</string>
+    <string name="vinculos_ver_bloqueados">Personas bloqueadas</string>
+    <string name="vinculos_desvincular">Desvincularme</string>
+    <string name="vinculos_desvincular_pregunta">%1$s ya no te tendrá en su agenda y dejarás de recibir sus alertas.</string>
+    <string name="vinculos_bloquear">Bloquear</string>
+    <string name="vinculos_bloquear_pregunta">%1$s ya no podrá volver a agregarte como contacto.</string>
+    <string name="vinculos_error_cargar">No se pudo cargar la lista.</string>
+    <string name="vinculos_domicilio_de">Domicilio de %1$s</string>
+    <string name="bloqueos_titulo">Personas bloqueadas</string>
+    <string name="bloqueos_aviso">Al desbloquear a alguien, no vuelves a su agenda de forma automática: tendría que agregarte otra vez.</string>
+    <string name="bloqueos_vacio">No has bloqueado a nadie.</string>
+    <string name="bloqueos_desbloquear">Desbloquear</string>
+    <string name="bloqueos_desbloquear_pregunta">¿Desbloquear a %1$s? Podrá volver a agregarte como contacto.</string>
+    <string name="cd_mas_opciones">Más opciones</string>
 
     <!-- Domicilio -->
     <string name="domicilio_titulo">Mi domicilio</string>

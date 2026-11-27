@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Persona que me tiene como contacto (AdaptadorVinculos). -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/espacio_2"
+    app:contentPadding="@dimen/espacio_3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                    android:textStyle="bold"
+                    tools:text="María López Díaz" />
+
+                <TextView
+                    android:id="@+id/tvDetalle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                    tools:text="2351000002, desde 26 nov 2026" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnMas"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="@dimen/toque_min"
+                android:layout_height="@dimen/toque_min"
+                android:contentDescription="@string/cd_mas_opciones"
+                app:icon="@drawable/ic_more_vert"
+                app:iconTint="@color/ym_texto" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDomicilio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/espacio_2"
+            android:drawablePadding="@dimen/espacio_1"
+            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+            android:textColor="@color/ym_texto"
+            app:drawableStartCompat="@drawable/ic_home"
+            app:drawableTint="@color/ym_texto_secundario"
+            tools:text="Calle Hidalgo 12, Centro, 93820" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/espacio_2"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnLlamar"
+                style="@style/Widget.YelpMe.Boton.Secundario"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/espacio_1"
+                android:layout_weight="1"
+                android:text="@string/contactos_llamar"
+                app:icon="@drawable/ic_call"
+                app:iconGravity="textStart"
+                app:iconTint="@color/ym_texto" />
+
+            <Button
+                android:id="@+id/btnMapa"
+                style="@style/Widget.YelpMe.Boton.Secundario"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/espacio_1"
+                android:layout_weight="1"
+                android:text="@string/vinculos_ver_mapa"
+                app:icon="@drawable/ic_place"
+                app:iconGravity="textStart"
+                app:iconTint="@color/ym_texto" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,6 +1,6 @@
 # 065 — Tarea: Vínculos y bloqueos (app)
 
-> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ⬜ Pendiente
+> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ✅ Terminada
 
 ## Objetivo
 "Quién me tiene como contacto" con el domicilio de cada persona, desvincularse, bloquear y desbloquear.
@@ -30,3 +30,5 @@
 
 ## Resultado
 Commit: `feat(mobile): agrega vínculos con domicilio y bloqueos`.
+
+Notas: `ui/vinculos/VinculosActivity` (ítem "Quién me tiene" del menú, antes "llega después") con tarjetas: nombre completo, "teléfono, desde 27 nov 2026", domicilio si lo comparte, "Llamar" (`Llamadas`), "Ver mapa" (diálogo con `MapaOsm` de solo lectura dentro de un marco de alto fijo; `MapaOsm.liberar()` al cerrar) y ⋮ (`PopupMenu`) con desvincularme / bloquear, ambos con confirmación. `BloqueosActivity` (pantalla secundaria) con desbloquear y el aviso de que no se vuelve a la agenda. `util/Formato.fecha` con `Locale.forLanguageTag("es-MX")`. Probado en emulador con Carlos (tras hacer que Ana lo guardara): Ana aparece con su domicilio y mapa; bloquear → sale de la lista y aparece en bloqueados; desbloquear → "No has bloqueado a nadie."; desvincularme → el contacto se borra de la agenda de Ana (comprobado en la BD).

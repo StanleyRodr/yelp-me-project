@@ -33,6 +33,7 @@ import com.yelpme.app.modelos.Contacto;
 import com.yelpme.app.modelos.Servicio;
 import com.yelpme.app.modelos.Usuario;
 import com.yelpme.app.ui.contactos.ContactosActivity;
+import com.yelpme.app.ui.vinculos.VinculosActivity;
 import com.yelpme.app.ui.historial.HistorialActivity;
 import com.yelpme.app.ui.inicio.InicioActivity;
 import com.yelpme.app.ui.perfil.PerfilActivity;
@@ -159,8 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             } else if (id == R.id.menu_perfil) {
                 ir(PerfilActivity.class);
             } else if (id == R.id.menu_vinculos) {
-                aviso(R.string.menu_pronto).show();
-                return false;
+                ir(VinculosActivity.class);
             } else if (id == R.id.menu_tema) {
                 Tema.alternar(this);
                 return false;
