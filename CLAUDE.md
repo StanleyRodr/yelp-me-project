@@ -13,7 +13,7 @@ Responder siempre en español (identificadores y términos técnicos en su forma
 - **Un commit por cada tarea terminada** de `docs/tasks/` (incluye el código y la actualización del `.md` de la tarea).
 - **Un PR por cada plan terminado** de `docs/plans/`, **hacia `main`**. Título en español; cuerpo con resumen, tabla de tareas con sus commits y cómo probar. Sin atribución a Claude.
 - Cada plan nuevo sale de `main` actualizado. Evitar cadenas de PR apilados: al fusionarlas en desorden, planes enteros quedaron fuera de `main` (corregido con el PR #5). Si un plan depende de otro aún sin fusionar, avisar antes de apilar.
-- **Tandas de 2 planes (desde el plan 009):** 009+010, 011+012, 013 solo. Antes de cada tanda se fusiona el PR anterior. Rama A desde `main`, rama B desde A; PR A → `main`, PR B → rama A (indicar "fusionar después de #A"). Fusionar con **Merge commit** (no squash ni rebase), A primero y borrando su rama: GitHub reapunta B a `main`. Cambios pedidos en A: commit en A y `git merge` de A dentro de B, sin force-push. Recorrido de verificación al cerrar cada plan.
+- **Tandas de 2 planes (desde el plan 009):** 009+010, 011+012, 013 solo. Antes de cada tanda se fusiona el PR anterior. Rama A desde `main`, rama B desde A; PR A → `main`, PR B → rama A (indicar "fusionar después de #A"). Fusionar con **Merge commit** (no squash ni rebase), A primero; luego `gh pr edit B --base main` y **después** borrar la rama A (borrarla antes cierra el PR B en lugar de reapuntarlo). Cambios pedidos en A: commit en A y `git merge` de A dentro de B, sin force-push. Recorrido de verificación al cerrar cada plan.
 
 ## Documentación y flujo de trabajo
 
