@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Espejo de los tokens ym-espacio-N y ym-radio de frontend/src/styles/tokens.css. -->
+<resources>
+    <dimen name="espacio_1">4dp</dimen>
+    <dimen name="espacio_2">8dp</dimen>
+    <dimen name="espacio_3">12dp</dimen>
+    <dimen name="espacio_4">16dp</dimen>
+    <dimen name="espacio_5">24dp</dimen>
+    <dimen name="espacio_6">32dp</dimen>
+    <dimen name="toque_min">48dp</dimen>
+    <dimen name="radio">6dp</dimen>
+    <dimen name="icono">24dp</dimen>
+    <dimen name="icono_servicio">32dp</dimen>
+    <dimen name="logo">72dp</dimen>
+    <dimen name="avatar">72dp</dimen>
+    <dimen name="mapa_alto">180dp</dimen>
+    <dimen name="ancho_formulario">480dp</dimen>
+</resources>

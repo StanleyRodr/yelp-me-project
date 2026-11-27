@@ -1,184 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Diseño original: tarjeta "Regístrate" con nombre, apellidos, correo y contraseña.
+     Se agregan teléfono (obligatorio en la API) y confirmación; se quita la dirección. -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/raiz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDA836"
+    android:background="?android:attr/colorBackground"
     tools:context=".ui.registro.RegistroActivity">
 
-    <!-- Logo -->
-    <ImageView
-        android:id="@+id/logoRegister"
-        android:layout_width="150dp"
-        android:layout_height="138dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.275"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08"
-        app:srcCompat="@drawable/dise_o_sin_t_tulo__18_" />
-
-    <!-- Nombre YelpME -->
-    <TextView
-        android:id="@+id/nombreappRegister"
-        android:layout_width="120dp"
-        android:layout_height="137dp"
-        android:fontFamily="@font/lilita_one"
-        android:text="YelpME"
-        android:textColor="#FFFFFF"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.762"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
-
-    <!-- Tarjeta de Registro -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardRegister"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="#FFF5E6"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoRegister"
-        app:layout_constraintVertical_bias="0.2">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/desplazable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
 
-            <!-- Encabezado con Ícono y Regístrate -->
-            <LinearLayout
+            <include
+                android:id="@+id/encabezado"
+                layout="@layout/layout_encabezado_acceso" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start|center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_margin="@dimen/espacio_4">
 
-                <ImageView
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/dise_o_sin_t_tulo__19_" />
-
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/raleway_light"
-                    android:text="Regístrate"
-                    android:textAlignment="center"
-                    android:textColor="#2A2A2A"
-                    android:textSize="22sp" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="@dimen/espacio_2">
 
-            <!-- Nombre -->
-            <EditText
-                android:id="@+id/etNombre"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input_bg"
-                android:hint="Nombre"
-                android:inputType="textPersonName"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:accessibilityHeading="true"
+                        android:text="@string/registro_titulo"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
 
-            <!-- Apellido Paterno -->
-            <EditText
-                android:id="@+id/etApellidoPaterno"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input_bg"
-                android:hint="Apellido paterno"
-                android:inputType="textPersonName"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_4"
+                        android:hint="@string/registro_nombre">
 
-            <!-- Apellido Materno -->
-            <EditText
-                android:id="@+id/etApellidoMaterno"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input_bg"
-                android:hint="Apellido materno"
-                android:inputType="textPersonName"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="personGivenName"
+                            android:inputType="textPersonName|textCapWords" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- E-mail -->
-            <EditText
-                android:id="@+id/etEmailRegister"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input_bg"
-                android:hint="E-mail"
-                android:inputType="textEmailAddress"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilApellidoPaterno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:hint="@string/registro_paterno">
 
-            <!-- Contraseña -->
-            <EditText
-                android:id="@+id/etPasswordRegister"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/input_bg"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etApellidoPaterno"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="personFamilyName"
+                            android:inputType="textPersonName|textCapWords" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Dirección -->
-            <EditText
-                android:id="@+id/etDireccion"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/input_bg"
-                android:hint="Dirección"
-                android:inputType="textPostalAddress"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilApellidoMaterno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:hint="@string/registro_materno">
 
-            <!-- Botón Final Regístrate -->
-            <Button
-                android:id="@+id/btnSubmitRegister"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:backgroundTint="#F7D05C"
-                android:fontFamily="@font/raleway_light"
-                android:text="Regístrate"
-                android:textAllCaps="false"
-                android:textColor="#2A2A2A"
-                android:textSize="15sp"
-                app:cornerRadius="8dp" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etApellidoMaterno"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="personMiddleName"
+                            android:inputType="textPersonName|textCapWords" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:hint="@string/registro_telefono"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="10"
+                        app:helperText="@string/registro_telefono_ayuda">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etTelefono"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="phoneNational"
+                            android:inputType="phone"
+                            android:maxLength="10" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:hint="@string/registro_correo">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCorreo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="emailAddress"
+                            android:inputType="textEmailAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:hint="@string/registro_password"
+                        app:endIconMode="password_toggle"
+                        app:helperText="@string/registro_password_ayuda">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="newPassword"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilConfirmacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:hint="@string/registro_confirmacion"
+                        app:endIconMode="password_toggle">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etConfirmacion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="newPassword"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnRegistrar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_5"
+                        android:text="@string/registro_crear" />
+
+                    <Button
+                        android:id="@+id/btnYaTengoCuenta"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_2"
+                        android:text="@string/registro_ya_tengo" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Espejo de frontend/src/styles/tokens.css (:root[data-theme='dark']): cambiar ambos.
+  La marca (header y barra) se conserva; marca_texto es la versión clara para texto e íconos.
+-->
+<resources>
+    <color name="ym_marca">#14213D</color>
+    <color name="ym_marca_hover">#1C2C50</color>
+    <color name="ym_marca_suave">#22304F</color>
+    <color name="ym_sobre_marca">#FFFFFF</color>
+    <color name="ym_sobre_marca_tenue">#B8C1D6</color>
+    <color name="ym_marca_texto">#A9BFFF</color>
+    <color name="ym_marca_contorno">#A9BFFF</color>
+
+    <color name="ym_fondo">#0F1420</color>
+    <color name="ym_superficie">#182031</color>
+    <color name="ym_texto">#E6EAF2</color>
+    <color name="ym_texto_secundario">#A3ADBF</color>
+    <color name="ym_borde">#2C3649</color>
+    <color name="ym_borde_fuerte">#46526A</color>
+    <color name="ym_skeleton">#232C3F</color>
+
+    <color name="ym_foco">#7FA2FF</color>
+    <color name="ym_foco_claro">#9DB8FF</color>
+
+    <color name="ym_estado_pendiente">#EF5350</color>
+    <color name="ym_estado_pendiente_texto">#FF8A80</color>
+    <color name="ym_estado_pendiente_fondo">#3A1A1D</color>
+
+    <color name="ym_estado_enviado">#FFA726</color>
+    <color name="ym_estado_enviado_texto">#FFB74D</color>
+    <color name="ym_estado_enviado_fondo">#3A2A12</color>
+
+    <color name="ym_estado_terminado">#66BB6A</color>
+    <color name="ym_estado_terminado_texto">#81C784</color>
+    <color name="ym_estado_terminado_fondo">#1B3020</color>
+
+    <color name="ym_estado_rechazado">#90A4AE</color>
+    <color name="ym_estado_rechazado_texto">#B0BEC5</color>
+    <color name="ym_estado_rechazado_fondo">#263238</color>
+
+    <color name="ym_estado_cancelado">#78909C</color>
+    <color name="ym_estado_cancelado_texto">#CFD8DC</color>
+    <color name="ym_estado_cancelado_fondo">#2A3236</color>
+
+    <!-- Botones con texto blanco: mismos tonos que el tema claro -->
+    <color name="ym_peligro">#C62828</color>
+    <color name="ym_peligro_hover">#A82222</color>
+    <color name="ym_exito">#2E7D32</color>
+    <color name="ym_exito_hover">#24672A</color>
+    <color name="ym_aviso">#FFA726</color>
+
+    <!-- Solo Android: texto sobre colorPrimary (= ym_marca_texto). Sin equivalente en tokens.css. -->
+    <color name="ym_sobre_marca_texto">#14213D</color>
+</resources>

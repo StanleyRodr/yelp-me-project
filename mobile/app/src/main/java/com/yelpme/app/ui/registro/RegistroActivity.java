@@ -1,13 +1,11 @@
 package com.yelpme.app.ui.registro;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.yelpme.app.R;
-import com.yelpme.app.ui.inicio.InicioActivity;
+import com.yelpme.app.databinding.ActivityRegistroBinding;
 
 /** Registro de usuario. Se conecta a la API en la tarea 050. */
 public class RegistroActivity extends AppCompatActivity {
@@ -16,11 +14,9 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_registro);
+        ActivityRegistroBinding vista = ActivityRegistroBinding.inflate(getLayoutInflater());
+        setContentView(vista.getRoot());
 
-        findViewById(R.id.btnSubmitRegister).setOnClickListener(v -> {
-            startActivity(new Intent(this, InicioActivity.class));
-            finishAffinity();
-        });
+        vista.btnYaTengoCuenta.setOnClickListener(v -> finish());
     }
 }

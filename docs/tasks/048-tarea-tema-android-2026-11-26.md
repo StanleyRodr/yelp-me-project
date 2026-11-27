@@ -1,6 +1,6 @@
 # 048 — Tarea: Tema y recursos Android
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Identidad igual a la web: paleta `--ym-*` clara y oscura, Atkinson Hyperlegible Next, Material Symbols, dimensiones y textos en recursos.
@@ -66,3 +66,5 @@ Emulador: tema claro y oscuro (Ajustes → Pantalla) sin textos ilegibles.
 
 ## Resultado
 Commit: `style(mobile): aplica paleta, tipografía e íconos de YelpMe`.
+
+Notas: Atkinson como TTF variable (`res/font/atkinson_variable.ttf`, 79 KB) convertido del woff2 del frontend con fontTools; licencia OFL en `mobile/LICENCIA-atkinson.txt`. Íconos generados desde la fuente Material Symbols del frontend (mismos glifos que la web), `ic_star` = variante rellena. `colorPrimary` = `ym_marca_texto` para que botones y foco se vean en oscuro; color solo Android `ym_sobre_marca_texto`. Logo blanco sobre transparente (`logo_yelpme.webp`, 6 KB) e ícono adaptable sobre `ym_marca`. Layouts de contenido sin header ni barra (los pone `BaseActivity`, tarea 052); `menu_drawer.xml` borrado.

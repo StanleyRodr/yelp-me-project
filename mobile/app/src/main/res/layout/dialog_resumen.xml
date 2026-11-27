@@ -1,139 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Resumen antes de enviar una solicitud (diseño original). Se usa en el plan 011. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    app:cardBackgroundColor="#E2F9C6"
-    app:cardCornerRadius="25dp"
-    app:cardElevation="10dp">
+    android:orientation="vertical"
+    android:padding="@dimen/espacio_5">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <!-- Encabezado: Título Resumen y botón rojo X -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Resumen"
-                android:textColor="#1E1E2C"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/btnCerrarModal"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitCenter"
-                android:src="@android:drawable/ic_delete"
-                app:tint="#E53935" />
-        </LinearLayout>
-
-        <!-- Emergencia ingresada -->
         <TextView
-            android:id="@+id/tvResumenEmergencia"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Emergencia: "
-            android:textColor="#2A2A2A"
-            android:textSize="15sp" />
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:text="@string/resumen_titulo"
+            android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
 
-        <!-- Lugar ingresado -->
-        <TextView
-            android:id="@+id/tvResumenLugar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Lugar: "
-            android:textColor="#2A2A2A"
-            android:textSize="15sp" />
-
-        <!-- Vista previa del Mapa en el resumen -->
-        <FrameLayout
-            android:id="@+id/mapResumenContainer"
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginBottom="14dp"
-            android:background="#D0E8B4">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Ubicación seleccionada"
-                android:textColor="#4E6137" />
-        </FrameLayout>
-
-        <!-- Ayudas seleccionadas -->
-        <TextView
+        <Button
+            android:id="@+id/btnCerrarModal"
+            style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Ayudas de:"
-            android:textColor="#2A2A2A"
-            android:textSize="15sp" />
-
-        <!-- Contenedor dinámico donde aparecerán solo los iconos elegidos -->
-        <LinearLayout
-            android:id="@+id/llAyudasSeleccionadas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:orientation="horizontal" />
-
-        <!-- Estado -->
-        <TextView
-            android:id="@+id/tvResumenEstado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:text="Estado: Pendiente"
-            android:textColor="#2A2A2A"
-            android:textSize="15sp" />
-
-        <!-- Botones Aceptar y Cancelar -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnModalAceptar"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="#C2F088"
-                android:text="Aceptar"
-                android:textAllCaps="false"
-                android:textColor="#1E1E2C"
-                app:cornerRadius="8dp" />
-
-            <Button
-                android:id="@+id/btnModalCancelar"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:backgroundTint="#C2F088"
-                android:text="Cancelar"
-                android:textAllCaps="false"
-                android:textColor="#1E1E2C"
-                app:cornerRadius="8dp" />
-        </LinearLayout>
-
+            android:contentDescription="@string/cd_cerrar"
+            app:icon="@drawable/ic_close" />
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvResumenEmergencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/espacio_3"
+        android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
+
+    <TextView
+        android:id="@+id/tvResumenLugar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/espacio_2"
+        android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
+
+    <FrameLayout
+        android:id="@+id/mapResumenContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mapa_alto"
+        android:layout_marginTop="@dimen/espacio_3"
+        android:background="@color/ym_skeleton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/espacio_3"
+        android:text="@string/resumen_ayudas"
+        android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+    <LinearLayout
+        android:id="@+id/llAyudasSeleccionadas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/tvResumenEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/espacio_3"
+        android:text="@string/resumen_estado"
+        android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/espacio_4"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnModalCancelar"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/espacio_2"
+            android:layout_weight="1"
+            android:text="@string/resumen_corregir" />
+
+        <Button
+            android:id="@+id/btnModalAceptar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/resumen_enviar" />
+    </LinearLayout>
+</LinearLayout>

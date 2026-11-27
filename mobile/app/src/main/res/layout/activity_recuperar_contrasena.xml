@@ -1,188 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Diseño original: tarjeta "Recuperar contraseña" con correo, código y contraseña nueva.
+     Cada paso es un contenedor; solo uno visible a la vez. -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/raiz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDA836"
+    android:background="?android:attr/colorBackground"
     tools:context=".ui.recuperar.RecuperarContrasenaActivity">
 
-    <!-- Logo YelpME -->
-    <ImageView
-        android:id="@+id/logoRecuperar"
-        android:layout_width="150dp"
-        android:layout_height="138dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.275"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08"
-        app:srcCompat="@drawable/dise_o_sin_t_tulo__18_" />
-
-    <TextView
-        android:id="@+id/nombreappRecuperar"
-        android:layout_width="120dp"
-        android:layout_height="137dp"
-        app:fontFamily="@font/lilita_one"
-        android:text="YelpME"
-        android:textColor="#FFFFFF"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.762"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08" />
-
-    <!-- Tarjeta Beige -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardRecuperar"
-        android:layout_width="310dp"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="#FFF5E6"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logoRecuperar"
-        app:layout_constraintVertical_bias="0.25">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/desplazable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff5e6"
-            android:orientation="vertical"
-            android:padding="22dp">
+            android:orientation="vertical">
 
-            <!-- Encabezado -->
-            <LinearLayout
+            <include
+                android:id="@+id/encabezado"
+                layout="@layout/layout_encabezado_acceso" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/espacio_4">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/llavecita" />
-
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Recuperar\ncontraseña"
-                    android:textAlignment="center"
-                    android:textColor="#2A2A2A"
-                    android:textSize="20sp"
-                    app:fontFamily="@font/raleway_light" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="@dimen/espacio_2">
 
-            <!-- Paso 1: Correo y botón Enviar -->
-            <EditText
-                android:id="@+id/etCorreoRecuperar"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:background="@drawable/input_bg"
-                android:hint="Correo"
-                android:inputType="textEmailAddress"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnEnviarCorreo"
-                android:layout_width="140dp"
-                android:layout_height="42dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#F7D05C"
-                android:text="Enviar"
-                android:textAllCaps="false"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp"
-                app:cornerRadius="8dp"
-                app:fontFamily="@font/raleway_light" />
+                        <ImageView
+                            android:layout_width="@dimen/icono_servicio"
+                            android:layout_height="@dimen/icono_servicio"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_lock_reset" />
 
-            <!-- Paso 2: Código y botón Validar (Check) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/espacio_3"
+                            android:accessibilityHeading="true"
+                            android:text="@string/recuperar_titulo"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+                    </LinearLayout>
 
-                <EditText
-                    android:id="@+id/etCodigo"
-                    android:layout_width="0dp"
-                    android:layout_height="44dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/input_bg"
-                    android:hint="Código"
-                    android:inputType="number"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:textColor="#2A2A2A"
-                    android:textSize="14sp" />
+                    <!-- Paso 1: correo -->
+                    <LinearLayout
+                        android:id="@+id/pasoCorreo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/btnValidarCodigo"
-                    android:layout_width="48dp"
-                    android:layout_height="44dp"
-                    android:layout_marginStart="10dp"
-                    android:backgroundTint="#fbdb5e"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/paloma__1_"
-                    app:cornerRadius="8dp" />
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_3"
+                            android:text="@string/recuperar_paso_correo"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno" />
 
-            <!-- Paso 3: Nueva contraseña y Confirmación -->
-            <EditText
-                android:id="@+id/etNuevaPassword"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/input_bg"
-                android:hint="Nueva contraseña"
-                android:inputType="textPassword"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilCorreo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_4"
+                            android:hint="@string/recuperar_correo">
 
-            <EditText
-                android:id="@+id/etConfirmarPassword"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/input_bg"
-                android:hint="Confirmar contraseña"
-                android:inputType="textPassword"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textSize="14sp" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCorreo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="emailAddress"
+                                android:imeOptions="actionDone"
+                                android:inputType="textEmailAddress" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Botón Final: Reestablecer -->
-            <Button
-                android:id="@+id/btnReestablecer"
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#F7D05C"
-                android:text="Reestablecer"
-                android:textAllCaps="false"
-                android:textColor="#2A2A2A"
-                android:textSize="15sp"
-                app:cornerRadius="8dp"
-                app:fontFamily="@font/raleway_light" />
+                        <Button
+                            android:id="@+id/btnEnviarCodigo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_4"
+                            android:text="@string/recuperar_enviar" />
+                    </LinearLayout>
 
+                    <!-- Paso 2: código -->
+                    <LinearLayout
+                        android:id="@+id/pasoCodigo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvDescripcionCodigo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_3"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                            tools:text="@string/recuperar_paso_codigo" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilCodigo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_4"
+                            android:hint="@string/recuperar_codigo"
+                            app:counterEnabled="true"
+                            app:counterMaxLength="6">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etCodigo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:imeOptions="actionDone"
+                                android:importantForAutofill="no"
+                                android:inputType="number"
+                                android:maxLength="6" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/btnVerificar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_4"
+                            android:text="@string/recuperar_verificar" />
+
+                        <Button
+                            android:id="@+id/btnReenviar"
+                            style="?attr/borderlessButtonStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_2"
+                            android:text="@string/recuperar_reenviar" />
+                    </LinearLayout>
+
+                    <!-- Paso 3: contraseña nueva -->
+                    <LinearLayout
+                        android:id="@+id/pasoPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_3"
+                            android:text="@string/recuperar_paso_password"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilNueva"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_4"
+                            android:hint="@string/recuperar_nueva"
+                            app:endIconMode="password_toggle"
+                            app:helperText="@string/registro_password_ayuda">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etNueva"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="newPassword"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilConfirmar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_3"
+                            android:hint="@string/recuperar_confirmar"
+                            app:endIconMode="password_toggle">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etConfirmar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="newPassword"
+                                android:imeOptions="actionDone"
+                                android:inputType="textPassword" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <Button
+                            android:id="@+id/btnGuardar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_4"
+                            android:text="@string/recuperar_guardar" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

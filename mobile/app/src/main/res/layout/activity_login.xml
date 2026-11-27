@@ -1,161 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Diseño original: logo + nombre arriba y tarjeta con correo, contraseña,
+     "Iniciar sesión", "Regístrate" y "¿Olvidaste tu contraseña?". -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/raiz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDA836"
+    android:background="?android:attr/colorBackground"
     tools:context=".ui.login.LoginActivity">
 
-    <!-- Logo de la app -->
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="150dp"
-        android:layout_height="138dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.275"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126"
-        app:srcCompat="@drawable/dise_o_sin_t_tulo__18_" />
-
-    <!-- Título de la app -->
-    <TextView
-        android:id="@+id/nombreapp"
-        android:layout_width="120dp"
-        android:layout_height="137dp"
-        android:fontFamily="@font/lilita_one"
-        android:text="YelpME"
-        android:textColor="#FFFFFF"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.762"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
-
-    <!-- Tarjeta del formulario de inicio de sesión -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/formularioiniciosesion"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="#FFF5E6"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintVertical_bias="0.3">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/desplazable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:orientation="vertical">
 
-            <!-- Encabezado: Ícono y texto Iniciar sesión -->
-            <LinearLayout
+            <include
+                android:id="@+id/encabezado"
+                layout="@layout/layout_encabezado_acceso" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start|center_vertical"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/espacio_4">
 
-                <ImageView
-                    android:id="@+id/iniciosesionfoto"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/dise_o_sin_t_tulo__19_" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/raleway_light"
-                    android:text="Iniciar sesión"
-                    android:textAlignment="center"
-                    android:textColor="#2A2A2A"
-                    android:textSize="22sp" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="@dimen/espacio_2">
 
-            <!-- Campo E-mail -->
-            <EditText
-                android:id="@+id/editTextTextEmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/input_bg"
-                android:ems="10"
-                android:hint="E-mail"
-                android:inputType="textEmailAddress"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textColorHint="#757575"
-                android:textSize="15sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-            <!-- Campo Contraseña -->
-            <EditText
-                android:id="@+id/editTextTextPassword"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/input_bg"
-                android:ems="10"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="#2A2A2A"
-                android:textColorHint="#757575"
-                android:textSize="15sp" />
+                        <ImageView
+                            android:layout_width="@dimen/icono_servicio"
+                            android:layout_height="@dimen/icono_servicio"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_person" />
 
-            <!-- Botón Iniciar sesión -->
-            <Button
-                android:id="@+id/btnIniciarSesion"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="#F7D05C"
-                android:fontFamily="@font/raleway_light"
-                android:text="Iniciar sesión"
-                android:textAllCaps="false"
-                android:textColor="#2A2A2A"
-                android:textSize="16sp"
-                app:cornerRadius="8dp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/espacio_3"
+                            android:accessibilityHeading="true"
+                            android:text="@string/login_titulo"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+                    </LinearLayout>
 
-            <!-- Botón Regístrate -->
-            <Button
-                android:id="@+id/btnRegistrate"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#F7D05C"
-                android:fontFamily="@font/raleway_light"
-                android:text="Registrate"
-                android:textAllCaps="false"
-                android:textColor="#2A2A2A"
-                android:textSize="16sp"
-                app:cornerRadius="8dp" />
+                    <TextView
+                        android:id="@+id/tvAviso"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_4"
+                        android:accessibilityLiveRegion="polite"
+                        android:background="@color/ym_marca_suave"
+                        android:padding="@dimen/espacio_3"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                        android:visibility="gone"
+                        tools:text="@string/login_expirada"
+                        tools:visibility="visible" />
 
-            <!-- Enlace ¿Olvidaste tu contraseña? -->
-            <TextView
-                android:id="@+id/tvOlvidasteContrasena"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:fontFamily="@font/raleway_light"
-                android:gravity="center"
-                android:text="¿Olvidaste tu contraseña?"
-                android:textColor="#1A237E"
-                android:textSize="12sp" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilIdentificador"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_4"
+                        android:hint="@string/login_identificador">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etIdentificador"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="emailAddress"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_3"
+                        android:hint="@string/login_password"
+                        app:endIconMode="password_toggle">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="password"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnIniciarSesion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_5"
+                        android:text="@string/login_entrar" />
+
+                    <Button
+                        android:id="@+id/btnRegistrate"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_2"
+                        android:text="@string/login_registrate" />
+
+                    <Button
+                        android:id="@+id/btnOlvidaste"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/espacio_2"
+                        android:text="@string/login_olvidaste" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
