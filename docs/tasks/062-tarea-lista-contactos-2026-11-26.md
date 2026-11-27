@@ -1,6 +1,6 @@
 # 062 — Tarea: Lista de contactos (app)
 
-> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ⬜ Pendiente
+> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ✅ Terminada
 
 ## Objetivo
 **Consultar** del CRUD: lista de la agenda desde la API con RecyclerView.
@@ -46,3 +46,5 @@ Carlos: lista con favorito primero y chips de vinculado. Búsqueda "mam" filtra.
 
 ## Resultado
 Commit: `feat(mobile): lista los contactos desde la API`.
+
+Notas: `ServicioContactos` con todas las rutas (contactos, favorito, teléfonos, vínculos, bloqueos); modelos `Contacto`, `VerificacionTelefono`, `Vinculo` (también para bloqueos, sin domicilio). Lista con `ListAdapter` + `DiffUtil`, fila tarjeta (inicial, nombre, "parentesco, teléfono", etiqueta "Vinculado", estrella si es favorito) y `contentDescription` completo. Búsqueda local sin acentos (`Normalizer`). Estado vacío distinto para agenda vacía y sin resultados. `DetalleContactoActivity` y `FormContactoActivity` quedan como esqueleto (factories) y se completan en 063–064. Probado en emulador: Carlos ve María (favorito), José y Mamá; "mam" deja solo a Mamá. Mamá aparece vinculada en la BD de desarrollo porque la usuaria de prueba del plan 008 se registró con ese número.

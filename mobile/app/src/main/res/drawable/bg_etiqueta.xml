@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Etiqueta pequeña (p. ej. "Vinculado"). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/ym_marca_suave" />
+    <corners android:radius="@dimen/radio" />
+</shape>

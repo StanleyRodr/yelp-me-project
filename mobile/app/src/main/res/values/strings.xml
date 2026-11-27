@@ -107,14 +107,21 @@
     <!-- Contactos -->
     <string name="contactos_titulo">Contactos de urgencia</string>
     <string name="contactos_buscar">Buscar contacto</string>
-    <string name="contactos_vacio">Aún no tienes contactos.</string>
+    <string name="contactos_vacio">Aún no tienes contactos. Agrega a alguien de confianza.</string>
+    <string name="contactos_sin_resultados">Ningún contacto coincide con la búsqueda.</string>
+    <string name="contactos_agregar">Agregar contacto</string>
+    <string name="contactos_vinculado">Vinculado</string>
+    <string name="contactos_error_cargar">No se pudieron cargar tus contactos.</string>
+    <string name="cd_fila_contacto">%1$s, %2$s</string>
+    <string name="cd_fila_vinculado">vinculado</string>
+    <string name="cd_fila_favorito">favorito</string>
     <string name="contactos_favorito">Contacto favorito</string>
     <string name="contactos_sin_favorito">Sin contacto favorito</string>
     <string name="contactos_nuevo">Nuevo contacto</string>
     <string name="contactos_nombre">Nombre</string>
     <string name="contactos_telefono">Teléfono</string>
     <string name="contactos_parentesco">Parentesco</string>
-    <string name="contactos_elige_favorito">Elige un contacto favorito.</string>
+    <string name="contactos_elige_favorito">Toca un contacto y márcalo como favorito.</string>
 
     <!-- Historial -->
     <string name="historial_titulo">Historial</string>
