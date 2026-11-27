@@ -30,8 +30,10 @@ class ContactosTest extends TestCase
 
         $respuesta = $this->getJson('/api/contactos')->assertOk();
 
-        $this->assertSame(['José Hernández', 'Mamá', 'María López'], array_column($respuesta->json('datos'), 'nombre'));
-        $this->assertSame([true, false, true], array_column($respuesta->json('datos'), 'vinculado'));
+        // El favorito (María) primero; luego por nombre.
+        $this->assertSame(['María López', 'José Hernández', 'Mamá'], array_column($respuesta->json('datos'), 'nombre'));
+        $this->assertSame([true, true, false], array_column($respuesta->json('datos'), 'vinculado'));
+        $this->assertSame([true, false, false], array_column($respuesta->json('datos'), 'favorito'));
         $respuesta->assertJsonMissingPath('datos.0.usuario_contacto_id');
     }
 
@@ -138,5 +140,59 @@ class ContactosTest extends TestCase
         $bloqueado = $this->getJson('/api/telefonos/2351000003')->json('datos');
         $sinCuenta = $this->getJson('/api/telefonos/2359990099')->json('datos');
         $this->assertSame([false, false], [$bloqueado['vinculable'], $sinCuenta['vinculable']]);
+    }
+
+    // ---------- Favorito (plan 010) ----------
+
+    private function contactoDeCarlos(string $nombre): int
+    {
+        $carlos = DB::table('usuarios')->where('correo', self::CARLOS)->value('id');
+
+        return DB::table('contactos')->where('usuario_id', $carlos)->where('nombre', $nombre)->value('id');
+    }
+
+    private function favoritosDeCarlos(): array
+    {
+        $carlos = DB::table('usuarios')->where('correo', self::CARLOS)->value('id');
+
+        return DB::table('contactos')->where('usuario_id', $carlos)->where('favorito', true)->pluck('nombre')->all();
+    }
+
+    public function test_favorito_es_unico_y_va_primero(): void
+    {
+        $this->como(self::CARLOS);
+        $mama = $this->contactoDeCarlos('Mamá');
+
+        $this->putJson("/api/contactos/{$mama}/favorito")->assertOk()
+            ->assertJsonPath('datos.favorito', true)
+            ->assertJsonPath('mensaje', 'Contacto favorito actualizado');
+        $this->assertSame(['Mamá'], $this->favoritosDeCarlos());
+        $this->getJson('/api/contactos')->assertJsonPath('datos.0.nombre', 'Mamá');
+
+        // Marcar el mismo otra vez no cambia nada.
+        $this->putJson("/api/contactos/{$mama}/favorito")->assertOk();
+        $this->assertSame(['Mamá'], $this->favoritosDeCarlos());
+
+        $this->deleteJson("/api/contactos/{$mama}/favorito")->assertOk()->assertJsonPath('datos.favorito', false);
+        $this->assertSame([], $this->favoritosDeCarlos());
+        $this->getJson('/api/contactos')->assertJsonPath('datos.0.nombre', 'José Hernández');
+    }
+
+    public function test_borrar_el_favorito_deja_sin_favorito(): void
+    {
+        $this->como(self::CARLOS);
+        $this->deleteJson("/api/contactos/{$this->contactoDeCarlos('María López')}")->assertOk();
+        $this->assertSame([], $this->favoritosDeCarlos());
+    }
+
+    public function test_favorito_de_contacto_ajeno_responde_404(): void
+    {
+        $maria = $this->contactoDeCarlos('María López');
+        $this->como(self::ANA);
+
+        $this->putJson("/api/contactos/{$maria}/favorito")->assertNotFound();
+        $this->deleteJson("/api/contactos/{$maria}/favorito")->assertNotFound();
+        $this->putJson('/api/contactos/999999/favorito')->assertNotFound();
+        $this->assertSame(['María López'], $this->favoritosDeCarlos());
     }
 }

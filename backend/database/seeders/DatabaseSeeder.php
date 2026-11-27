@@ -71,6 +71,8 @@ class DatabaseSeeder extends Seeder
             $contacto($maria, 'Hermano', '2359990002', 'Familia', null);
             $contacto($jose, 'Carlos Ramírez', '2351000001', 'Amistad', $carlos);
             $contacto($ana, 'Papá', '2359990003', 'Familia', null);
+            // Carlos: María es su favorito (botón de la barra en la app).
+            DB::table('contactos')->where('usuario_id', $carlos)->where('telefono', '2351000002')->update(['favorito' => true]);
 
             // José bloqueó a Ana: Ana no puede vincularlo.
             DB::table('bloqueos')->insert([

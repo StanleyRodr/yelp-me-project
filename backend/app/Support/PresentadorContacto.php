@@ -16,6 +16,7 @@ class PresentadorContacto
             'telefono' => $c->telefono,
             'parentesco' => $c->parentesco,
             'vinculado' => $c->usuario_contacto_id !== null,
+            'favorito' => (bool) $c->favorito,
             'created_at' => Normalizar::fecha($c->created_at),
             'updated_at' => Normalizar::fecha($c->updated_at),
         ];

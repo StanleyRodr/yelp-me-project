@@ -54,6 +54,19 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ui.contactos.DetalleContactoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.contactos.FormContactoActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.vinculos.VinculosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.vinculos.BloqueosActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.historial.HistorialActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

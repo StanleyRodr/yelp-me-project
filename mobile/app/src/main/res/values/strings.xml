@@ -107,14 +107,45 @@
     <!-- Contactos -->
     <string name="contactos_titulo">Contactos de urgencia</string>
     <string name="contactos_buscar">Buscar contacto</string>
-    <string name="contactos_vacio">Aún no tienes contactos.</string>
+    <string name="contactos_vacio">Aún no tienes contactos. Agrega a alguien de confianza.</string>
+    <string name="contactos_sin_resultados">Ningún contacto coincide con la búsqueda.</string>
+    <string name="contactos_agregar">Agregar contacto</string>
+    <string name="contactos_vinculado">Vinculado</string>
+    <string name="contactos_agregar_titulo">Agregar contacto</string>
+    <string name="contactos_editar_titulo">Editar contacto</string>
+    <string name="contactos_telefono_ayuda">10 dígitos. Si tiene cuenta en YelpMe, recibirá tus alertas.</string>
+    <string name="contactos_parentesco_ayuda">Elige una opción o escribe otra.</string>
+    <string name="contactos_tel_con_cuenta">Tiene cuenta en YelpMe: recibirá tus alertas.</string>
+    <string name="contactos_tel_sin_cuenta">Sin cuenta en YelpMe: solo podrás llamarle.</string>
+    <string name="contactos_tel_en_agenda">Ya tienes este número en tu agenda.</string>
+    <string name="contactos_guardado">Contacto guardado.</string>
+    <string name="contactos_guardado_vinculado">Contacto guardado y vinculado con su cuenta de YelpMe.</string>
+    <string name="contactos_error_obtener">No se pudo cargar el contacto.</string>
+    <string name="contactos_detalle_titulo">Contacto</string>
+    <string name="contactos_sin_cuenta">Sin cuenta: solo llamada</string>
+    <string name="contactos_llamar">Llamar</string>
+    <string name="contactos_marcar_favorito">Marcar como favorito</string>
+    <string name="contactos_quitar_favorito">Quitar de favorito</string>
+    <string name="contactos_editar">Editar</string>
+    <string name="contactos_eliminar">Eliminar contacto</string>
+    <string name="contactos_eliminar_pregunta">¿Eliminar a %1$s de tus contactos?</string>
+    <string name="contactos_eliminado">Contacto eliminado.</string>
+    <string name="contactos_es_favorito">%1$s es tu contacto favorito.</string>
+    <string name="contactos_ya_no_favorito">%1$s ya no es tu contacto favorito.</string>
+    <string name="contactos_ya_no_existe">Este contacto ya no está en tu agenda.</string>
+    <string name="llamada_no_disponible">Este dispositivo no puede hacer llamadas.</string>
+    <string name="cd_llamar_favorito">Llamar a %1$s (favorito)</string>
+    <string name="contactos_error_cargar">No se pudieron cargar tus contactos.</string>
+    <string name="cd_fila_contacto">%1$s, %2$s</string>
+    <string name="cd_fila_vinculado">vinculado</string>
+    <string name="cd_fila_favorito">favorito</string>
     <string name="contactos_favorito">Contacto favorito</string>
     <string name="contactos_sin_favorito">Sin contacto favorito</string>
     <string name="contactos_nuevo">Nuevo contacto</string>
     <string name="contactos_nombre">Nombre</string>
     <string name="contactos_telefono">Teléfono</string>
     <string name="contactos_parentesco">Parentesco</string>
-    <string name="contactos_elige_favorito">Elige un contacto favorito.</string>
+    <string name="contactos_elige_favorito">Toca un contacto y márcalo como favorito.</string>
 
     <!-- Historial -->
     <string name="historial_titulo">Historial</string>
@@ -166,7 +197,26 @@
     <string name="menu_tema_oscuro">Cambiar a tema oscuro</string>
     <string name="menu_tema_claro">Cambiar a tema claro</string>
     <string name="menu_cerrar_sesion">Cerrar sesión</string>
-    <string name="menu_pronto">Esta sección llega en la siguiente versión de la app.</string>
+
+    <!-- Quién me tiene y bloqueos -->
+    <string name="vinculos_titulo">Quién me tiene</string>
+    <string name="vinculos_explicacion">Estas personas te eligieron como contacto de confianza. Recibirás sus alertas.</string>
+    <string name="vinculos_vacio">Nadie te tiene como contacto todavía.</string>
+    <string name="vinculos_desde">%1$s, desde %2$s</string>
+    <string name="vinculos_ver_mapa">Ver mapa</string>
+    <string name="vinculos_ver_bloqueados">Personas bloqueadas</string>
+    <string name="vinculos_desvincular">Desvincularme</string>
+    <string name="vinculos_desvincular_pregunta">%1$s ya no te tendrá en su agenda y dejarás de recibir sus alertas.</string>
+    <string name="vinculos_bloquear">Bloquear</string>
+    <string name="vinculos_bloquear_pregunta">%1$s ya no podrá volver a agregarte como contacto.</string>
+    <string name="vinculos_error_cargar">No se pudo cargar la lista.</string>
+    <string name="vinculos_domicilio_de">Domicilio de %1$s</string>
+    <string name="bloqueos_titulo">Personas bloqueadas</string>
+    <string name="bloqueos_aviso">Al desbloquear a alguien, no vuelves a su agenda de forma automática: tendría que agregarte otra vez.</string>
+    <string name="bloqueos_vacio">No has bloqueado a nadie.</string>
+    <string name="bloqueos_desbloquear">Desbloquear</string>
+    <string name="bloqueos_desbloquear_pregunta">¿Desbloquear a %1$s? Podrá volver a agregarte como contacto.</string>
+    <string name="cd_mas_opciones">Más opciones</string>
 
     <!-- Domicilio -->
     <string name="domicilio_titulo">Mi domicilio</string>

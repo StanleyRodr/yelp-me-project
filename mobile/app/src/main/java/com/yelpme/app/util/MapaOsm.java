@@ -177,6 +177,11 @@ public class MapaOsm implements DefaultLifecycleObserver {
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         owner.getLifecycle().removeObserver(this);
+        liberar();
+    }
+
+    /** Libera el mapa antes de que acabe la pantalla (p. ej. al cerrar un diálogo con mapa). */
+    public void liberar() {
         if (mapa != null) {
             mapa.onDetach();
             mapa = null;

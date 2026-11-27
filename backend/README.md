@@ -137,24 +137,28 @@ Públicas, con `throttle:acceso` (5 por minuto por correo + IP). Lógica en `App
 
 | Método | Ruta | Cuerpo | Respuesta (`datos`) |
 |---|---|---|---|
-| GET | `/api/contactos` | — | Lista de mi agenda, por nombre |
+| GET | `/api/contactos` | — | Lista de mi agenda: el favorito primero, luego por nombre |
 | POST | `/api/contactos` | `nombre`, `telefono`, `parentesco` | Contacto (201) |
 | GET | `/api/contactos/{id}` | — | Contacto |
 | PUT/PATCH | `/api/contactos/{id}` | Campos a cambiar | Contacto |
 | DELETE | `/api/contactos/{id}` | — | `null` |
+| PUT | `/api/contactos/{id}/favorito` | — | Contacto (desmarca el anterior: máximo uno) |
+| DELETE | `/api/contactos/{id}/favorito` | — | Contacto |
 | GET | `/api/telefonos/{telefono}` | — | `{ telefono, vinculable, en_agenda }` (30/min) |
-| GET | `/api/vinculos` | — | Quién me tiene: `[{ id, nombre, apellido_paterno, apellido_materno, telefono, desde }]` |
+| GET | `/api/vinculos` | — | Quién me tiene: `[{ id, nombre, apellido_paterno, apellido_materno, telefono, desde, domicilio }]` (`domicilio` de esa persona o `null`) |
 | DELETE | `/api/vinculos/{id}` | — | `null` (me borra de su agenda) |
 | GET | `/api/bloqueos` | — | `[{ id, nombre, apellido_paterno, apellido_materno, telefono, desde }]` |
 | POST | `/api/bloqueos` | `contacto_id` (id de un vínculo) | Bloqueo (201) |
 | DELETE | `/api/bloqueos/{id}` | — | `null` |
 
-Contacto = `id, nombre, telefono, parentesco, vinculado, created_at, updated_at`.
+Contacto = `id, nombre, telefono, parentesco, vinculado, favorito, created_at, updated_at`.
 
 - **Vinculación automática** al crear y al cambiar el teléfono: si el número es de una cuenta de rol `usuario` que no me bloqueó. Si no, se guarda sin vínculo (se puede llamar, no recibe avisos).
 - **Errores 422:** teléfono repetido en mi agenda ("Ya tienes un contacto con ese teléfono."), mi propio número ("No puedes agregarte a ti mismo como contacto.").
 - **Propiedad:** contactos, vínculos y bloqueos ajenos responden 404 (no revela que existen).
 - **Bloquear** borra el contacto de la agenda de quien me tiene e impide que me vuelva a vincular. **Desbloquear** no lo restaura, pero vincula el contacto si ya me había guardado de nuevo.
+- **Favorito:** uno por usuario, en transacción con `lockForUpdate` sobre la agenda. Borrar el contacto favorito deja al usuario sin favorito.
+- **Vínculos con domicilio:** quien me guardó como contacto de confianza comparte su domicilio conmigo; los bloqueos no lo incluyen.
 - `vinculable: false` es igual para sin cuenta, admin, número propio o cuenta que me bloqueó.
 
 ## Solicitudes de ayuda

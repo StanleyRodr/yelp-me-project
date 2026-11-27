@@ -1,6 +1,6 @@
 # 066 — Tarea: Verificación del plan 010
 
-> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ⬜ Pendiente
+> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ✅ Terminada
 
 ## Objetivo
 Demostrar el CRUD obligatorio, la propiedad de registros y cerrar el plan.
@@ -37,3 +37,5 @@ Vinculación automática, favorito y barra, llamada concedida/negada, vínculos 
 
 ## Resultado
 Commit: `docs(contactos): documenta contactos en Android y cierra el plan 010`.
+
+Notas: `php artisan test` 97 OK; `./gradlew testDebugUnitTest assembleDebug assembleRelease` OK; sin `findViewById`, colores hex ni textos fijos en layouts. CRUD en emulador con Carlos, comprobado en la BD en cada paso: crear "Pruebas CRUD" 2359999999 Amistad (fila nueva, sin vínculo) → consultar en lista y detalle → modificar parentesco a Pareja (columna cambiada) → eliminar (fila borrada). Grabación local `crud-plan010.mp4` (no se sube al repo). Propiedad con curl y el token de Carlos sobre un contacto de María: `GET`, `PUT`, `DELETE` y `PUT /favorito` → 404. Recorrido de vinculación, favorito y barra, llamada concedida/negada, vínculos con domicilio, desvincular, bloquear y desbloquear en las tareas 062–065; tema oscuro revisado en lista y "Quién me tiene".

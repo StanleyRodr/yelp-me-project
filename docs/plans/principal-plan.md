@@ -320,8 +320,8 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 | Parte    | Estado |
 |----------|--------|
 | Frontend | Planes 002, 007, 008 y 009: panel completo (rutas con login, dashboard con recarga cada 15 s, solicitudes, usuarios, perfil) conectado a la API real, recuperación de contraseña, tema claro/oscuro y domicilio del usuario con mini mapa. |
-| Backend  | Planes 001, 003–006, 008 y 009: base, autenticación, recuperación de contraseña, contactos, solicitudes, gestión de usuarios (strikes, suspensiones, cuentas), perfil propio y domicilio único (`domicilios`); apellidos en dos columnas. Pruebas sobre `YelpMe_pruebas`. Falta FCM. |
-| Mobile   | Planes 008 y 009: proyecto en git, tema de YelpMe claro/oscuro, Retrofit con sesión, splash, login, registro, recuperación de contraseña, `BaseActivity` con menú y barra de servicios simulada; perfil completo (datos, foto, strikes, suspensiones, domicilio con mapa, contraseña). Contactos y solicitudes con su diseño, sin datos (planes 010–011). |
+| Backend  | Planes 001, 003–006 y 008–010: base, autenticación, recuperación de contraseña, contactos, solicitudes, gestión de usuarios (strikes, suspensiones, cuentas), perfil propio, domicilio único (`domicilios`) y contacto favorito; apellidos en dos columnas. Pruebas sobre `YelpMe_pruebas`. Falta FCM. |
+| Mobile   | Planes 008–010: proyecto en git, tema de YelpMe claro/oscuro, Retrofit con sesión, splash, login, registro, recuperación de contraseña, `BaseActivity` con menú y barra de servicios simulada; perfil completo (datos, foto, strikes, suspensiones, domicilio con mapa, contraseña); CRUD de contactos contra la API, favorito con llamada directa desde la barra, quién me tiene (con domicilio), desvincular y bloqueos. Solicitudes con su diseño, sin datos (plan 011). |
 | BD       | Creada con `database/script-bd.sql`: 10 tablas (incluye `codigos_recuperacion`), admin inicial y catálogo de servicios. |
 
 ### Pendiente en el frontend
@@ -407,7 +407,7 @@ El día de la presentación debe poder demostrarse:
 7. ✅ Plan 007 — Frontend: conectar los services a la API con axios y consulta periódica del dashboard.
 8. ✅ Plan 008 — Base mobile y ajustes transversales: proyecto Android importado y limpio, tema claro/oscuro (web y Android), apellidos en dos columnas, recuperación de contraseña (API, panel, app), Retrofit y sesión, login/registro, `BaseActivity` y barra simulada.
 9. ✅ Plan 009 — Perfil: datos, foto, contraseña, strikes y domicilio (API, panel, app).
-10. Plan 010 — Contactos en Android: CRUD, favorito, vínculos (con domicilio), bloqueos, llamadas.
+10. ✅ Plan 010 — Contactos en Android: CRUD, favorito, vínculos (con domicilio), bloqueos, llamadas.
 11. Plan 011 — Solicitudes en Android: GPS con respaldo de domicilio, servicios, estados, historial.
 12. Plan 012 — Notificaciones FCM (backend + Android).
 13. Plan 013 — Despliegue: Vercel, Railway (API + MySQL), APK en GitHub Releases.

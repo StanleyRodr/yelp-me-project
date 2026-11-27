@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
 use App\Http\Controllers\Api\DomicilioController;
 use App\Http\Controllers\Api\EstadoSolicitudController;
+use App\Http\Controllers\Api\FavoritoController;
 use App\Http\Controllers\Api\FotoPerfilController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\PerfilController;
@@ -60,6 +61,10 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
         Route::apiResource('contactos', ContactoController::class)
             ->parameters(['contactos' => 'id'])
             ->whereNumber('id');
+
+        // Contacto favorito: máximo uno (plan 010)
+        Route::put('/contactos/{id}/favorito', [FavoritoController::class, 'update'])->whereNumber('id');
+        Route::delete('/contactos/{id}/favorito', [FavoritoController::class, 'destroy'])->whereNumber('id');
 
         Route::get('/telefonos/{telefono}', [TelefonoController::class, 'show'])
             ->middleware('throttle:telefonos');

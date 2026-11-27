@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Support\Normalizar;
+use App\Support\PresentadorDomicilio;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,8 +22,12 @@ class VinculoController extends Controller
             ->join('usuarios as u', 'u.id', '=', 'c.usuario_id')
             ->where('c.usuario_contacto_id', $request->user()->id)
             ->orderBy('u.nombre')
-            ->get(['c.id', 'c.created_at', 'u.nombre', 'u.apellido_paterno', 'u.apellido_materno', 'u.telefono'])
-            ->map(fn ($v) => [
+            ->get(['c.id', 'c.usuario_id', 'c.created_at', 'u.nombre', 'u.apellido_paterno', 'u.apellido_materno', 'u.telefono']);
+
+        // Quien me eligió como contacto de confianza comparte su domicilio conmigo (plan 010).
+        $domicilios = PresentadorDomicilio::porUsuarios($vinculos->pluck('usuario_id')->all());
+
+        $vinculos = $vinculos->map(fn ($v) => [
                 'id' => $v->id,
                 // Datos de la cuenta de quien me agregó, no el alias que me puso.
                 'nombre' => $v->nombre,
@@ -30,6 +35,7 @@ class VinculoController extends Controller
                 'apellido_materno' => $v->apellido_materno,
                 'telefono' => $v->telefono,
                 'desde' => Normalizar::fecha($v->created_at),
+                'domicilio' => $domicilios->get($v->usuario_id),
             ]);
 
         return $this->respuesta($vinculos);

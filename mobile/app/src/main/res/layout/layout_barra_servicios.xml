@@ -44,9 +44,13 @@
             android:tint="@color/ym_sobre_marca" />
 
         <TextView
+            android:id="@+id/tvFavorito"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:importantForAccessibility="no"
+            android:maxLines="1"
+            android:maxWidth="88dp"
             android:text="@string/barra_favorito"
             android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
             android:textColor="@color/ym_sobre_marca" />

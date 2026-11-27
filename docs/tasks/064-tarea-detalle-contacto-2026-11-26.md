@@ -1,6 +1,6 @@
 # 064 — Tarea: Detalle, llamada y favorito (app)
 
-> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ⬜ Pendiente
+> Plan: `010-plan-mobile-contactos-2026-11-26.md` · Rama: `feature/mobile-contactos` · Estado: ✅ Terminada
 
 ## Objetivo
 Detalle del contacto, **Eliminar** del CRUD, marcar favorito y llamada directa; activar el botón del favorito en la barra.
@@ -35,3 +35,5 @@ public static void llamar(ComponentActivity a, ActivityResultLauncher<String> pe
 
 ## Resultado
 Commit: `feat(mobile): agrega detalle, llamada directa y contacto favorito`.
+
+Notas: `util/Llamadas` (se crea en `onCreate` porque registra el pedido de permiso): con `CALL_PHONE` → `ACTION_CALL`; si se niega → `ACTION_DIAL`; sin app de teléfono → aviso. `api/Favorito`: favorito en memoria por usuario (la lista de contactos lo actualiza sin otra petición; detalle y formulario lo invalidan). `BaseActivity` pone el primer nombre del favorito en el botón de la barra (`contentDescription` "Llamar a … (favorito)") y llama con `Llamadas`; sin favorito abre Contactos con el aviso. Detalle con llamar, favorito (alterna), editar (→ formulario) y eliminar con confirmación; 404 → vuelve a la lista con "Este contacto ya no está en tu agenda.". Probado en emulador con Carlos: marcar a Ana → estrella y barra "Ana"; barra con permiso negado → marcador con su número; con permiso → llamada `ACTIVE` (emulada); editar parentesco → "Hermana"; eliminar → fuera de la lista y de la BD, barra vuelve a "Favorito" y su botón abre Contactos con el aviso. María restaurada como favorito de demo.
