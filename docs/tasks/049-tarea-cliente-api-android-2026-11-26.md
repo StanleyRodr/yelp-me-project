@@ -1,6 +1,6 @@
 # 049 — Tarea: Cliente API Android
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Retrofit con token Bearer, errores uniformes (como `ErrorApi` de la web), 401 global y sesión guardada. Base de todas las pantallas.
@@ -43,3 +43,5 @@ Logcat en debug muestra peticiones con el header Bearer.
 
 ## Resultado
 Commit: `feat(mobile): agrega cliente Retrofit con sesión y errores uniformes`.
+
+Notas: `Llamada.Respuestas<T>` (clase abstracta para usar con clases internas anónimas) entrega `datos` o `ErrorApi` en el hilo principal. Logging en debug solo de encabezados (el cuerpo llevaría contraseñas). `DELETE sesion` recibe el token explícito para no disparar el 401 global. Tema en `util/Tema` (`ym_ajustes`, no se borra al cerrar sesión).

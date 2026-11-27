@@ -32,7 +32,7 @@
 }
 
 .swal2-loader {
-  border-color: var(--ym-marca) transparent var(--ym-marca) transparent;
+  border-color: var(--ym-marca-texto) transparent var(--ym-marca-texto) transparent;
 }
 
 /* Íconos de resultado con colores de estado */

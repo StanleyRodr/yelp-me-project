@@ -2,9 +2,13 @@
  * Tema de Bootstrap 5.3 con variables CSS (sin Sass).
  * Bootstrap compila los colores de cada componente en su propia clase,
  * por eso además de :root se sobrescriben las variables locales.
+ * Funciona igual en claro y oscuro: todo apunta a tokens. useTema.js pone
+ * además data-bs-theme para los detalles internos de Bootstrap (flecha del
+ * select, botón cerrar, etc.).
  */
 
-:root {
+:root,
+:root[data-bs-theme='dark'] {
   --bs-body-font-family: var(--ym-fuente);
   --bs-body-font-size: var(--ym-texto-base);
   --bs-body-line-height: var(--ym-interlineado);
@@ -13,8 +17,10 @@
   --bs-body-bg: var(--ym-fondo);
   --bs-emphasis-color: var(--ym-texto);
   --bs-secondary-color: var(--ym-texto-secundario);
+  --bs-secondary-bg: var(--ym-superficie);
   --bs-tertiary-bg: var(--ym-fondo);
   --bs-border-color: var(--ym-borde);
+  --bs-heading-color: var(--ym-texto);
   --bs-border-radius: var(--ym-radio);
   --bs-border-radius-sm: var(--ym-radio);
   --bs-border-radius-lg: var(--ym-radio);
@@ -24,10 +30,10 @@
   --bs-primary: var(--ym-marca);
   --bs-primary-rgb: var(--ym-marca-rgb);
   --bs-primary-bg-subtle: var(--ym-marca-suave);
-  --bs-primary-text-emphasis: var(--ym-marca);
-  --bs-link-color: var(--ym-marca);
+  --bs-primary-text-emphasis: var(--ym-marca-texto);
+  --bs-link-color: var(--ym-marca-texto);
   --bs-link-color-rgb: var(--ym-marca-rgb);
-  --bs-link-hover-color: var(--ym-marca-hover);
+  --bs-link-hover-color: var(--ym-marca-texto);
   --bs-focus-ring-color: var(--ym-foco-anillo);
 }
 
@@ -41,7 +47,7 @@
 .btn-primary {
   --bs-btn-color: var(--ym-sobre-marca);
   --bs-btn-bg: var(--ym-marca);
-  --bs-btn-border-color: var(--ym-marca);
+  --bs-btn-border-color: var(--ym-marca-contorno);
   --bs-btn-hover-color: var(--ym-sobre-marca);
   --bs-btn-hover-bg: var(--ym-marca-hover);
   --bs-btn-hover-border-color: var(--ym-marca-hover);
@@ -50,20 +56,20 @@
   --bs-btn-active-border-color: var(--ym-marca-hover);
   --bs-btn-disabled-color: var(--ym-sobre-marca);
   --bs-btn-disabled-bg: var(--ym-marca);
-  --bs-btn-disabled-border-color: var(--ym-marca);
+  --bs-btn-disabled-border-color: var(--ym-marca-contorno);
 }
 
 .btn-outline-primary {
-  --bs-btn-color: var(--ym-marca);
-  --bs-btn-border-color: var(--ym-marca);
+  --bs-btn-color: var(--ym-marca-texto);
+  --bs-btn-border-color: var(--ym-marca-contorno);
   --bs-btn-hover-color: var(--ym-sobre-marca);
   --bs-btn-hover-bg: var(--ym-marca);
   --bs-btn-hover-border-color: var(--ym-marca);
   --bs-btn-active-color: var(--ym-sobre-marca);
   --bs-btn-active-bg: var(--ym-marca-hover);
   --bs-btn-active-border-color: var(--ym-marca-hover);
-  --bs-btn-disabled-color: var(--ym-marca);
-  --bs-btn-disabled-border-color: var(--ym-marca);
+  --bs-btn-disabled-color: var(--ym-marca-texto);
+  --bs-btn-disabled-border-color: var(--ym-marca-contorno);
 }
 
 .btn-outline-secondary {
@@ -115,6 +121,8 @@
 /* Formularios */
 .form-control,
 .form-select {
+  color: var(--ym-texto);
+  background-color: var(--ym-superficie);
   border-color: var(--ym-borde-fuerte);
   border-radius: var(--ym-radio);
 }
@@ -130,9 +138,13 @@
   border-color: var(--ym-borde-fuerte);
 }
 
+.form-check-input {
+  background-color: var(--ym-superficie);
+}
+
 .form-check-input:checked {
   background-color: var(--ym-marca);
-  border-color: var(--ym-marca);
+  border-color: var(--ym-marca-contorno);
 }
 
 .form-label {
@@ -177,6 +189,8 @@
 }
 
 .modal {
+  --bs-modal-bg: var(--ym-superficie);
+  --bs-modal-color: var(--ym-texto);
   --bs-modal-border-color: var(--ym-borde);
   --bs-modal-border-radius: var(--ym-radio);
   --bs-modal-box-shadow: none;
@@ -185,6 +199,13 @@
 }
 
 .dropdown-menu {
+  --bs-dropdown-bg: var(--ym-superficie);
+  --bs-dropdown-color: var(--ym-texto);
+  --bs-dropdown-link-color: var(--ym-texto);
+  --bs-dropdown-link-hover-color: var(--ym-texto);
+  --bs-dropdown-link-hover-bg: var(--ym-marca-suave);
+  --bs-dropdown-header-color: var(--ym-texto-secundario);
+  --bs-dropdown-divider-bg: var(--ym-borde);
   --bs-dropdown-border-color: var(--ym-borde);
   --bs-dropdown-border-radius: var(--ym-radio);
   --bs-dropdown-box-shadow: none;

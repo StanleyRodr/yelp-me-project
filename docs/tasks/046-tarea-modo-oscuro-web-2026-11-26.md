@@ -1,6 +1,6 @@
 # 046 — Tarea: Modo oscuro en la web
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Panel con tema claro, oscuro o del sistema. Paleta oscura definida aquí; la tarea 048 la replica en Android.
@@ -49,3 +49,9 @@ Login, dashboard, solicitudes, atención, usuarios, detalle, perfil y modales en
 
 ## Resultado
 Commit: `feat(frontend): agrega modo oscuro con selector de tema`.
+
+Notas: token nuevo `--ym-marca-texto` (marca como texto/acento; en oscuro `#A9BFFF`) y `--ym-marca-contorno`, porque el navy sobre fondo oscuro no se lee. `--ym-peligro`/`--ym-exito` conservan el tono claro en oscuro (botones con texto blanco). Selector en `components/comunes/SelectorTema.vue`. **Pendiente:** recorrido visual en navegador (sin extensión de Chrome en esta sesión).
+
+Ajuste posterior (`fix(panel)`): selector cambiado a un solo botón de ícono que cicla Claro → Oscuro → Sistema (`title`/`aria-label` con el actual y el siguiente), en la navbar junto al menú del usuario (se quitaron las opciones del menú) y en login/recuperación. "Sistema oscuro con Windows en claro" no era fallo: el navegador tenía su propio modo fijo en oscuro y `prefers-color-scheme` lo reporta así.
+
+Segundo ajuste (`refactor(panel)`): se quitó la opción "Sistema"; el botón alterna Claro ↔ Oscuro. Sin elección guardada el panel sigue al sistema; un valor viejo `sistema` en `ym_tema` se trata como sin elección.

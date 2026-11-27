@@ -27,7 +27,8 @@ USE YelpMe;
 CREATE TABLE usuarios (
     id                BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre            VARCHAR(100)  NOT NULL,
-    apellidos         VARCHAR(100)  NOT NULL,
+    apellido_paterno  VARCHAR(60)   NOT NULL,
+    apellido_materno  VARCHAR(60)   NULL,
     telefono          VARCHAR(15)   NOT NULL,
     correo            VARCHAR(150)  NOT NULL,
     password          VARCHAR(255)  NOT NULL,
@@ -210,6 +211,24 @@ CREATE TABLE personal_access_tokens (
     INDEX idx_pat_expires_at (expires_at)
 ) ENGINE=InnoDB;
 
+-- ---------------------------------------------------------------------
+-- 10. codigos_recuperacion: códigos de 6 dígitos para recuperar la contraseña
+--     (plan principal 5.1). Se guarda el hash, nunca el código. No se borran:
+--     vigente = usado_en IS NULL AND expira_en > ahora AND intentos < 5.
+--     Pedir otro código marca los anteriores como usados.
+-- ---------------------------------------------------------------------
+CREATE TABLE codigos_recuperacion (
+    id          BIGINT UNSIGNED  AUTO_INCREMENT PRIMARY KEY,
+    usuario_id  BIGINT UNSIGNED  NOT NULL,
+    codigo      VARCHAR(255)     NOT NULL,
+    intentos    TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    expira_en   TIMESTAMP        NOT NULL,
+    usado_en    TIMESTAMP        NULL,
+    created_at  TIMESTAMP        NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_codrec_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE RESTRICT,
+    INDEX idx_codrec_usuario (usuario_id, usado_en)
+) ENGINE=InnoDB;
+
 -- =====================================================================
 --  Datos iniciales
 -- =====================================================================
@@ -217,8 +236,8 @@ CREATE TABLE personal_access_tokens (
 -- Administrador inicial
 --   correo:     admin@yelpme.com
 --   contraseña: Admin123*   (CAMBIARLA tras el primer inicio de sesión)
-INSERT INTO usuarios (nombre, apellidos, telefono, correo, password, rol)
-VALUES ('Administrador', 'General', '0000000000', 'admin@yelpme.com',
+INSERT INTO usuarios (nombre, apellido_paterno, apellido_materno, telefono, correo, password, rol)
+VALUES ('Administrador', 'General', NULL, '0000000000', 'admin@yelpme.com',
         '$2y$10$IYbySxhJpZ3.OXhDwz0b/egNNxS1lsCzgcrPNwqvmHakwLON.D31e', 'admin');
 
 -- Catálogo de servicios (íconos de Material Symbols)

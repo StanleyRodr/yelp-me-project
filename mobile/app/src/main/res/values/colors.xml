@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Espejo de frontend/src/styles/tokens.css (:root, tema claro): cambiar ambos.
+  Mismos nombres que los tokens (- → _). El tema oscuro está en values-night/colors.xml.
+-->
+<resources>
+    <!-- Marca -->
+    <color name="ym_marca">#14213D</color>
+    <color name="ym_marca_hover">#0E1830</color>
+    <color name="ym_marca_suave">#E6E9F0</color>
+    <color name="ym_sobre_marca">#FFFFFF</color>
+    <color name="ym_sobre_marca_tenue">#B8C1D6</color>
+    <color name="ym_marca_texto">#14213D</color>
+    <color name="ym_marca_contorno">#14213D</color>
+
+    <!-- Superficies y texto -->
+    <color name="ym_fondo">#F3F5F8</color>
+    <color name="ym_superficie">#FFFFFF</color>
+    <color name="ym_texto">#1A2233</color>
+    <color name="ym_texto_secundario">#556070</color>
+    <color name="ym_borde">#D5DBE3</color>
+    <color name="ym_borde_fuerte">#AEB7C4</color>
+    <color name="ym_skeleton">#E1E6EC</color>
+
+    <!-- Foco -->
+    <color name="ym_foco">#2F5BD3</color>
+    <color name="ym_foco_claro">#9DB8FF</color>
+
+    <!-- Estados de solicitud: color, texto y fondo -->
+    <color name="ym_estado_pendiente">#C62828</color>
+    <color name="ym_estado_pendiente_texto">#A82222</color>
+    <color name="ym_estado_pendiente_fondo">#FBEAEA</color>
+
+    <color name="ym_estado_enviado">#B26A00</color>
+    <color name="ym_estado_enviado_texto">#8A5200</color>
+    <color name="ym_estado_enviado_fondo">#FBF1E1</color>
+
+    <color name="ym_estado_terminado">#2E7D32</color>
+    <color name="ym_estado_terminado_texto">#24672A</color>
+    <color name="ym_estado_terminado_fondo">#E8F3E9</color>
+
+    <color name="ym_estado_rechazado">#37474F</color>
+    <color name="ym_estado_rechazado_texto">#2B3A41</color>
+    <color name="ym_estado_rechazado_fondo">#E7EBED</color>
+
+    <color name="ym_estado_cancelado">#78909C</color>
+    <color name="ym_estado_cancelado_texto">#4E636E</color>
+    <color name="ym_estado_cancelado_fondo">#EEF2F4</color>
+
+    <!-- Semánticos -->
+    <color name="ym_peligro">#C62828</color>
+    <color name="ym_peligro_hover">#A82222</color>
+    <color name="ym_exito">#2E7D32</color>
+    <color name="ym_exito_hover">#24672A</color>
+    <color name="ym_aviso">#B26A00</color>
+
+    <!-- Solo Android: texto sobre colorPrimary (= ym_marca_texto). Sin equivalente en tokens.css. -->
+    <color name="ym_sobre_marca_texto">#FFFFFF</color>
+</resources>

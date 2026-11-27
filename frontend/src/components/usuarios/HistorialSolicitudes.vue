@@ -53,7 +53,7 @@ const ordenadas = computed(() => [...props.solicitudes].sort((a, b) => b.created
 }
 
 .folio {
-  color: var(--ym-marca);
+  color: var(--ym-marca-texto);
   font-weight: var(--ym-peso-fuerte);
 }
 

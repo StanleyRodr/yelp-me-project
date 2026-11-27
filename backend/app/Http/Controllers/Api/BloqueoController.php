@@ -21,7 +21,7 @@ class BloqueoController extends Controller
             ->join('usuarios as u', 'u.id', '=', 'b.bloqueado_id')
             ->where('b.usuario_id', $request->user()->id)
             ->orderBy('u.nombre')
-            ->get(['b.id', 'b.created_at', 'u.nombre', 'u.apellidos', 'u.telefono'])
+            ->get(['b.id', 'b.created_at', 'u.nombre', 'u.apellido_paterno', 'u.apellido_materno', 'u.telefono'])
             ->map(fn ($b) => $this->presentar($b));
 
         return $this->respuesta($bloqueos);
@@ -82,7 +82,7 @@ class BloqueoController extends Controller
             ->join('usuarios as u', 'u.id', '=', 'b.bloqueado_id')
             ->where('b.id', $id)
             ->where('b.usuario_id', $yo)
-            ->first(['b.id', 'b.created_at', 'u.nombre', 'u.apellidos', 'u.telefono']);
+            ->first(['b.id', 'b.created_at', 'u.nombre', 'u.apellido_paterno', 'u.apellido_materno', 'u.telefono']);
 
         return $bloqueo ?? abort(404);
     }
@@ -92,7 +92,8 @@ class BloqueoController extends Controller
         return [
             'id' => $b->id,
             'nombre' => $b->nombre,
-            'apellidos' => $b->apellidos,
+            'apellido_paterno' => $b->apellido_paterno,
+            'apellido_materno' => $b->apellido_materno,
             'telefono' => $b->telefono,
             'desde' => Normalizar::fecha($b->created_at),
         ];

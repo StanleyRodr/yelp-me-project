@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Banda de marca de las pantallas de acceso (login, registro, recuperar). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/encabezado"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ym_marca"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/espacio_2"
+    android:paddingBottom="@dimen/espacio_5">
+
+    <Button
+        android:id="@+id/btnAtras"
+        style="@style/Widget.YelpMe.BotonIcono.Marca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cd_atras"
+        android:visibility="gone"
+        app:icon="@drawable/ic_arrow_back" />
+
+    <ImageView
+        android:layout_width="@dimen/logo"
+        android:layout_height="@dimen/logo"
+        android:layout_marginStart="@dimen/espacio_3"
+        android:contentDescription="@string/cd_logo"
+        android:src="@drawable/logo_yelpme" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/espacio_3"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.YelpMe.Titulo"
+            android:textColor="@color/ym_sobre_marca" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comun_aviso_prototipo"
+            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+            android:textColor="@color/ym_sobre_marca_tenue" />
+    </LinearLayout>
+</LinearLayout>

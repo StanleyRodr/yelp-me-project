@@ -86,10 +86,10 @@ const opciones = computed(() => [
 }
 
 .chip[aria-pressed='true'] {
-  border-color: var(--e, var(--ym-marca));
+  border-color: var(--e, var(--ym-marca-texto));
   background: var(--e-fondo, var(--ym-marca-suave));
-  color: var(--e-texto, var(--ym-marca));
-  box-shadow: inset 0 -3px 0 var(--e, var(--ym-marca));
+  color: var(--e-texto, var(--ym-marca-texto));
+  box-shadow: inset 0 -3px 0 var(--e, var(--ym-marca-texto));
 }
 
 .chip[aria-pressed='true'] .chip-conteo {

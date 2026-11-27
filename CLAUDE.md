@@ -30,11 +30,11 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
-| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002 y 007) |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006) |
-| `mobile/`   | Android Studio, Java                        | App del usuario final       | Diseños recibidos; integración en planes 008–011 |
+| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002, 007 y 008) |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006, 008) |
+| `mobile/`   | Android Studio, Java                        | App del usuario final       | Base conectada a la API (plan 008); perfil, contactos y solicitudes en planes 009–011 |
 
-**Planes pendientes ya escritos** (con sus tareas 042–081 en `docs/tasks/`): 008 base mobile y ajustes transversales, 009 perfil y domicilio, 010 contactos en Android, 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
+**Planes pendientes ya escritos** (con sus tareas 054–081 en `docs/tasks/`): 009 perfil y domicilio, 010 contactos en Android, 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
 
 Web y Android consumen la **misma API Laravel**.
 
@@ -54,6 +54,8 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 
 - **Pruebas sobre `YelpMe_pruebas`**, nunca `YelpMe`: `phpunit.xml` apunta ahí, `tests/TestCase.php` aborta si no termina en `_pruebas` y cada prueba se revierte (`DatabaseTransactions`). Recrear con `bd:pruebas` tras cambiar el script o el seeder.
 - **Autenticación (plan 003):** `POST /api/registro`, `POST /api/login` (app, correo o teléfono), `POST /api/admin/login` (panel), `GET|DELETE /api/sesion`. Detalle y errores en `backend/README.md`.
+- **Recuperar contraseña (plan 008):** `POST /api/recuperacion`, `POST /api/recuperacion/verificacion`, `PUT /api/recuperacion` (públicas, `throttle:acceso`). Lógica en `App\Support\Recuperacion` (tabla `codigos_recuperacion`, hash del código, 15 min, 5 intentos); el 422 se lanza fuera de la transacción para no revertir el intento. Con `MAIL_MAILER=log` el código queda en `storage/logs/laravel.log`.
+- **Nombre:** `apellido_paterno` (obligatorio) + `apellido_materno` (opcional, vacío → `null`). Nombre compuesto con `PresentadorUsuario::nombreCompleto`; en el panel `nombreCompleto` de `utils/formato.js`.
 - **Contactos (plan 004):** `apiResource /api/contactos`, `GET /api/telefonos/{telefono}`, `/api/vinculos`, `/api/bloqueos` (rol usuario). Recursos ajenos → 404. Vinculación en `App\Support\ReglasContactos`; normalización de teléfono, correo y fechas en `App\Support\Normalizar`.
 - **Solicitudes (plan 005):** app `apiResource /api/solicitudes` (sin destroy) + `PUT /api/solicitudes/{id}/estado`; panel `/api/admin/solicitudes`, `…/{id}/estado`, `…/{id}/servicios`; `GET /api/servicios`. Transiciones **solo** en `App\Support\TransicionesSolicitud` (espejo de `frontend/src/constantes/transiciones.js`: cambiar ambas). Todo cambio de estado: `DB::transaction` + `Solicitudes::bloquear` (FOR UPDATE) + `exigir` + `aplicarEstado`. Strikes con `ReglasCuenta::darStrike` (suspende al tercero).
 - **Usuarios y perfil (plan 006):** panel `/api/admin/usuarios` (+ `/cuenta`, `/strikes`, `/suspension`), `/api/admin/strikes/{id}/anulacion`, `/api/admin/actividad`; perfil `/api/perfil`, `/api/perfil/foto`, `/api/perfil/password` (cualquier rol). Acciones por estado de cuenta en `ReglasCuenta::exigirAccion` (espejo de `frontend/src/constantes/cuentas.js`). Listados en lote con `PresentadorCuenta`.
@@ -97,7 +99,8 @@ Arquitectura (plan 002):
 - **Para levantar el panel:** backend con `php artisan serve` (puerto 8000) y frontend con `npm run dev`. `VITE_API_URL` en `frontend/.env` (ver `.env.example`).
 - **Reglas que deciden qué botones mostrar:** `constantes/transiciones.js` (`accionesPermitidas`) y `constantes/cuentas.js` (`accionesCuenta`), espejo de `TransicionesSolicitud` y `ReglasCuenta::ACCIONES` del backend (cambiar ambos lados). La validación real es de la API.
 - **Rutas** (`router/index.js`): `/login` pública; resto hijas de `components/layout/AppShell.vue` con guard de sesión. `router.onError` recarga una vez si falla la descarga de un módulo.
-- **Diseño:** tokens en `styles/tokens.css` (único archivo con hex); tema de Bootstrap por variables en `styles/tema-bootstrap.css`; base, foco y movimiento reducido en `styles/base.css`; SweetAlert2 en `styles/sweetalert.css` + `plugins/alertas.js` (`confirmar`, `exito`, `error`).
+- **Tema:** `composables/useTema.js` (claro/oscuro en `localStorage['ym_tema']`; sin elección sigue al sistema) pone `data-theme` y `data-bs-theme` en `<html>`; `index.html` repite la lectura para no parpadear. Selector `comunes/SelectorTema.vue`: botón de ícono que alterna Claro ↔ Oscuro (navbar, login y recuperación). Sin elección guardada sigue `prefers-color-scheme` del navegador: si el navegador fija su propio modo, manda sobre el de Windows. Para texto o acentos con color de marca usar `--ym-marca-texto` (en oscuro el navy no se lee); `--ym-marca` es fondo.
+- **Diseño:** tokens en `styles/tokens.css` (único archivo con hex; bloque `:root[data-theme='dark']` para el oscuro, espejo de `mobile/.../values(-night)/colors.xml`); tema de Bootstrap por variables en `styles/tema-bootstrap.css`; base, foco y movimiento reducido en `styles/base.css`; SweetAlert2 en `styles/sweetalert.css` + `plugins/alertas.js` (`confirmar`, `exito`, `error`).
 - **Piezas comunes** (`components/comunes/`): `EstadoBadge`, `ListaServicios`, `MapaBase` (único lugar que usa Leaflet), `LineaTiempo`, `TarjetaSeccion`, `CampoBusqueda`, `EstadoVacio`, `BotonCarga`, skeletons. Modales en `components/modals/` sobre `ModalBase`; acciones con motivo reutilizan `ModalMotivo`.
 
 Reglas de componentes (plan 002):
@@ -124,3 +127,13 @@ Otras convenciones:
 - Íconos de servicios con Material Symbols (Vector Asset).
 - Estilo: clases internas anónimas cuando sea posible y constructores.
 - Colores en `res/values/colors.xml` y textos en `res/values/strings.xml`, compartiendo paleta con la web; nada hardcodeado.
+
+Comandos (desde `mobile/`): `./gradlew assembleDebug` · `./gradlew testDebugUnitTest` · `./gradlew assembleRelease`.
+
+Base (plan 008):
+- **Paquetes:** `com.yelpme.app.ui.<pantalla>` (activities), `api` (Retrofit), `modelos`, `util`. `YelpMeApp` arranca tema, `Sesion` y `ClienteApi`.
+- **API:** `ClienteApi.servicio(Interfaz.class)` + `Llamada.de(call).enviar(new Llamada.Respuestas<T>() {...})` → `alExito(datos)` / `alError(ErrorApi)` en el hilo principal. `ErrorApi.campo("telefono")` da el error de un campo (`Formularios.mostrarErrores` los pone en sus `TextInputLayout`). Un 401 fuera de login/registro/recuperación borra la sesión y abre el login con aviso (`InterceptorSesion`). Catálogo de servicios en memoria con `Catalogo.servicios(...)`.
+- **URL de la API:** `BuildConfig.API_URL` (debug `http://10.0.2.2:8000/api/`, release Railway). Si el emulador o un teléfono no alcanza `10.0.2.2`: `adb reverse tcp:8000 tcp:8000` y `api.url=http://127.0.0.1:8000/api/` en `local.properties`. HTTP sin cifrar solo en debug (`src/debug`).
+- **Pantallas con sesión** heredan de `ui/base/BaseActivity`: `itemMenu()` + `ponerContenido(binding)`; header con saludo, menú lateral (por la derecha), barra de servicios (llamada **simulada**, nunca `ACTION_CALL`) y botón del favorito, insets y `aviso(...)` (Snackbar sobre la barra). Las de acceso usan `Margenes.bordeABorde` + `Margenes.aplicar`.
+- **Tema:** `values/colors.xml` y `values-night/colors.xml` son espejo de `frontend/src/styles/tokens.css` (cambiar ambos); `colorPrimary` = `ym_marca_texto`. Estilos `Widget.YelpMe.*` y `TextAppearance.YelpMe.*` en `themes.xml`; fuente Atkinson variable en `res/font`. Tema en el menú lateral: un item alterna claro ↔ oscuro (`util/Tema`, sin elección guardada sigue al sistema, igual que la web).
+- **Íconos:** vectores generados desde la fuente Material Symbols del frontend (`res/drawable/ic_*.xml`); `IconosServicio.de(icono)` para los servicios.

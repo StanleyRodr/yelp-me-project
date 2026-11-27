@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Support\Credenciales;
 use App\Support\Normalizar;
 use App\Support\PresentadorUsuario;
 use Illuminate\Http\JsonResponse;
@@ -27,10 +28,11 @@ class RegistroController extends Controller
 
         $datos = $request->validate([
             'nombre' => ['required', 'string', 'max:100'],
-            'apellidos' => ['required', 'string', 'max:100'],
+            'apellido_paterno' => ['required', 'string', 'max:60'],
+            'apellido_materno' => ['nullable', 'string', 'max:60'],
             'telefono' => ['required', 'digits:10', 'unique:usuarios,telefono'],
             'correo' => ['required', 'email', 'max:150', 'unique:usuarios,correo'],
-            'password' => ['required', 'string', 'min:8', 'max:72', 'confirmed'],
+            'password' => Credenciales::REGLAS_PASSWORD,
             'fcm_token' => ['nullable', 'string', 'max:255'],
         ]);
 
@@ -39,7 +41,8 @@ class RegistroController extends Controller
 
             $id = DB::table('usuarios')->insertGetId([
                 'nombre' => trim($datos['nombre']),
-                'apellidos' => trim($datos['apellidos']),
+                'apellido_paterno' => trim($datos['apellido_paterno']),
+                'apellido_materno' => Normalizar::opcional($datos['apellido_materno'] ?? null),
                 'telefono' => $datos['telefono'],
                 'correo' => $datos['correo'],
                 'password' => Hash::make($datos['password']),

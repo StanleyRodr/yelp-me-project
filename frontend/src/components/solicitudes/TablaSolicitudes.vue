@@ -66,12 +66,12 @@ tbody tr {
 }
 
 .fila-seleccionada > td:first-child {
-  box-shadow: inset 3px 0 0 var(--ym-marca);
+  box-shadow: inset 3px 0 0 var(--ym-marca-texto);
 }
 
 .folio {
   font-weight: var(--ym-peso-fuerte);
-  color: var(--ym-marca);
+  color: var(--ym-marca-texto);
 }
 
 .titulo {

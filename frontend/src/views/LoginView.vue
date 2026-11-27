@@ -2,10 +2,11 @@
   <main class="login">
     <PanelMarca class="login-marca" />
     <div class="login-form">
+      <SelectorTema class="selector-tema" />
       <FormLogin
         :cargando="auth.cargando"
         :error="auth.error ?? ''"
-        :aviso="route.query.expirada ? 'Tu sesión terminó. Inicia sesión de nuevo para continuar.' : ''"
+        :aviso="aviso"
         :ayuda-demo="esDesarrollo"
         @enviar="entrar"
       />
@@ -17,6 +18,7 @@
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import PanelMarca from '../components/auth/PanelMarca.vue'
+import SelectorTema from '../components/comunes/SelectorTema.vue'
 import FormLogin from '../components/auth/FormLogin.vue'
 import { useAuthStore } from '../stores/auth'
 
@@ -24,6 +26,10 @@ const auth = useAuthStore()
 const router = useRouter()
 const route = useRoute()
 const esDesarrollo = import.meta.env.DEV
+
+const aviso = route.query.recuperada
+  ? 'Contraseña actualizada. Inicia sesión.'
+  : route.query.expirada ? 'Tu sesión terminó. Inicia sesión de nuevo para continuar.' : ''
 
 // Un error de un intento anterior no debe aparecer al volver al login.
 onMounted(() => auth.limpiarError())
@@ -52,11 +58,18 @@ async function entrar({ correo, password }) {
 }
 
 .login-form {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--ym-espacio-6) var(--ym-espacio-5);
   background: var(--ym-superficie);
+}
+
+.selector-tema {
+  position: absolute;
+  top: var(--ym-espacio-4);
+  right: var(--ym-espacio-4);
 }
 
 @media (max-width: 767.98px) {

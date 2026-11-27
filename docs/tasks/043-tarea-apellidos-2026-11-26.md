@@ -1,6 +1,6 @@
 # 043 — Tarea: Apellidos en dos columnas
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 `usuarios.apellidos` → `apellido_paterno` (obligatorio) + `apellido_materno` (opcional) en BD, API, pruebas y panel.
@@ -71,3 +71,5 @@ Panel: perfil guarda materno vacío; navbar muestra "Administrador General".
 
 ## Resultado
 Commit: `refactor(usuarios): separa apellidos en paterno y materno`.
+
+**Aviso:** recrear `YelpMe` con `database/script-bd.sql` + `php artisan db:seed` (cambió la tabla `usuarios`). Atributos de validación `apellido_paterno`/`apellido_materno` en `lang/es/validation.php`.

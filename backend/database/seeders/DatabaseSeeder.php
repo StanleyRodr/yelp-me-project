@@ -32,10 +32,11 @@ class DatabaseSeeder extends Seeder
             // ---------- Usuarios ----------
             $admin1 = DB::table('usuarios')->where('correo', 'admin@yelpme.com')->value('id');
 
-            $usuario = fn (string $nombre, string $apellidos, string $telefono, string $correo, string $rol, string $pass) =>
+            $usuario = fn (string $nombre, string $paterno, ?string $materno, string $telefono, string $correo, string $rol, string $pass) =>
                 DB::table('usuarios')->insertGetId([
                     'nombre' => $nombre,
-                    'apellidos' => $apellidos,
+                    'apellido_paterno' => $paterno,
+                    'apellido_materno' => $materno,
                     'telefono' => $telefono,
                     'correo' => $correo,
                     'password' => $pass,
@@ -44,12 +45,12 @@ class DatabaseSeeder extends Seeder
                     'updated_at' => $ahora,
                 ]);
 
-            $admin2 = $usuario('Laura', 'Méndez Ruiz', '2350000001', self::CORREO_MARCA, 'admin', $passAdmin);
-            $carlos = $usuario('Carlos', 'Ramírez Soto', '2351000001', 'carlos@correo.com', 'usuario', $passUsuario);
-            $maria  = $usuario('María', 'López Díaz', '2351000002', 'maria@correo.com', 'usuario', $passUsuario);
-            $jose   = $usuario('José', 'Hernández Cruz', '2351000003', 'jose@correo.com', 'usuario', $passUsuario);
-            $ana    = $usuario('Ana', 'Torres Vega', '2351000004', 'ana@correo.com', 'usuario', $passUsuario);
-            $luis   = $usuario('Luis', 'García Mora', '2351000005', 'luis@correo.com', 'usuario', $passUsuario);
+            $admin2 = $usuario('Laura', 'Méndez', 'Ruiz', '2350000001', self::CORREO_MARCA, 'admin', $passAdmin);
+            $carlos = $usuario('Carlos', 'Ramírez', 'Soto', '2351000001', 'carlos@correo.com', 'usuario', $passUsuario);
+            $maria  = $usuario('María', 'López', 'Díaz', '2351000002', 'maria@correo.com', 'usuario', $passUsuario);
+            $jose   = $usuario('José', 'Hernández', 'Cruz', '2351000003', 'jose@correo.com', 'usuario', $passUsuario);
+            $ana    = $usuario('Ana', 'Torres', 'Vega', '2351000004', 'ana@correo.com', 'usuario', $passUsuario);
+            $luis   = $usuario('Luis', 'García', 'Mora', '2351000005', 'luis@correo.com', 'usuario', $passUsuario);
 
             // ---------- Contactos (vinculados y no vinculados) ----------
             $contacto = fn (int $dueno, string $nombre, string $telefono, string $parentesco, ?int $vinculado) =>

@@ -22,6 +22,6 @@ defineProps({
 }
 
 .servicio .material-symbols-outlined {
-  color: var(--ym-marca);
+  color: var(--ym-marca-texto);
 }
 </style>

@@ -59,12 +59,14 @@ return [
 
     'attributes' => [
         'nombre' => 'nombre',
-        'apellidos' => 'apellidos',
+        'apellido_paterno' => 'apellido paterno',
+        'apellido_materno' => 'apellido materno',
         'telefono' => 'teléfono',
         'correo' => 'correo',
         'password' => 'contraseña',
         'password_confirmation' => 'confirmación de contraseña',
         'fcm_token' => 'token del dispositivo',
+        'codigo' => 'código',
         'parentesco' => 'parentesco',
         'titulo' => 'título',
         'descripcion' => 'descripción',

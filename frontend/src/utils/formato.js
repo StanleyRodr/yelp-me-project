@@ -27,7 +27,7 @@ export function duracion(minutos) {
 
 export const haceTiempo = (iso, ahora) => `hace ${duracion(minutosDesde(iso, ahora))}`
 
-export const nombreCompleto = (p) => (p ? [p.nombre, p.apellidos].filter(Boolean).join(' ') : '')
+export const nombreCompleto = (p) => (p ? [p.nombre, p.apellido_paterno, p.apellido_materno].filter(Boolean).join(' ') : '')
 
 /** Texto para búsqueda: minúsculas y sin acentos ("Policía" ≈ "policia"). */
 export const normalizar = (texto) =>

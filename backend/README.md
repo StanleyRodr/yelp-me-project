@@ -99,13 +99,13 @@ Token en el header `Authorization: Bearer <token>`. Los endpoints de acceso tien
 
 | Método | Ruta | Quién | Cuerpo | Respuesta (`datos`) |
 |---|---|---|---|---|
-| POST | `/api/registro` | Público (app) | `nombre`, `apellidos`, `telefono` (10 dígitos), `correo`, `password`, `password_confirmation`, `fcm_token`? | `token`, `usuario`, `contactos_vinculados` (201) |
+| POST | `/api/registro` | Público (app) | `nombre`, `apellido_paterno`, `apellido_materno`? (vacío → `null`), `telefono` (10 dígitos), `correo`, `password`, `password_confirmation`, `fcm_token`? | `token`, `usuario`, `contactos_vinculados` (201) |
 | POST | `/api/login` | Público (app, rol usuario) | `correo` **o** `telefono`, `password`, `fcm_token`? | `token`, `usuario` |
 | POST | `/api/admin/login` | Público (panel, rol admin) | `correo`, `password` | `token`, `usuario` |
 | GET | `/api/sesion` | Con token | — | `usuario` |
 | DELETE | `/api/sesion` | Con token | — | `null` (borra solo el token actual) |
 
-`usuario` = `id, nombre, apellidos, telefono, correo, rol, foto_perfil (URL), activo, suspendido, strikes_activos, limite_strikes, created_at`. Nunca incluye `password` ni `fcm_token`.
+`usuario` = `id, nombre, apellido_paterno, apellido_materno, telefono, correo, rol, foto_perfil (URL), activo, suspendido, strikes_activos, limite_strikes, created_at`. Nunca incluye `password` ni `fcm_token`.
 
 | Situación | Código | Mensaje |
 |---|---|---|
@@ -119,6 +119,20 @@ Una cuenta **suspendida** sí inicia sesión (`suspendido: true`); la app bloque
 
 Middlewares para rutas nuevas: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` (panel, prefijo `/api/admin`). Los grupos ya están en `routes/api.php`.
 
+### Recuperación de contraseña (cualquier rol)
+
+Públicas, con `throttle:acceso` (5 por minuto por correo + IP). Lógica en `App\Support\Recuperacion`; tabla `codigos_recuperacion` (se guarda el hash del código).
+
+| Método | Ruta | Cuerpo | Respuesta |
+|---|---|---|---|
+| POST | `/api/recuperacion` | `correo` | 200 "Si el correo está registrado, te enviamos un código." (igual si no existe o está deshabilitada) |
+| POST | `/api/recuperacion/verificacion` | `correo`, `codigo` | 200 `{ valido: true }` · 422 `errores.codigo` "El código no es válido o ya venció." |
+| PUT | `/api/recuperacion` | `correo`, `codigo`, `password`, `password_confirmation` | 200 "Contraseña actualizada. Inicia sesión." · 422 |
+
+- Código de 6 dígitos, vence en 15 min, 5 intentos fallidos lo invalidan. Pedir otro anula el anterior.
+- Al cambiar la contraseña se borran **todos** los tokens de la cuenta.
+- En desarrollo (`MAIL_MAILER=log`) el correo queda en `storage/logs/laravel.log`: buscar "Tu código de YelpMe". Para SMTP ver el comentario en `.env.example`.
+
 ## Contactos de confianza (app, rol `usuario`)
 
 | Método | Ruta | Cuerpo | Respuesta (`datos`) |
@@ -129,9 +143,9 @@ Middlewares para rutas nuevas: `auth:sanctum` + `cuenta.activa` + `rol:usuario` 
 | PUT/PATCH | `/api/contactos/{id}` | Campos a cambiar | Contacto |
 | DELETE | `/api/contactos/{id}` | — | `null` |
 | GET | `/api/telefonos/{telefono}` | — | `{ telefono, vinculable, en_agenda }` (30/min) |
-| GET | `/api/vinculos` | — | Quién me tiene: `[{ id, nombre, apellidos, telefono, desde }]` |
+| GET | `/api/vinculos` | — | Quién me tiene: `[{ id, nombre, apellido_paterno, apellido_materno, telefono, desde }]` |
 | DELETE | `/api/vinculos/{id}` | — | `null` (me borra de su agenda) |
-| GET | `/api/bloqueos` | — | `[{ id, nombre, apellidos, telefono, desde }]` |
+| GET | `/api/bloqueos` | — | `[{ id, nombre, apellido_paterno, apellido_materno, telefono, desde }]` |
 | POST | `/api/bloqueos` | `contacto_id` (id de un vínculo) | Bloqueo (201) |
 | DELETE | `/api/bloqueos/{id}` | — | `null` |
 
@@ -145,7 +159,7 @@ Contacto = `id, nombre, telefono, parentesco, vinculado, created_at, updated_at`
 
 ## Solicitudes de ayuda
 
-Solicitud = columnas de `solicitudes` (`id, usuario_id, titulo, descripcion, latitud, longitud, ubicacion_nombre, estado, admin_id, cerrado_por_id, motivo, enviado_en, cerrado_en, created_at, updated_at`) + `servicios` (ids) + `usuario` `{ id, nombre, apellidos, telefono }` + `admin` y `cerrado_por` `{ id, nombre, apellidos }` o `null`. Misma forma que usa el frontend.
+Solicitud = columnas de `solicitudes` (`id, usuario_id, titulo, descripcion, latitud, longitud, ubicacion_nombre, estado, admin_id, cerrado_por_id, motivo, enviado_en, cerrado_en, created_at, updated_at`) + `servicios` (ids) + `usuario` `{ id, nombre, apellido_paterno, apellido_materno, telefono }` + `admin` y `cerrado_por` `{ id, nombre, apellido_paterno, apellido_materno }` o `null`. Misma forma que usa el frontend.
 
 | Método | Ruta | Quién | Cuerpo |
 |---|---|---|---|
@@ -210,7 +224,7 @@ Transiciones (plan principal 7.2; tabla en `App\Support\TransicionesSolicitud`, 
 | Método | Ruta | Cuerpo |
 |---|---|---|
 | GET | `/api/sesion` | — (consultar el perfil) |
-| PUT/PATCH | `/api/perfil` | `nombre`, `apellidos`, `telefono`, `correo` (los que cambian) |
+| PUT/PATCH | `/api/perfil` | `nombre`, `apellido_paterno`, `apellido_materno` (vacío o `null` lo quita), `telefono`, `correo` (los que cambian) |
 | POST | `/api/perfil/foto` | multipart `foto` (JPG/PNG/WEBP, máx. 1 MB) |
 | DELETE | `/api/perfil/foto` | — |
 | PUT | `/api/perfil/password` | `actual`, `nueva`, `nueva_confirmation` |

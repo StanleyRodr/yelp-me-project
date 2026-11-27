@@ -21,12 +21,13 @@ class VinculoController extends Controller
             ->join('usuarios as u', 'u.id', '=', 'c.usuario_id')
             ->where('c.usuario_contacto_id', $request->user()->id)
             ->orderBy('u.nombre')
-            ->get(['c.id', 'c.created_at', 'u.nombre', 'u.apellidos', 'u.telefono'])
+            ->get(['c.id', 'c.created_at', 'u.nombre', 'u.apellido_paterno', 'u.apellido_materno', 'u.telefono'])
             ->map(fn ($v) => [
                 'id' => $v->id,
                 // Datos de la cuenta de quien me agregó, no el alias que me puso.
                 'nombre' => $v->nombre,
-                'apellidos' => $v->apellidos,
+                'apellido_paterno' => $v->apellido_paterno,
+                'apellido_materno' => $v->apellido_materno,
                 'telefono' => $v->telefono,
                 'desde' => Normalizar::fecha($v->created_at),
             ]);

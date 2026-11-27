@@ -28,13 +28,20 @@ class PresentadorUsuario
         ];
     }
 
+    /** "Carlos Ramírez Soto"; sin espacios de más si falta el materno. */
+    public static function nombreCompleto(object $u): string
+    {
+        return trim(implode(' ', array_filter([$u->nombre, $u->apellido_paterno ?? null, $u->apellido_materno ?? null])));
+    }
+
     /** Campos guardados en `usuarios`, sin consultas extra (para listados en lote). */
     public static function base(object $u): array
     {
         return [
             'id' => $u->id,
             'nombre' => $u->nombre,
-            'apellidos' => $u->apellidos,
+            'apellido_paterno' => $u->apellido_paterno,
+            'apellido_materno' => $u->apellido_materno,
             'telefono' => $u->telefono,
             'correo' => $u->correo,
             'rol' => $u->rol,

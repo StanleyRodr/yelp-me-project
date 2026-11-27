@@ -1,6 +1,6 @@
 # 045 — Tarea: Recuperar contraseña (panel)
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 "¿Olvidaste tu contraseña?" en el login del panel, con los 3 pasos de la API (tarea 044).
@@ -38,3 +38,5 @@ Mismo `pedir()` de `http.js`. El interceptor de 401 no aplica (rutas públicas; 
 
 ## Resultado
 Commit: `feat(frontend): agrega recuperación de contraseña al panel`.
+
+Notas: `AvisoFormulario` para avisos/errores de los pasos. Si el código vence en el paso 3 se regresa al paso 2 con el error. `meta.soloSinSesion` en el router para `/login` y `/recuperar`.

@@ -49,7 +49,7 @@ tbody tr {
 .nombre {
   display: block;
   font-weight: var(--ym-peso-medio);
-  color: var(--ym-marca);
+  color: var(--ym-marca-texto);
 }
 
 .secundario {

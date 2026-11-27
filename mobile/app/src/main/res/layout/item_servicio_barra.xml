@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Un servicio de la barra inferior: ícono de Material Symbols y nombre corto. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center"
+    android:minWidth="72dp"
+    android:minHeight="@dimen/toque_min"
+    android:orientation="vertical"
+    android:padding="@dimen/espacio_1">
+
+    <ImageView
+        android:id="@+id/ivIcono"
+        android:layout_width="@dimen/icono_servicio"
+        android:layout_height="@dimen/icono_servicio"
+        android:importantForAccessibility="no"
+        android:tint="@color/ym_sobre_marca"
+        tools:src="@drawable/ic_local_police" />
+
+    <TextView
+        android:id="@+id/tvNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:importantForAccessibility="no"
+        android:maxWidth="88dp"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+        android:textColor="@color/ym_sobre_marca"
+        tools:text="Policía" />
+</LinearLayout>

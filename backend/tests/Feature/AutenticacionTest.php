@@ -19,7 +19,8 @@ class AutenticacionTest extends TestCase
     {
         return $this->postJson('/api/registro', array_merge([
             'nombre' => 'Rosa',
-            'apellidos' => 'Prueba',
+            'apellido_paterno' => 'Prueba',
+            'apellido_materno' => 'Segunda',
             'telefono' => '2359990001', // teléfono del contacto "Mamá" de Carlos (no vinculado)
             'correo' => 'rosa@correo.com',
             'password' => 'secreto123',
@@ -63,6 +64,21 @@ class AutenticacionTest extends TestCase
     public function test_registro_nunca_crea_admins(): void
     {
         $this->registro(['rol' => 'admin'])->assertCreated()->assertJsonPath('datos.usuario.rol', 'usuario');
+    }
+
+    public function test_registro_sin_apellido_materno(): void
+    {
+        $this->registro(['apellido_materno' => null])
+            ->assertCreated()
+            ->assertJsonPath('datos.usuario.apellido_paterno', 'Prueba')
+            ->assertJsonPath('datos.usuario.apellido_materno', null);
+    }
+
+    public function test_registro_exige_apellido_paterno(): void
+    {
+        $this->registro(['apellido_paterno' => '  '])
+            ->assertUnprocessable()
+            ->assertJsonValidationErrors('apellido_paterno', 'errores');
     }
 
     public function test_registro_rechaza_duplicados_y_confirmacion_distinta(): void

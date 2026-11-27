@@ -63,7 +63,7 @@ const props = defineProps({
 defineEmits(['accion'])
 
 const acciones = computed(() => accionesCuenta(props.usuario))
-const iniciales = computed(() => [props.usuario.nombre, props.usuario.apellidos].map((p) => p?.[0] ?? '').join('').toUpperCase())
+const iniciales = computed(() => [props.usuario.nombre, props.usuario.apellido_paterno].map((p) => p?.[0] ?? '').join('').toUpperCase())
 </script>
 
 <style scoped>

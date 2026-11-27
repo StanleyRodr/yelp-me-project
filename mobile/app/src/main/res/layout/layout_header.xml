@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Header del diseño: saludo y botón de menú. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ym_marca"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/espacio_4"
+    android:paddingEnd="@dimen/espacio_1">
+
+    <TextView
+        android:id="@+id/tvSaludoUsuario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:accessibilityHeading="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/TextAppearance.YelpMe.Marca"
+        tools:text="@string/inicio_saludo_simple" />
+
+    <Button
+        android:id="@+id/btnMenu"
+        style="@style/Widget.YelpMe.BotonIcono.Marca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cd_menu"
+        app:icon="@drawable/ic_menu" />
+</LinearLayout>

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Contenido de Contactos (diseño: lista, detalle y formulario que se alternan).
+     Campos alineados con la API (nombre, teléfono, parentesco). Se conecta en el plan 010. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.contactos.ContactosActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/espacio_4">
+
+        <!-- Vista A: lista -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardListaContactos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:accessibilityHeading="true"
+                        android:text="@string/contactos_titulo"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+
+                    <Button
+                        android:id="@+id/btnAgregarContacto"
+                        style="?attr/materialIconButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/cd_agregar_contacto"
+                        app:icon="@drawable/ic_add" />
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilBuscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:hint="@string/contactos_buscar">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etBuscar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:importantForAutofill="no"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listaContactos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:id="@+id/tvVacio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:text="@string/contactos_vacio"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_5"
+                    android:text="@string/contactos_favorito"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+                <TextView
+                    android:id="@+id/tvFavorito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contactos_sin_favorito"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Vista B: detalle -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDetalleContacto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnVolverDeDetalle"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comun_volver"
+                    app:icon="@drawable/ic_arrow_back" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvAvatarInicial"
+                        android:layout_width="@dimen/avatar"
+                        android:layout_height="@dimen/avatar"
+                        android:background="@color/ym_marca"
+                        android:gravity="center"
+                        android:importantForAccessibility="no"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Marca" />
+
+                    <TextView
+                        android:id="@+id/tvDetalleNombre"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/espacio_3"
+                        android:layout_weight="1"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+
+                    <Button
+                        android:id="@+id/btnLlamarContacto"
+                        style="?attr/materialIconButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/cd_llamar_contacto"
+                        app:icon="@drawable/ic_call" />
+
+                    <Button
+                        android:id="@+id/btnEliminarContacto"
+                        style="?attr/materialIconButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/cd_eliminar_contacto"
+                        app:icon="@drawable/ic_delete" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_4"
+                    android:text="@string/contactos_telefono"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+                <TextView
+                    android:id="@+id/tvDetalleTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:text="@string/contactos_parentesco"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+                <TextView
+                    android:id="@+id/tvDetalleParentesco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Vista C: nuevo contacto -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNuevoContacto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:accessibilityHeading="true"
+                    android:text="@string/contactos_nuevo"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilNuevoNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_4"
+                    android:hint="@string/contactos_nombre">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNuevoNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName|textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilNuevoTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:hint="@string/contactos_telefono">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNuevoTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:maxLength="10" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilNuevoParentesco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:hint="@string/contactos_parentesco">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNuevoParentesco"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_4"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnCancelarNuevoContacto"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/espacio_2"
+                        android:layout_weight="1"
+                        android:text="@string/comun_cancelar" />
+
+                    <Button
+                        android:id="@+id/btnGuardarNuevoContacto"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/comun_guardar" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

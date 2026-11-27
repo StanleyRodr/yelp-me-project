@@ -18,8 +18,11 @@ import './styles/tema-bootstrap.css'
 import './styles/base.css'
 import './styles/sweetalert.css'
 
+import { iniciarTema } from './composables/useTema'
 import { registrarSesionExpirada } from './services/http'
 import { useAuthStore } from './stores/auth'
+
+iniciarTema()
 
 const app = createApp(App).use(createPinia()).use(router)
 const auth = useAuthStore()

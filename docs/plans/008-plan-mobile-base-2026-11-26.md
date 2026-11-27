@@ -38,29 +38,29 @@ Dejar la app Android lista para crecer: el proyecto de la otra persona entra a g
 
 | # | Tarea | Resumen | Estado |
 |---|---|---|---|
-| 042 | [Importar proyecto Android](../tasks/042-tarea-importar-android-2026-11-26.md) | Proyecto original a git sin datos personales ni archivos de máquina. | ⬜ |
-| 043 | [Apellidos en dos columnas](../tasks/043-tarea-apellidos-2026-11-26.md) | BD, seeder, API, pruebas y panel con paterno/materno. | ⬜ |
-| 044 | [Recuperar contraseña: API](../tasks/044-tarea-recuperar-api-2026-11-26.md) | Tabla de códigos, 3 endpoints, correo y pruebas. | ⬜ |
-| 045 | [Recuperar contraseña: panel](../tasks/045-tarea-recuperar-panel-2026-11-26.md) | Vista de 3 pasos en el panel web. | ⬜ |
-| 046 | [Modo oscuro en la web](../tasks/046-tarea-modo-oscuro-web-2026-11-26.md) | Tokens oscuros, selector de tema, Bootstrap, SweetAlert y mapa. | ⬜ |
-| 047 | [Configuración Android](../tasks/047-tarea-configuracion-android-2026-11-26.md) | Gradle, dependencias, BuildConfig, manifest, red y renombres. | ⬜ |
-| 048 | [Tema y recursos Android](../tasks/048-tarea-tema-android-2026-11-26.md) | colors claro/oscuro, Atkinson, dimens, strings, Material Symbols, limpieza de PNG. | ⬜ |
-| 049 | [Cliente API Android](../tasks/049-tarea-cliente-api-android-2026-11-26.md) | Retrofit, token, errores uniformes, 401 global, sesión guardada. | ⬜ |
-| 050 | [Login, registro y sesión](../tasks/050-tarea-login-registro-android-2026-11-26.md) | Entrada automática, login correo/teléfono, registro, cerrar sesión. | ⬜ |
-| 051 | [Recuperar contraseña: app](../tasks/051-tarea-recuperar-android-2026-11-26.md) | Los 3 pasos del diseño conectados a la API. | ⬜ |
-| 052 | [BaseActivity y barra inferior](../tasks/052-tarea-base-activity-2026-11-26.md) | Menú lateral, insets, barra con servicios simulados y botón del favorito. | ⬜ |
-| 053 | [Verificación del plan 008](../tasks/053-tarea-verificacion-008-2026-11-26.md) | Pruebas, build, recorrido en emulador y documentación. | ⬜ |
+| 042 | [Importar proyecto Android](../tasks/042-tarea-importar-android-2026-11-26.md) | Proyecto original a git sin datos personales ni archivos de máquina. | ✅ |
+| 043 | [Apellidos en dos columnas](../tasks/043-tarea-apellidos-2026-11-26.md) | BD, seeder, API, pruebas y panel con paterno/materno. | ✅ |
+| 044 | [Recuperar contraseña: API](../tasks/044-tarea-recuperar-api-2026-11-26.md) | Tabla de códigos, 3 endpoints, correo y pruebas. | ✅ |
+| 045 | [Recuperar contraseña: panel](../tasks/045-tarea-recuperar-panel-2026-11-26.md) | Vista de 3 pasos en el panel web. | ✅ |
+| 046 | [Modo oscuro en la web](../tasks/046-tarea-modo-oscuro-web-2026-11-26.md) | Tokens oscuros, selector de tema, Bootstrap, SweetAlert y mapa. | ✅ |
+| 047 | [Configuración Android](../tasks/047-tarea-configuracion-android-2026-11-26.md) | Gradle, dependencias, BuildConfig, manifest, red y renombres. | ✅ |
+| 048 | [Tema y recursos Android](../tasks/048-tarea-tema-android-2026-11-26.md) | colors claro/oscuro, Atkinson, dimens, strings, Material Symbols, limpieza de PNG. | ✅ |
+| 049 | [Cliente API Android](../tasks/049-tarea-cliente-api-android-2026-11-26.md) | Retrofit, token, errores uniformes, 401 global, sesión guardada. | ✅ |
+| 050 | [Login, registro y sesión](../tasks/050-tarea-login-registro-android-2026-11-26.md) | Entrada automática, login correo/teléfono, registro, cerrar sesión. | ✅ |
+| 051 | [Recuperar contraseña: app](../tasks/051-tarea-recuperar-android-2026-11-26.md) | Los 3 pasos del diseño conectados a la API. | ✅ |
+| 052 | [BaseActivity y barra inferior](../tasks/052-tarea-base-activity-2026-11-26.md) | Menú lateral, insets, barra con servicios simulados y botón del favorito. | ✅ |
+| 053 | [Verificación del plan 008](../tasks/053-tarea-verificacion-008-2026-11-26.md) | Pruebas, build, recorrido en emulador y documentación. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] `mobile/` en git sin datos personales; `local.properties`, `build/` y archivos de máquina ignorados.
-- [ ] Apellidos en dos columnas en BD, API, panel y app; `php artisan test` en verde.
-- [ ] Recuperación de contraseña funciona en panel y app (código en `laravel.log`).
-- [ ] Web y app con tema claro, oscuro y sistema; colores iguales a los tokens.
-- [ ] Android: ViewBinding en todo, sin `findViewById`, sin textos ni colores hardcodeados en lo tocado.
-- [ ] Registro, login (correo o teléfono), entrada automática y cierre de sesión contra la API.
-- [ ] Barra inferior con servicios del catálogo y aviso simulado.
-- [ ] `./gradlew assembleDebug` y `npm run build` sin errores.
-- [ ] Commits por tarea, en español, sin atribución; PR a `main` al terminar.
+- [x] `mobile/` en git sin datos personales; `local.properties`, `build/` y archivos de máquina ignorados.
+- [x] Apellidos en dos columnas en BD, API, panel y app; `php artisan test` en verde.
+- [x] Recuperación de contraseña funciona en panel y app (código en `laravel.log`).
+- [x] Web y app con tema claro, oscuro y sistema; colores iguales a los tokens.
+- [x] Android: ViewBinding en todo, sin `findViewById`, sin textos ni colores hardcodeados en lo tocado.
+- [x] Registro, login (correo o teléfono), entrada automática y cierre de sesión contra la API.
+- [x] Barra inferior con servicios del catálogo y aviso simulado.
+- [x] `./gradlew assembleDebug` y `npm run build` sin errores.
+- [x] Commits por tarea, en español, sin atribución; PR a `main` al terminar.

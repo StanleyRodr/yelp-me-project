@@ -110,6 +110,32 @@ onBeforeUnmount(() => {
   font-family: var(--ym-fuente);
 }
 
+/* Las teselas de OSM no tienen versión oscura gratuita: se atenúan. */
+:global([data-theme='dark']) .mapa :deep(.leaflet-tile-pane) {
+  filter: brightness(0.85) contrast(1.1);
+}
+
+.mapa :deep(.leaflet-popup-content-wrapper),
+.mapa :deep(.leaflet-popup-tip) {
+  background: var(--ym-superficie);
+  color: var(--ym-texto);
+}
+
+.mapa :deep(.leaflet-bar a) {
+  background: var(--ym-superficie);
+  color: var(--ym-texto);
+  border-color: var(--ym-borde);
+}
+
+.mapa :deep(.leaflet-control-attribution) {
+  background: var(--ym-superficie);
+  color: var(--ym-texto-secundario);
+}
+
+.mapa :deep(.leaflet-control-attribution a) {
+  color: var(--ym-marca-texto);
+}
+
 /* Los marcadores los crea Leaflet fuera del template: requieren :deep */
 .mapa :deep(.marcador) {
   display: grid;

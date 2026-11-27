@@ -8,8 +8,8 @@ export const perfilService = {
   },
 
   /** PUT /api/perfil → usuario actualizado */
-  actualizar({ nombre, apellidos, telefono, correo }) {
-    return pedir({ method: 'put', url: '/perfil', data: { nombre, apellidos, telefono, correo } })
+  actualizar({ nombre, apellido_paterno, apellido_materno, telefono, correo }) {
+    return pedir({ method: 'put', url: '/perfil', data: { nombre, apellido_paterno, apellido_materno, telefono, correo } })
   },
 
   /** POST /api/perfil/foto (multipart, campo `foto`) → usuario con la URL nueva */

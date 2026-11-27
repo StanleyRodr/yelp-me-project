@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textos de la app. Prefijo por pantalla; cd_ = contentDescription. -->
+<resources>
+    <string name="app_name">YelpMe</string>
+
+    <!-- Común -->
+    <string name="comun_cancelar">Cancelar</string>
+    <string name="comun_guardar">Guardar</string>
+    <string name="comun_volver">Volver</string>
+    <string name="comun_aceptar">Aceptar</string>
+    <string name="comun_sin_dato">—</string>
+    <string name="comun_aviso_prototipo">Prototipo académico. No se conecta con servicios reales de emergencia.</string>
+
+    <!-- Errores -->
+    <string name="error_sin_conexion">No se pudo conectar con el servidor. Revisa tu conexión.</string>
+    <string name="error_generico">Algo salió mal. Intenta de nuevo.</string>
+    <string name="error_obligatorio">Este dato es obligatorio.</string>
+    <string name="error_correo">Escribe un correo válido, por ejemplo nombre@dominio.com.</string>
+    <string name="error_telefono">Escribe 10 dígitos, sin espacios.</string>
+    <string name="error_password_corta">La contraseña necesita al menos 8 caracteres.</string>
+    <string name="error_no_coinciden">Las contraseñas no coinciden.</string>
+
+    <!-- Descripciones para lectores de pantalla -->
+    <string name="cd_logo">Logo de YelpMe</string>
+    <string name="cd_menu">Abrir menú</string>
+    <string name="cd_atras">Regresar</string>
+    <string name="cd_cerrar">Cerrar</string>
+    <string name="cd_agregar_contacto">Agregar contacto</string>
+    <string name="cd_llamar_contacto">Llamar a este contacto</string>
+    <string name="cd_eliminar_contacto">Eliminar este contacto</string>
+    <string name="cd_foto_perfil">Foto de perfil</string>
+    <string name="cd_servicio">Llamar a %1$s (simulado)</string>
+    <string name="cd_favorito">Llamar a mi contacto favorito</string>
+
+    <!-- Login -->
+    <string name="login_titulo">Iniciar sesión</string>
+    <string name="login_identificador">Correo o teléfono</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_entrar">Iniciar sesión</string>
+    <string name="login_entrando">Entrando…</string>
+    <string name="login_registrate">Regístrate</string>
+    <string name="login_olvidaste">¿Olvidaste tu contraseña?</string>
+    <string name="login_expirada">Tu sesión terminó. Inicia sesión de nuevo.</string>
+    <string name="login_recuperada">Contraseña actualizada. Inicia sesión.</string>
+    <string name="login_falta_identificador">Escribe tu correo o teléfono.</string>
+    <string name="login_falta_password">Escribe tu contraseña.</string>
+
+    <!-- Registro -->
+    <string name="registro_titulo">Regístrate</string>
+    <string name="registro_nombre">Nombre</string>
+    <string name="registro_paterno">Apellido paterno</string>
+    <string name="registro_materno">Apellido materno (opcional)</string>
+    <string name="registro_telefono">Teléfono</string>
+    <string name="registro_telefono_ayuda">10 dígitos. Tus contactos te encuentran por este número.</string>
+    <string name="registro_correo">Correo</string>
+    <string name="registro_password">Contraseña</string>
+    <string name="registro_password_ayuda">Al menos 8 caracteres.</string>
+    <string name="registro_confirmacion">Confirmar contraseña</string>
+    <string name="registro_crear">Crear cuenta</string>
+    <string name="registro_creando">Creando cuenta…</string>
+    <string name="registro_ya_tengo">Ya tengo cuenta</string>
+    <plurals name="registro_vinculados">
+        <item quantity="one">Te vinculamos con %d contacto.</item>
+        <item quantity="other">Te vinculamos con %d contactos.</item>
+    </plurals>
+
+    <!-- Recuperar contraseña -->
+    <string name="recuperar_titulo">Recuperar contraseña</string>
+    <string name="recuperar_paso_correo">Escribe el correo de tu cuenta y te enviaremos un código de 6 dígitos.</string>
+    <string name="recuperar_correo">Correo</string>
+    <string name="recuperar_enviar">Enviar código</string>
+    <string name="recuperar_paso_codigo">Si %1$s está registrado, te llegó un código. Vence en 15 minutos.</string>
+    <string name="recuperar_codigo">Código</string>
+    <string name="recuperar_verificar">Verificar código</string>
+    <string name="recuperar_reenviar">Enviar otro código</string>
+    <string name="recuperar_paso_password">Al guardarla se cerrarán todas tus sesiones abiertas.</string>
+    <string name="recuperar_nueva">Nueva contraseña</string>
+    <string name="recuperar_confirmar">Confirmar contraseña</string>
+    <string name="recuperar_guardar">Guardar contraseña</string>
+    <string name="recuperar_enviando">Enviando…</string>
+    <string name="recuperar_codigo_incompleto">Escribe los 6 dígitos del código.</string>
+
+    <!-- Inicio (crear solicitud) -->
+    <string name="inicio_saludo">¡Hola, %1$s!</string>
+    <string name="inicio_saludo_simple">¡Hola!</string>
+    <string name="inicio_titulo">Solicitudes</string>
+    <string name="inicio_emergencia">Emergencia</string>
+    <string name="inicio_lugar">Lugar</string>
+    <string name="inicio_ayuda_de">Ayuda de:</string>
+    <string name="inicio_comentarios">Comentarios</string>
+    <string name="inicio_limpiar">Limpiar</string>
+    <string name="inicio_enviar">Enviar</string>
+    <string name="inicio_tu_solicitud">Tu solicitud</string>
+    <string name="inicio_editar">Editar</string>
+    <string name="inicio_cancelar">Cancelar solicitud</string>
+    <string name="inicio_envio_pendiente">El envío de solicitudes llega en la siguiente versión de la app.</string>
+
+    <!-- Resumen de solicitud -->
+    <string name="resumen_titulo">Resumen</string>
+    <string name="resumen_emergencia">Emergencia: %1$s</string>
+    <string name="resumen_lugar">Lugar: %1$s</string>
+    <string name="resumen_ayudas">Ayuda de:</string>
+    <string name="resumen_estado">Estado: Pendiente</string>
+    <string name="resumen_enviar">Enviar</string>
+    <string name="resumen_corregir">Corregir</string>
+
+    <!-- Contactos -->
+    <string name="contactos_titulo">Contactos de urgencia</string>
+    <string name="contactos_buscar">Buscar contacto</string>
+    <string name="contactos_vacio">Aún no tienes contactos.</string>
+    <string name="contactos_favorito">Contacto favorito</string>
+    <string name="contactos_sin_favorito">Sin contacto favorito</string>
+    <string name="contactos_nuevo">Nuevo contacto</string>
+    <string name="contactos_nombre">Nombre</string>
+    <string name="contactos_telefono">Teléfono</string>
+    <string name="contactos_parentesco">Parentesco</string>
+    <string name="contactos_elige_favorito">Elige un contacto favorito.</string>
+
+    <!-- Historial -->
+    <string name="historial_titulo">Historial</string>
+    <string name="historial_filtro">Filtrar por estado</string>
+    <string name="historial_vacio">Aún no has pedido ayuda.</string>
+    <string name="historial_volver">Volver al historial</string>
+    <string name="historial_emergencia">Emergencia</string>
+    <string name="historial_ayudas">Ayudas</string>
+    <string name="historial_lugar">Lugar</string>
+    <string name="historial_comentarios">Comentarios</string>
+
+    <!-- Perfil -->
+    <string name="perfil_titulo">Mi perfil</string>
+    <string name="perfil_nombre">Nombre</string>
+    <string name="perfil_telefono">Teléfono</string>
+    <string name="perfil_correo">Correo</string>
+    <string name="perfil_domicilio">Domicilio</string>
+    <string name="perfil_sin_domicilio">Sin domicilio registrado</string>
+
+    <!-- Menú lateral -->
+    <string name="menu_inicio">Inicio</string>
+    <string name="menu_contactos">Contactos</string>
+    <string name="menu_vinculos">Quién me tiene</string>
+    <string name="menu_historial">Historial</string>
+    <string name="menu_perfil">Perfil</string>
+    <string name="menu_tema_oscuro">Cambiar a tema oscuro</string>
+    <string name="menu_tema_claro">Cambiar a tema claro</string>
+    <string name="menu_cerrar_sesion">Cerrar sesión</string>
+    <string name="menu_pronto">Esta sección llega en la siguiente versión de la app.</string>
+
+    <!-- Sesión -->
+    <string name="sesion_cerrar_titulo">¿Cerrar sesión?</string>
+    <string name="sesion_cerrar_mensaje">Tendrás que volver a iniciar sesión en este teléfono.</string>
+    <string name="sesion_cerrar_confirmar">Cerrar sesión</string>
+    <string name="sesion_sin_conexion">Sin conexión. Mostramos tus datos guardados.</string>
+
+    <!-- Barra de servicios -->
+    <string name="barra_simulada_titulo">Llamada simulada</string>
+    <string name="barra_simulada">Llamada simulada a %1$s. YelpMe es un prototipo y no contacta servicios reales.</string>
+    <string name="barra_favorito">Favorito</string>
+</resources>

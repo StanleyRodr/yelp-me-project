@@ -66,6 +66,8 @@
       Iniciar sesión
     </BotonCarga>
 
+    <RouterLink :to="{ name: 'recuperar' }" class="olvidaste">¿Olvidaste tu contraseña?</RouterLink>
+
     <p v-if="ayudaDemo" class="demo">
       Demo: <span class="ym-cifras">admin@yelpme.com</span> / <span class="ym-cifras">Admin123*</span>
     </p>
@@ -153,6 +155,11 @@ async function enviar() {
   border-radius: var(--ym-radio);
   background: var(--ym-estado-pendiente-fondo);
   color: var(--ym-estado-pendiente-texto);
+}
+
+.olvidaste {
+  display: inline-block;
+  margin-top: var(--ym-espacio-3);
 }
 
 .demo {

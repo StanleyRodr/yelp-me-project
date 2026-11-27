@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Barra inferior del diseño: servicios del catálogo (llamada simulada) y,
+     al final, el botón fijo del contacto favorito. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ym_marca"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="@dimen/espacio_1">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listaServicios"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/espacio_1" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:background="@color/ym_sobre_marca_tenue" />
+
+    <LinearLayout
+        android:id="@+id/btnFavorito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/cd_favorito"
+        android:focusable="true"
+        android:gravity="center"
+        android:minWidth="72dp"
+        android:minHeight="@dimen/toque_min"
+        android:orientation="vertical"
+        android:padding="@dimen/espacio_1">
+
+        <ImageView
+            android:layout_width="@dimen/icono_servicio"
+            android:layout_height="@dimen/icono_servicio"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_star"
+            android:tint="@color/ym_sobre_marca" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:text="@string/barra_favorito"
+            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+            android:textColor="@color/ym_sobre_marca" />
+    </LinearLayout>
+</LinearLayout>

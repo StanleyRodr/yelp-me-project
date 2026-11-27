@@ -1,6 +1,6 @@
 # 044 — Tarea: Recuperar contraseña (API)
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Recuperación con código de 6 dígitos por correo, para cualquier rol. Reglas: plan principal 5.1.
@@ -67,3 +67,5 @@ php artisan bd:pruebas && php artisan test
 
 ## Resultado
 Commit: `feat(auth): agrega recuperación de contraseña con código por correo`.
+
+Notas: la verificación vive en `VerificacionRecuperacionController@store` (convención de métodos REST). `Recuperacion::comprobar` suma el intento y el 422 se lanza fuera de la transacción para no revertirlo. `Credenciales::REGLAS_PASSWORD` compartida con el registro. BD `YelpMe` recreada.
