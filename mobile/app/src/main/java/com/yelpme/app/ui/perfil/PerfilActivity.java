@@ -1,16 +1,34 @@
 package com.yelpme.app.ui.perfil;
 
 import android.os.Bundle;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 import com.yelpme.app.R;
+import com.yelpme.app.api.ClienteApi;
+import com.yelpme.app.api.ErrorApi;
+import com.yelpme.app.api.Llamada;
+import com.yelpme.app.api.ServicioPerfil;
 import com.yelpme.app.databinding.ActivityPerfilBinding;
+import com.yelpme.app.modelos.Domicilio;
 import com.yelpme.app.modelos.Usuario;
 import com.yelpme.app.ui.base.BaseActivity;
+import com.yelpme.app.util.MapaOsm;
 
-/** Perfil con los datos de la sesión. Edición, foto y domicilio en el plan 009. */
+/**
+ * Perfil con datos de la API: foto, datos, strikes, suspensiones y domicilio.
+ * Recarga en onResume y al deslizar hacia abajo.
+ */
 public class PerfilActivity extends BaseActivity {
 
     private ActivityPerfilBinding vista;
+    private ServicioPerfil api;
+    private MapaOsm mapa;
+    private Llamada<Usuario> llamadaUsuario;
+    private Llamada<Domicilio> llamadaDomicilio;
+    /** Respuestas pendientes de la recarga en curso (sesión + domicilio). */
+    private int pendientes;
 
     @Override
     protected int itemMenu() {
@@ -22,18 +40,134 @@ public class PerfilActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         vista = ActivityPerfilBinding.inflate(getLayoutInflater());
         ponerContenido(vista);
+        api = ClienteApi.servicio(ServicioPerfil.class);
+
+        vista.recargaPerfil.setColorSchemeResources(R.color.ym_marca_texto);
+        vista.recargaPerfil.setProgressBackgroundColorSchemeResource(R.color.ym_superficie);
+        vista.recargaPerfil.setOnRefreshListener(this::cargar);
+
+        mapa = new MapaOsm(this, vista.mapPerfilPrincipal, getLifecycle());
+        mapa.soloLectura(true);
+
+        // Datos guardados mientras llega la respuesta.
+        Usuario guardado = sesion.usuario();
+        if (guardado != null) {
+            mostrar(guardado);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Usuario u = sesion.usuario();
-        if (u == null) {
-            return;
+        cargar();
+    }
+
+    @Override
+    protected void onDestroy() {
+        cancelar();
+        super.onDestroy();
+    }
+
+    private void cancelar() {
+        if (llamadaUsuario != null) {
+            llamadaUsuario.cancelar();
         }
+        if (llamadaDomicilio != null) {
+            llamadaDomicilio.cancelar();
+        }
+    }
+
+    /** Sesión y domicilio en paralelo. */
+    private void cargar() {
+        cancelar();
+        pendientes = 2;
+        llamadaUsuario = Llamada.de(api.sesion()).enviar(new Llamada.Respuestas<Usuario>() {
+            @Override
+            public void alExito(Usuario usuario) {
+                sesion.actualizarUsuario(usuario);
+                mostrar(usuario);
+                terminar();
+            }
+
+            @Override
+            public void alError(ErrorApi error) {
+                terminar();
+                fallo(error);
+            }
+        });
+        llamadaDomicilio = Llamada.de(api.domicilio()).enviar(new Llamada.Respuestas<Domicilio>() {
+            @Override
+            public void alExito(Domicilio domicilio) {
+                mostrar(domicilio);
+                terminar();
+            }
+
+            @Override
+            public void alError(ErrorApi error) {
+                terminar();
+                fallo(error);
+            }
+        });
+    }
+
+    private void terminar() {
+        pendientes--;
+        if (pendientes <= 0) {
+            vista.recargaPerfil.setRefreshing(false);
+        }
+    }
+
+    private void fallo(ErrorApi error) {
+        if (error.getCodigo() == 401) {
+            return; // InterceptorSesion ya abrió el login.
+        }
+        aviso(R.string.perfil_error_cargar)
+                .setDuration(Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.comun_reintentar, v -> cargar())
+                .show();
+    }
+
+    private void mostrar(Usuario u) {
         vista.tvPerfilNombreCorto.setText(u.nombre);
+        vista.tvPerfilFolio.setText(getString(R.string.perfil_folio, u.id));
         vista.tvPerfilNombreCompleto.setText(u.nombreCompleto());
         vista.tvPerfilTelefono.setText(u.telefono);
         vista.tvPerfilCorreo.setText(u.correo);
+
+        vista.tvAvatarInicial.setText(u.iniciales());
+        if (u.fotoPerfil != null) {
+            vista.ivFotoPerfil.setVisibility(View.VISIBLE);
+            Glide.with(this).load(u.fotoPerfil).circleCrop().into(vista.ivFotoPerfil);
+        } else {
+            Glide.with(this).clear(vista.ivFotoPerfil);
+            vista.ivFotoPerfil.setVisibility(View.GONE);
+        }
+
+        int limite = Math.max(u.limiteStrikes, 1);
+        vista.tvPerfilStrikes.setText(getString(R.string.perfil_strikes, u.strikesActivos, limite));
+        vista.progresoStrikes.setMax(limite);
+        vista.progresoStrikes.setProgressCompat(Math.min(u.strikesActivos, limite), false);
+        vista.tvAvisoSuspendido.setVisibility(u.suspendido ? View.VISIBLE : View.GONE);
+        vista.tvPerfilSuspensiones.setText(u.vecesSuspendido == 0
+                ? getString(R.string.perfil_nunca_suspendido)
+                : getResources().getQuantityString(R.plurals.perfil_veces_suspendido, u.vecesSuspendido, u.vecesSuspendido));
+    }
+
+    private void mostrar(Domicilio d) {
+        if (d == null) {
+            vista.tvPerfilDomicilio.setText(R.string.perfil_sin_domicilio);
+            vista.tvPerfilReferencia.setVisibility(View.GONE);
+            vista.mapPerfilPrincipal.setVisibility(View.GONE);
+            return;
+        }
+        vista.tvPerfilDomicilio.setText(d.texto);
+        boolean conReferencia = d.referencia != null && !d.referencia.isEmpty();
+        vista.tvPerfilReferencia.setVisibility(conReferencia ? View.VISIBLE : View.GONE);
+        if (conReferencia) {
+            vista.tvPerfilReferencia.setText(getString(R.string.perfil_referencia, d.referencia));
+        }
+        vista.mapPerfilPrincipal.setVisibility(View.VISIBLE);
+        mapa.centrar(d.latitud, d.longitud, MapaOsm.ZOOM_CALLE);
+        mapa.marcador(d.latitud, d.longitud, R.drawable.ic_place, d.texto);
     }
 }

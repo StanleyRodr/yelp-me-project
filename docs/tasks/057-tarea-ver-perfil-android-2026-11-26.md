@@ -1,6 +1,6 @@
 # 057 — Tarea: Ver perfil (app)
 
-> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ⬜ Pendiente
+> Plan: `009-plan-perfil-2026-11-26.md` · Rama: `feature/perfil-domicilio` · Estado: ✅ Terminada
 
 ## Objetivo
 `PerfilActivity` con datos reales de la API, conservando la estructura del diseño.
@@ -37,3 +37,5 @@ Emulador: Carlos (con domicilio), María (sin), Luis (suspendido, 2 veces), Ana 
 
 ## Resultado
 Commit: `feat(mobile): muestra el perfil con strikes y domicilio`.
+
+Notas: `api/ServicioPerfil` (todas las rutas de perfil y domicilio), modelo `Domicilio`, `Usuario.vecesSuspendido` e `iniciales()`. Perfil con `SwipeRefreshLayout`, avatar de iniciales (`bg_avatar`) o foto con Glide `circleCrop`, tarjeta "Mi cuenta" (strikes con `LinearProgressIndicator`, banner de suspensión, "Suspendido N veces" o "nunca") y domicilio con mini mapa de solo lectura. Muestra la sesión guardada mientras carga; error con Snackbar "Reintentar". `MapaOsm.marcador` pinta el vector a 40dp. Los botones de editar, contraseña y domicilio llegan en 058–059. Probado en emulador: Carlos (domicilio y mapa) y Luis en oscuro (suspendido, 3 de 3, 2 veces, sin domicilio).

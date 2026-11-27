@@ -2,8 +2,11 @@ package com.yelpme.app.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -113,8 +116,14 @@ public class MapaOsm implements DefaultLifecycleObserver {
             marcador.setInfoWindow(null);
             mapa.getOverlays().add(marcador);
         }
-        Drawable dibujo = DrawableCompat.wrap(ContextCompat.getDrawable(contexto, icono).mutate());
-        DrawableCompat.setTint(dibujo, ContextCompat.getColor(contexto, R.color.ym_marca_texto));
+        // Pin de 40dp (los vectores son de 24dp: se ven chicos sobre el mapa).
+        int tamano = Math.round(40 * contexto.getResources().getDisplayMetrics().density);
+        Drawable vector = ContextCompat.getDrawable(contexto, icono).mutate();
+        DrawableCompat.setTint(vector, ContextCompat.getColor(contexto, R.color.ym_marca_texto));
+        Bitmap mapaBits = Bitmap.createBitmap(tamano, tamano, Bitmap.Config.ARGB_8888);
+        vector.setBounds(0, 0, tamano, tamano);
+        vector.draw(new Canvas(mapaBits));
+        Drawable dibujo = new BitmapDrawable(contexto.getResources(), mapaBits);
         marcador.setIcon(dibujo);
         marcador.setTitle(titulo);
         marcador.setPosition(new GeoPoint(lat, lng));

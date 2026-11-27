@@ -13,6 +13,7 @@
     <dimen name="icono_servicio">32dp</dimen>
     <dimen name="logo">72dp</dimen>
     <dimen name="avatar">72dp</dimen>
+    <dimen name="avatar_perfil">96dp</dimen>
     <dimen name="mapa_alto">180dp</dimen>
     <dimen name="ancho_formulario">480dp</dimen>
 </resources>
