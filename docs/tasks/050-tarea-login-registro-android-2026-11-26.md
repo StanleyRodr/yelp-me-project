@@ -1,6 +1,6 @@
 # 050 — Tarea: Login, registro y sesión (app)
 
-> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ⬜ Pendiente
+> Plan: `008-plan-mobile-base-2026-11-26.md` · Rama: `feature/mobile-base` · Estado: ✅ Terminada
 
 ## Objetivo
 Entrada automática con el token guardado, login con correo o teléfono, registro completo y cierre de sesión contra la API.
@@ -44,3 +44,5 @@ Backend con `php artisan serve`; emulador:
 
 ## Resultado
 Commit: `feat(mobile): conecta login, registro y sesión a la API`.
+
+Notas: probado en emulador (API 37) contra `php artisan serve`: login por teléfono con contraseña mala (error bajo el campo) y buena, entrada automática, tokens borrados → login con aviso, registro con teléfono repetido (error bajo el campo) y registro nuevo con vinculación. En este equipo el emulador no alcanzó `10.0.2.2:8000`; se usó `adb reverse tcp:8000 tcp:8000` + `api.url` en `local.properties`. Guarda contra doble envío (Enter + botón). `Margenes.bordeABorde` deja íconos claros sobre el header. El saludo y el menú con "Cerrar sesión" quedan en el header de `BaseActivity` (tarea 052).

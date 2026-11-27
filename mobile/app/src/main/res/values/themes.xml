@@ -40,6 +40,13 @@
         <item name="materialCardViewStyle">@style/Widget.YelpMe.Tarjeta</item>
     </style>
 
+    <!-- Splash (SplashActivity): logo sobre la marca mientras se confirma la sesión -->
+    <style name="Theme.YelpMe.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ym_marca</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.YelpMe</item>
+    </style>
+
     <!-- Botones: 48dp de alto mínimo y radio de 6dp como la web -->
     <style name="Widget.YelpMe.Boton" parent="Widget.Material3.Button">
         <item name="android:minHeight">@dimen/toque_min</item>
