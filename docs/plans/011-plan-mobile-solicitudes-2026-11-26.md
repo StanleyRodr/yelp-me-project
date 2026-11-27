@@ -32,7 +32,7 @@ El usuario crea solicitudes de ayuda con su ubicación GPS (o su domicilio si el
 |---|---|---|---|
 | 067 | [Ubicación con respaldo](../tasks/067-tarea-ubicacion-android-2026-11-26.md) | GPS, permisos, diálogo con domicilio / reintentar / mapa. | ✅ |
 | 068 | [Crear solicitud](../tasks/068-tarea-crear-solicitud-android-2026-11-26.md) | Formulario, servicios del catálogo, suspensión, resumen y envío. | ✅ |
-| 069 | [Detalle y acciones](../tasks/069-tarea-detalle-solicitud-android-2026-11-26.md) | Solicitud activa, detalle, editar, cancelar con motivo, terminar. | ⬜ |
+| 069 | [Detalle y acciones](../tasks/069-tarea-detalle-solicitud-android-2026-11-26.md) | Solicitud activa, detalle, editar, cancelar con motivo, terminar. | ✅ |
 | 070 | [Historial](../tasks/070-tarea-historial-android-2026-11-26.md) | Lista con filtro por los 5 estados y detalle. | ⬜ |
 | 071 | [Verificación del plan 011](../tasks/071-tarea-verificacion-011-2026-11-26.md) | Criterios 5–7 y 10 del MVP con el panel; documentación. | ⬜ |
 

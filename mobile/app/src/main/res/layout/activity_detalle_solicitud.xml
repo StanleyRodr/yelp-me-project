@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Detalle de una solicitud propia (DetalleSolicitudActivity), con el estilo del
+     detalle del historial del diseño. Botones según TransicionesSolicitud. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/raiz"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:orientation="vertical"
+    tools:context=".ui.solicitudes.DetalleSolicitudActivity">
+
+    <include
+        android:id="@+id/barra"
+        layout="@layout/layout_barra_secundaria" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/recarga"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/desplazable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/contenido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/espacio_4"
+                android:visibility="invisible">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvBadge"
+                            style="@style/YelpMe.Badge"
+                            tools:text="Pendiente" />
+
+                        <TextView
+                            android:id="@+id/tvMensajeEstado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_2"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                            android:textColor="@color/ym_texto"
+                            tools:text="Esperando a que un administrador la atienda." />
+
+                        <TextView
+                            android:id="@+id/tvMotivo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_2"
+                            android:background="@drawable/bg_aviso_peligro"
+                            android:padding="@dimen/espacio_3"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                            android:textColor="@color/ym_estado_pendiente_texto"
+                            android:visibility="gone"
+                            tools:text="Motivo: broma" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_4"
+                            android:text="@string/historial_emergencia"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+                        <TextView
+                            android:id="@+id/tvTituloSolicitud"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:accessibilityHeading="true"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo"
+                            tools:text="Choque en la avenida" />
+
+                        <TextView
+                            android:id="@+id/tvDescripcion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_1"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                            tools:text="Dos autos, una persona herida." />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_3"
+                            android:text="@string/historial_ayudas"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/cgServicios"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tvSoloContactos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/inicio_solo_contactos"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_3"
+                            android:text="@string/historial_lugar"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
+
+                        <TextView
+                            android:id="@+id/tvLugar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                            tools:text="Frente al parque central" />
+
+                        <FrameLayout
+                            android:id="@+id/mapDetalleContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/mapa_alto"
+                            android:layout_marginTop="@dimen/espacio_2"
+                            android:background="@color/ym_skeleton" />
+
+                        <TextView
+                            android:id="@+id/tvFechas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/espacio_3"
+                            android:lineSpacingExtra="@dimen/espacio_1"
+                            android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                            tools:text="Creada: 27 nov 2026, 14:20" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <Button
+                    android:id="@+id/btnTerminar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_4"
+                    android:text="@string/solicitud_terminar"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_check_circle"
+                    app:iconGravity="textStart" />
+
+                <Button
+                    android:id="@+id/btnEditar"
+                    style="@style/Widget.YelpMe.Boton.Secundario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_2"
+                    android:text="@string/inicio_editar"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_edit"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/ym_texto" />
+
+                <Button
+                    android:id="@+id/btnCancelar"
+                    style="@style/Widget.YelpMe.Boton.Texto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_2"
+                    android:text="@string/inicio_cancelar"
+                    android:textColor="@color/ym_estado_pendiente_texto"
+                    android:visibility="gone"
+                    app:icon="@drawable/ic_cancel"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/ym_estado_pendiente_texto" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

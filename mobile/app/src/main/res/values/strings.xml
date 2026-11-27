@@ -107,6 +107,40 @@
     <string name="inicio_tu_solicitud">Tu solicitud</string>
     <string name="inicio_editar">Editar</string>
     <string name="inicio_cancelar">Cancelar solicitud</string>
+    <string name="inicio_activa_pendiente">Esperando a que un administrador la atienda.</string>
+    <string name="inicio_activa_enviado">La ayuda va en camino.</string>
+    <string name="inicio_activa_hace">%1$s. Ver detalle</string>
+    <string name="hace_momento">Hace un momento</string>
+    <string name="hace_minutos">Hace %1$d min</string>
+    <string name="hace_horas">Hace %1$d h</string>
+
+    <!-- Estados (iguales al panel) -->
+    <string name="estado_pendiente">Pendiente</string>
+    <string name="estado_enviado">Enviado</string>
+    <string name="estado_rechazado">Rechazado</string>
+    <string name="estado_cancelado">Cancelado</string>
+    <string name="estado_terminado">Terminado</string>
+
+    <!-- Detalle de solicitud -->
+    <string name="solicitud_titulo">Tu solicitud</string>
+    <string name="solicitud_editar_titulo">Editar solicitud</string>
+    <string name="solicitud_actualizada">Solicitud actualizada.</string>
+    <string name="solicitud_sin_lugar">Sin referencia escrita</string>
+    <string name="solicitud_msg_solo_contactos">Solo se avisó a tus contactos. Márcala como terminada cuando todo esté bien.</string>
+    <string name="solicitud_msg_rechazado">Un administrador la rechazó.</string>
+    <string name="solicitud_msg_cancelado">La cancelaste.</string>
+    <string name="solicitud_msg_terminado">La atención terminó.</string>
+    <string name="solicitud_motivo_valor">Motivo: %1$s</string>
+    <string name="solicitud_creada">Creada: %1$s</string>
+    <string name="solicitud_enviada_en">Ayuda enviada: %1$s</string>
+    <string name="solicitud_cerrada_en">Cerrada: %1$s</string>
+    <string name="solicitud_atendida_por">Atendida por %1$s</string>
+    <string name="solicitud_terminar">Ya terminó la emergencia</string>
+    <string name="solicitud_terminar_pregunta">¿La emergencia terminó?</string>
+    <string name="solicitud_terminar_explicacion">La solicitud se cerrará como terminada.</string>
+    <string name="solicitud_cancelar_pregunta">¿Por qué la cancelas?</string>
+    <string name="solicitud_motivo">Motivo</string>
+    <string name="solicitud_falta_motivo">Escribe el motivo para cancelar.</string>
 
     <!-- Resumen de solicitud -->
     <string name="resumen_titulo">Resumen</string>

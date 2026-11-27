@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Material Symbols Outlined "emergency" (Apache 2.0), mismo ícono que el panel web. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:tint="?attr/colorOnSurface"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M410 840V602L204 721L134 600L340 480L134 361L204 240L410 359V120H550V359L756 240L826 361L620 480L826 600L756 721L550 602V840Z" />
+</vector>

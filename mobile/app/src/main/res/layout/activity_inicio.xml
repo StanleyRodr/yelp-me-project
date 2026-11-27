@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Contenido de Inicio (diseño "Solicitudes"): formulario y tarjeta "Tu solicitud".
-     Header, menú y barra inferior los pone BaseActivity. Se conecta en el plan 011. -->
+<!-- Contenido de Inicio (diseño "Solicitudes"): tarjeta "Tu solicitud" (la activa)
+     y formulario para pedir ayuda. Header, menú y barra los pone BaseActivity. -->
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,6 +14,80 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/espacio_4">
+
+        <!-- Tu solicitud activa (Pendiente o Enviado): toda la tarjeta abre el detalle -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTuSolicitud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/espacio_4"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:accessibilityHeading="true"
+                        android:text="@string/inicio_tu_solicitud"
+                        android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
+
+                    <TextView
+                        android:id="@+id/tvBadgeActiva"
+                        style="@style/YelpMe.Badge"
+                        tools:text="Pendiente" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvActivaTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_3"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo"
+                    android:textStyle="bold"
+                    tools:text="Choque en la avenida" />
+
+                <TextView
+                    android:id="@+id/tvActivaMensaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_1"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                    android:textColor="@color/ym_texto"
+                    tools:text="Esperando a que un administrador la atienda." />
+
+                <LinearLayout
+                    android:id="@+id/llActivaServicios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_2"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/tvActivaHace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/espacio_2"
+                    android:drawablePadding="@dimen/espacio_1"
+                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
+                    app:drawableEndCompat="@drawable/ic_arrow_forward"
+                    app:drawableTint="@color/ym_texto_secundario"
+                    tools:text="Hace 5 min. Ver detalle" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Formulario: pedir ayuda (título, ubicación, servicios, comentarios) -->
         <com.google.android.material.card.MaterialCardView
@@ -33,136 +107,12 @@
                     android:text="@string/inicio_titulo"
                     android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilEmergencia"
+                <include
+                    android:id="@+id/formulario"
+                    layout="@layout/layout_form_solicitud"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_4"
-                    android:hint="@string/inicio_emergencia"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="150">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etEmergencia"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapSentences"
-                        android:maxLength="150" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilLugar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:hint="@string/inicio_lugar"
-                    app:helperText="@string/inicio_lugar_ayuda">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etLugar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPostalAddress|textCapSentences"
-                        android:maxLength="255" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                    android:id="@+id/tvOrigen"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:drawablePadding="@dimen/espacio_2"
-                    android:gravity="center_vertical"
-                    android:text="@string/inicio_origen_buscando"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
-                    android:textColor="@color/ym_texto"
-                    app:drawableStartCompat="@drawable/ic_my_location"
-                    app:drawableTint="@color/ym_texto_secundario" />
-
-                <FrameLayout
-                    android:id="@+id/mapContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mapa_alto"
-                    android:layout_marginTop="@dimen/espacio_2"
-                    android:background="@color/ym_skeleton"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_2"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnUsarDomicilio"
-                        style="@style/Widget.YelpMe.Boton.Texto"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/inicio_mi_domicilio"
-                        android:visibility="gone"
-                        app:icon="@drawable/ic_home"
-                        app:iconGravity="textStart" />
-
-                    <Button
-                        android:id="@+id/btnCambiarMapa"
-                        style="@style/Widget.YelpMe.Boton.Texto"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/inicio_cambiar_mapa"
-                        app:icon="@drawable/ic_place"
-                        app:iconGravity="textStart" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/inicio_ayuda_de"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:id="@+id/tvAvisoSuspendido"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_2"
-                    android:background="@drawable/bg_aviso_peligro"
-                    android:padding="@dimen/espacio_3"
-                    android:text="@string/perfil_suspendido"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno"
-                    android:textColor="@color/ym_estado_pendiente_texto"
-                    android:visibility="gone" />
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/grupoServicios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_2" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_1"
-                    android:text="@string/inicio_sin_servicios_ayuda"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Pequeno" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilComentarios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_4"
-                    android:hint="@string/inicio_comentarios">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etComentarios"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:inputType="textMultiLine|textCapSentences"
-                        android:maxLength="2000"
-                        android:minLines="3" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="@dimen/espacio_4" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -189,121 +139,5 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Tu solicitud: oculta hasta que haya una activa (plan 011) -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardTuSolicitud"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/espacio_4"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:accessibilityHeading="true"
-                    android:text="@string/inicio_tu_solicitud"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Subtitulo" />
-
-                <TextView
-                    android:id="@+id/tvBannerEstado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:background="@color/ym_estado_pendiente_fondo"
-                    android:gravity="center"
-                    android:padding="@dimen/espacio_2"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta"
-                    android:textColor="@color/ym_estado_pendiente_texto" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_emergencia"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:id="@+id/tvDetalleEmergencia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_ayudas"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <LinearLayout
-                    android:id="@+id/llDetalleAyudas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_lugar"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:id="@+id/tvDetalleLugar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
-
-                <FrameLayout
-                    android:id="@+id/mapDetalleContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mapa_alto"
-                    android:layout_marginTop="@dimen/espacio_2"
-                    android:background="@color/ym_skeleton" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_3"
-                    android:text="@string/historial_comentarios"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Etiqueta" />
-
-                <TextView
-                    android:id="@+id/tvDetalleComentarios"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.YelpMe.Cuerpo" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/espacio_4"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnEditarSolicitud"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/espacio_2"
-                        android:layout_weight="1"
-                        android:text="@string/inicio_editar" />
-
-                    <Button
-                        android:id="@+id/btnCancelarSolicitud"
-                        style="@style/Widget.YelpMe.Boton.Peligro"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/inicio_cancelar" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

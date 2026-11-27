@@ -12,6 +12,7 @@ import java.util.Locale;
 public final class Formato {
 
     private static final DateTimeFormatter FECHA = DateTimeFormatter.ofPattern("d MMM yyyy", Locale.forLanguageTag("es-MX"));
+    private static final DateTimeFormatter FECHA_HORA = DateTimeFormatter.ofPattern("d MMM yyyy, HH:mm", Locale.forLanguageTag("es-MX"));
 
     private Formato() {
     }
@@ -23,6 +24,18 @@ public final class Formato {
         }
         try {
             return OffsetDateTime.parse(iso).atZoneSameInstant(ZoneId.systemDefault()).format(FECHA).replace(".", "");
+        } catch (DateTimeParseException e) {
+            return "";
+        }
+    }
+
+    /** ISO 8601 de la API → "26 nov 2026, 14:20". */
+    public static String fechaHora(@Nullable String iso) {
+        if (iso == null || iso.isEmpty()) {
+            return "";
+        }
+        try {
+            return OffsetDateTime.parse(iso).atZoneSameInstant(ZoneId.systemDefault()).format(FECHA_HORA).replace(".", "");
         } catch (DateTimeParseException e) {
             return "";
         }

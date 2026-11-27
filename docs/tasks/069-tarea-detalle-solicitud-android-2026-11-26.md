@@ -1,6 +1,6 @@
 # 069 — Tarea: Detalle y acciones de la solicitud (app)
 
-> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ⬜ Pendiente
+> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ✅ Terminada
 
 ## Objetivo
 Tarjeta de solicitud activa en Inicio, detalle completo y acciones del usuario: editar (Pendiente), cancelar con motivo y terminar.
@@ -47,3 +47,5 @@ Ciclo de estado al tocar el banner, colores de fondo por estado (`#FF3D00`…), 
 
 ## Resultado
 Commit: `feat(mobile): agrega detalle y acciones de la solicitud`.
+
+Notas: `util/TransicionesSolicitud` (espejo del lado usuario del backend) con `TransicionesSolicitudTest` (5 estados × con/sin servicios). `ui/comunes/BadgeEstado` (color, fondo e ícono por estado como `EstadoBadge` del panel; estilo `YelpMe.Badge`). Los campos del formulario se extrajeron a `layout_form_solicitud` + `ui/inicio/FormularioSolicitud` (ubicación con respaldo, servicios, suspensión), que usan Inicio y `FormSolicitudActivity` (editar; al editar, un suspendido puede quitar servicios pero no agregar). Inicio muestra arriba la solicitud activa (Pendiente o Enviado) y la recarga cada 15 s mientras está visible ("Hace N min", en español aunque el teléfono esté en otro idioma). `DetalleSolicitudActivity`: badge, mensaje por estado, motivo, datos, mapa, fechas y quién atendió; botones según las transiciones; cancelar pide motivo (no cierra el diálogo si está vacío); 409 → aviso y recarga; se recarga cada 15 s. Se quitaron del diseño el ciclo de estados al tocar y los colores inventados. Probado con el panel en Chrome: #14 sin servicios → Editar/Terminar/Cancelar, cancelar sin motivo da error, terminar → Terminado sin botones; #12 enviada desde el panel → la app la muestra Enviado (Terminar/Cancelar, sin Editar) y el usuario la termina → el panel la ve Terminado al recargar; #15 editada en Pendiente (título y comentario; servicios intactos); rechazada en el panel con motivo → la app muestra Rechazado y "Motivo: …" sola en ≤ 15 s. Cancelar con motivo usa el mismo camino que terminar (`PUT /estado`); su envío exitoso se prueba en la tarea 071. Observación del panel (fuera de este plan): el detalle de Atención no se recarga solo, solo las listas.
