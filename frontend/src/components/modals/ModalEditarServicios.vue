@@ -112,12 +112,12 @@ fieldset {
 }
 
 .opcion .material-symbols-outlined {
-  color: var(--ym-marca);
+  color: var(--ym-marca-texto);
 }
 
 .btn-check:checked + .opcion {
   background: var(--ym-marca);
-  border-color: var(--ym-marca);
+  border-color: var(--ym-marca-contorno);
   color: var(--ym-sobre-marca);
   font-weight: var(--ym-peso-medio);
 }

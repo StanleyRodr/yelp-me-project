@@ -79,9 +79,9 @@ const opciones = computed(() => [
 }
 
 .chip[aria-pressed='true'] {
-  border-color: var(--ym-marca);
+  border-color: var(--ym-marca-texto);
   background: var(--ym-marca-suave);
-  color: var(--ym-marca);
-  box-shadow: inset 0 -3px 0 var(--ym-marca);
+  color: var(--ym-marca-texto);
+  box-shadow: inset 0 -3px 0 var(--ym-marca-texto);
 }
 </style>

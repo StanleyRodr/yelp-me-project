@@ -1,9 +1,13 @@
 /*
  * Tokens de diseño de YelpMe.
  * ÚNICO archivo del frontend con colores hexadecimales.
- * Los mismos valores se replican en res/values/colors.xml de Android.
+ * Espejo de mobile/app/src/main/res/values/colors.xml (claro) y
+ * values-night/colors.xml (oscuro): cambiar ambos.
+ * El tema lo aplica composables/useTema.js con <html data-theme="light|dark">.
  */
 :root {
+  color-scheme: light;
+
   /* Marca */
   --ym-marca: #14213D;
   --ym-marca-hover: #0E1830;
@@ -11,6 +15,9 @@
   --ym-marca-suave: #E6E9F0;
   --ym-sobre-marca: #FFFFFF;
   --ym-sobre-marca-tenue: #B8C1D6;
+  /* Marca como texto, ícono o línea de acento sobre superficies */
+  --ym-marca-texto: #14213D;
+  --ym-marca-contorno: var(--ym-marca);
 
   /* Superficies y texto */
   --ym-fondo: #F3F5F8;
@@ -81,4 +88,60 @@
   --ym-espacio-5: 1.5rem;
   --ym-espacio-6: 2rem;
   --ym-alto-navbar: 56px;
+}
+
+/*
+ * Tema oscuro: mismos nombres, otros valores. La navbar conserva la marca.
+ * Texto sobre fondo/superficie con contraste >= 4.5:1.
+ */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --ym-marca: #14213D;
+  --ym-marca-hover: #1C2C50;
+  --ym-marca-rgb: 20, 33, 61;
+  --ym-marca-suave: #22304F;
+  --ym-sobre-marca: #FFFFFF;
+  --ym-sobre-marca-tenue: #B8C1D6;
+  --ym-marca-texto: #A9BFFF;
+  --ym-marca-contorno: #A9BFFF;
+
+  --ym-fondo: #0F1420;
+  --ym-superficie: #182031;
+  --ym-texto: #E6EAF2;
+  --ym-texto-rgb: 230, 234, 242;
+  --ym-texto-secundario: #A3ADBF;
+  --ym-borde: #2C3649;
+  --ym-borde-fuerte: #46526A;
+  --ym-skeleton: #232C3F;
+
+  --ym-foco: #7FA2FF;
+  --ym-foco-anillo: rgba(127, 162, 255, 0.4);
+  --ym-foco-claro: #9DB8FF;
+
+  --ym-estado-pendiente: #EF5350;
+  --ym-estado-pendiente-texto: #FF8A80;
+  --ym-estado-pendiente-fondo: #3A1A1D;
+
+  --ym-estado-enviado: #FFA726;
+  --ym-estado-enviado-texto: #FFB74D;
+  --ym-estado-enviado-fondo: #3A2A12;
+
+  --ym-estado-terminado: #66BB6A;
+  --ym-estado-terminado-texto: #81C784;
+  --ym-estado-terminado-fondo: #1B3020;
+
+  --ym-estado-rechazado: #90A4AE;
+  --ym-estado-rechazado-texto: #B0BEC5;
+  --ym-estado-rechazado-fondo: #263238;
+
+  --ym-estado-cancelado: #78909C;
+  --ym-estado-cancelado-texto: #CFD8DC;
+  --ym-estado-cancelado-fondo: #2A3236;
+
+  /* Botones con texto blanco: se quedan con los tonos del tema claro */
+  --ym-peligro: #C62828;
+  --ym-peligro-hover: #A82222;
+  --ym-exito: #2E7D32;
+  --ym-exito-hover: #24672A;
 }

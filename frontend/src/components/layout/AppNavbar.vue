@@ -55,6 +55,8 @@
               </RouterLink>
             </li>
             <li><hr class="dropdown-divider" /></li>
+            <SelectorTema modo="items" />
+            <li><hr class="dropdown-divider" /></li>
             <li>
               <button type="button" class="dropdown-item" @click="$emit('cerrar-sesion')">
                 <i class="bi bi-box-arrow-right me-2" aria-hidden="true"></i>Cerrar sesión
@@ -70,6 +72,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import SelectorTema from '../comunes/SelectorTema.vue'
 
 const props = defineProps({
   enlaces: { type: Array, required: true },

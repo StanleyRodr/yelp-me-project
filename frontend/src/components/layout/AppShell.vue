@@ -69,7 +69,7 @@ async function cerrarSesion() {
   left: var(--ym-espacio-2);
   padding: var(--ym-espacio-2) var(--ym-espacio-3);
   background: var(--ym-superficie);
-  color: var(--ym-marca);
+  color: var(--ym-marca-texto);
   border-radius: var(--ym-radio);
 }
 

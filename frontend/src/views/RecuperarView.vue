@@ -2,6 +2,7 @@
   <main class="recuperar">
     <PanelMarca class="recuperar-marca" />
     <div class="recuperar-form">
+      <SelectorTema class="selector-tema" />
       <div class="recuperar-contenido">
         <PasoCorreo
           v-if="paso === 'correo'"
@@ -42,6 +43,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import PanelMarca from '../components/auth/PanelMarca.vue'
+import SelectorTema from '../components/comunes/SelectorTema.vue'
 import PasoCorreo from '../components/recuperacion/PasoCorreo.vue'
 import PasoCodigo from '../components/recuperacion/PasoCodigo.vue'
 import PasoPassword from '../components/recuperacion/PasoPassword.vue'
@@ -116,6 +118,7 @@ const guardar = (password) =>
 }
 
 .recuperar-form {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,6 +136,12 @@ const guardar = (password) =>
   gap: var(--ym-espacio-2);
   align-items: center;
   margin-top: var(--ym-espacio-5);
+}
+
+.selector-tema {
+  position: absolute;
+  top: var(--ym-espacio-4);
+  right: var(--ym-espacio-4);
 }
 
 @media (max-width: 767.98px) {
