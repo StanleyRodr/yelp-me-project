@@ -32,7 +32,9 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
 | `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002 y 007) |
 | `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP sin FCM (planes 001, 003–006) |
-| `mobile/`   | Android Studio, Java                        | App del usuario final       | Vacío                   |
+| `mobile/`   | Android Studio, Java                        | App del usuario final       | Diseños recibidos; integración en planes 008–011 |
+
+**Planes pendientes ya escritos** (con sus tareas 042–081 en `docs/tasks/`): 008 base mobile y ajustes transversales, 009 perfil y domicilio, 010 contactos en Android, 011 solicitudes en Android, 012 FCM, 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: abrir el siguiente plan sin terminar, crear su rama desde `main` y ejecutar sus tareas en orden.
 
 Web y Android consumen la **misma API Laravel**.
 
