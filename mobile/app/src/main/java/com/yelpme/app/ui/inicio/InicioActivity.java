@@ -97,6 +97,8 @@ public class InicioActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         formulario.aplicarSuspension(sesion.usuario());
+        // Suspensión o rehabilitación hechas por el admin mientras la app estaba en segundo plano.
+        formulario.refrescarUsuario();
         recarga.post(recargar);
     }
 

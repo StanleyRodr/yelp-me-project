@@ -1,6 +1,6 @@
 # 071 — Tarea: Verificación del plan 011
 
-> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ⬜ Pendiente
+> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ✅ Terminada
 
 ## Objetivo
 Demostrar los criterios 5, 6, 7 y 10 del MVP con app y panel, y cerrar el plan.
@@ -35,3 +35,12 @@ cd mobile && ./gradlew testDebugUnitTest assembleDebug
 
 ## Resultado
 Commit: `docs(solicitudes): documenta solicitudes en Android y cierra el plan 011`.
+
+Notas: `php artisan test` 97 OK; `npm run build` OK; `./gradlew testDebugUnitTest assembleDebug assembleRelease` OK; sin `findViewById`, hex ni textos fijos en layouts. Recorrido con el emulador y el panel en Chrome (API local):
+- Criterio 5: las solicitudes creadas en la app aparecen en el dashboard ("Por atender" y mapa) sin recargar.
+- Criterio 6: #16 con Ambulancia → el admin agrega Policía, envía y termina → la app pasa a Enviado y a Terminado sola (≤ 15 s) con "Atendida por Administrador General" y las tres fechas.
+- Criterio 7: #17 de Ana rechazada con strike → 3 strikes y suspensión → la app muestra el aviso y bloquea servicios; el admin la rehabilita → al volver a la app desaparece el aviso (se agregó el refresco del usuario en `onResume` de Inicio).
+- Criterio 10: #14 creada sin GPS con el domicilio → el panel muestra "Enviada desde su domicilio" y la tarjeta del domicilio con mapa (revisión visual pendiente del plan 009 hecha).
+- Cancelar con motivo (#18, Ana) → el panel la ve Cancelado con "Motivo: Ya encontre el camino". Sin servicios → terminar (#14) en ambos lados.
+- Propiedad: con el token de Carlos, `GET` y `PUT /estado` de una solicitud de María → 404.
+El detalle del panel no se recarga solo (solo las listas): al cambiar el estado desde la app hay que recargar esa página; queda anotado para el panel.
