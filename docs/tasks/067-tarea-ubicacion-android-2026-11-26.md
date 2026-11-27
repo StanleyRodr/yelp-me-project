@@ -1,6 +1,6 @@
 # 067 — Tarea: Ubicación con respaldo (app)
 
-> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ⬜ Pendiente
+> Plan: `011-plan-mobile-solicitudes-2026-11-26.md` · Rama: `feature/mobile-solicitudes` · Estado: ✅ Terminada
 
 ## Objetivo
 Obtener la ubicación actual; si no se puede, ofrecer domicilio, reintentar o marcar en el mapa (plan principal 7.5).
@@ -38,3 +38,5 @@ Documentar en la tarea: Extended controls → Location para fijar coordenadas; p
 
 ## Resultado
 Commit: `feat(mobile): obtiene la ubicación con respaldo del domicilio`.
+
+Notas: `util/Ubicacion` (constructor registra permisos y el pedido de encender la ubicación): permisos fino + aproximado con explicación previa si corresponde; `checkLocationSettings` → `ResolvableApiException` para encender; `getCurrentLocation` con límite de 10 s y `getLastLocation` de respaldo. Motivos: `SIN_PERMISO`, `SIN_PERMISO_PERMANENTE` (→ "Abrir ajustes" en vez de reintentar), `GPS_APAGADO`, `TIEMPO_AGOTADO`, `ERROR`. `Ubicacion.Origen` = GPS, DOMICILIO, MAPA. `ui/inicio/DialogoSinUbicacion` con "Usar mi domicilio" solo si tiene. Prefijo `ubicacion_prefijo_domicilio` = "Domicilio: <texto>" (el panel lo detecta). Emulador: Extended controls → Location para fijar coordenadas; para probar fallos, quitar el permiso en Ajustes de la app o apagar la ubicación. Recorrido en el emulador junto con el formulario (tarea 068).

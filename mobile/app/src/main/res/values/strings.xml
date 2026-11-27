@@ -8,6 +8,7 @@
     <string name="comun_guardar">Guardar</string>
     <string name="comun_volver">Volver</string>
     <string name="comun_aceptar">Aceptar</string>
+    <string name="comun_continuar">Continuar</string>
     <string name="comun_sin_dato">—</string>
     <string name="comun_aviso_prototipo">Prototipo académico. No se conecta con servicios reales de emergencia.</string>
 
@@ -256,6 +257,18 @@
     <string name="ubicacion_usar">Usar esta ubicación</string>
     <string name="ubicacion_mia">Mi ubicación</string>
     <string name="ubicacion_sin_permiso">Sin permiso de ubicación. Mueve el mapa a mano o actívalo en Ajustes.</string>
+    <string name="ubicacion_permiso_titulo">Permiso de ubicación</string>
+    <string name="ubicacion_permiso_explicacion">Usamos tu ubicación solo al enviar una solicitud, para que la ayuda sepa dónde estás.</string>
+    <string name="ubicacion_falla_titulo">No pudimos obtener tu ubicación</string>
+    <string name="ubicacion_falla_permiso">La app no tiene permiso de ubicación.</string>
+    <string name="ubicacion_falla_gps">La ubicación del teléfono está apagada.</string>
+    <string name="ubicacion_falla_tiempo">El GPS tardó demasiado. Si estás bajo techo, acércate a una ventana.</string>
+    <string name="ubicacion_falla_error">Algo falló al leer el GPS.</string>
+    <string name="ubicacion_usar_domicilio">Usar mi domicilio</string>
+    <string name="ubicacion_reintentar">Reintentar</string>
+    <string name="ubicacion_marcar_mapa">Marcar en el mapa</string>
+    <string name="ubicacion_abrir_ajustes">Abrir ajustes</string>
+    <string name="ubicacion_prefijo_domicilio">Domicilio: %1$s</string>
     <string name="ubicacion_sin_gps">No se pudo obtener tu ubicación. Revisa que el GPS esté encendido.</string>
 
     <!-- Sesión -->
