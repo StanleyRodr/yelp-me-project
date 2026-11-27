@@ -114,7 +114,7 @@ const guardar = (password) =>
 .recuperar {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .recuperar-form {

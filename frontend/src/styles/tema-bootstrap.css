@@ -32,7 +32,9 @@
   --bs-primary-bg-subtle: var(--ym-marca-suave);
   --bs-primary-text-emphasis: var(--ym-marca-texto);
   --bs-link-color: var(--ym-marca-texto);
-  --bs-link-color-rgb: var(--ym-marca-rgb);
+  /* Bootstrap pinta los enlaces con el -rgb: debe ser el color de texto de marca (claro en oscuro). */
+  --bs-link-color-rgb: var(--ym-marca-texto-rgb);
+  --bs-link-hover-color-rgb: var(--ym-marca-texto-rgb);
   --bs-link-hover-color: var(--ym-marca-texto);
   --bs-focus-ring-color: var(--ym-foco-anillo);
 }

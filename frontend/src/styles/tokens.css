@@ -17,6 +17,7 @@
   --ym-sobre-marca-tenue: #B8C1D6;
   /* Marca como texto, ícono o línea de acento sobre superficies */
   --ym-marca-texto: #14213D;
+  --ym-marca-texto-rgb: 20, 33, 61;
   --ym-marca-contorno: var(--ym-marca);
 
   /* Superficies y texto */
@@ -104,6 +105,7 @@
   --ym-sobre-marca: #FFFFFF;
   --ym-sobre-marca-tenue: #B8C1D6;
   --ym-marca-texto: #A9BFFF;
+  --ym-marca-texto-rgb: 169, 191, 255;
   --ym-marca-contorno: #A9BFFF;
 
   --ym-fondo: #0F1420;
