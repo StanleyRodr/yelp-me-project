@@ -229,6 +229,26 @@ CREATE TABLE codigos_recuperacion (
     INDEX idx_codrec_usuario (usuario_id, usado_en)
 ) ENGINE=InnoDB;
 
+-- ---------------------------------------------------------------------
+-- 11. domicilios: domicilio único del usuario con su punto en el mapa
+--     (plan 009). 1:1 con usuarios; se borra físicamente al quitarlo.
+-- ---------------------------------------------------------------------
+CREATE TABLE domicilios (
+    id             BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    usuario_id     BIGINT UNSIGNED NOT NULL,
+    calle          VARCHAR(120)    NOT NULL,
+    numero         VARCHAR(20)     NOT NULL,
+    colonia        VARCHAR(100)    NOT NULL,
+    codigo_postal  CHAR(5)         NOT NULL,
+    referencia     VARCHAR(255)    NULL,
+    latitud        DECIMAL(10, 8)  NOT NULL,
+    longitud       DECIMAL(11, 8)  NOT NULL,
+    created_at     TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at     TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT uq_domicilios_usuario UNIQUE (usuario_id),
+    CONSTRAINT fk_domicilios_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id) ON DELETE RESTRICT
+) ENGINE=InnoDB;
+
 -- =====================================================================
 --  Datos iniciales
 -- =====================================================================

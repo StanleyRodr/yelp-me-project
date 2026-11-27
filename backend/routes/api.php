@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\Admin\SuspensionController as AdminSuspensionContro
 use App\Http\Controllers\Api\Admin\UsuarioController as AdminUsuarioController;
 use App\Http\Controllers\Api\BloqueoController;
 use App\Http\Controllers\Api\ContactoController;
+use App\Http\Controllers\Api\DomicilioController;
 use App\Http\Controllers\Api\EstadoSolicitudController;
 use App\Http\Controllers\Api\FotoPerfilController;
 use App\Http\Controllers\Api\PasswordController;
@@ -73,6 +74,11 @@ Route::middleware(['auth:sanctum', 'cuenta.activa'])->group(function () {
             ->parameters(['vinculos' => 'id'])->whereNumber('id');
         Route::apiResource('bloqueos', BloqueoController::class)->only(['index', 'store', 'destroy'])
             ->parameters(['bloqueos' => 'id'])->whereNumber('id');
+
+        // Domicilio único del usuario (plan 009)
+        Route::get('/perfil/domicilio', [DomicilioController::class, 'show']);
+        Route::put('/perfil/domicilio', [DomicilioController::class, 'update']);
+        Route::delete('/perfil/domicilio', [DomicilioController::class, 'destroy']);
     });
 
     // Panel web (rol admin): solicitudes y usuarios (planes 005 y 006)

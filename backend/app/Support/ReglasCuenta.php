@@ -90,6 +90,12 @@ class ReglasCuenta
             ->count();
     }
 
+    /** Suspensiones en el historial (vigente + rehabilitadas). */
+    public static function vecesSuspendido(int $usuarioId): int
+    {
+        return DB::table('suspensiones')->where('usuario_id', $usuarioId)->count();
+    }
+
     /** Suspensión vigente = sin fecha de rehabilitación. */
     public static function estaSuspendido(int $usuarioId): bool
     {

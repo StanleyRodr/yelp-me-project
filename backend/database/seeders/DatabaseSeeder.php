@@ -227,6 +227,20 @@ class DatabaseSeeder extends Seeder
                 'motivo' => 'Suspensión automática por 3 strikes.',
                 'fecha_suspension' => $hace(7, 1),
             ]);
+
+            // ---------- Domicilios (Misantla). María sin domicilio ----------
+            DB::table('domicilios')->insert([
+                [
+                    'usuario_id' => $carlos, 'calle' => 'Av. Ignacio Zaragoza', 'numero' => '214', 'colonia' => 'Centro',
+                    'codigo_postal' => '93820', 'referencia' => 'Portón café frente a la farmacia',
+                    'latitud' => 19.93152, 'longitud' => -96.85087, 'created_at' => $ahora, 'updated_at' => $ahora,
+                ],
+                [
+                    'usuario_id' => $ana, 'calle' => 'Calle Comonfort', 'numero' => '37-B', 'colonia' => 'Ojite',
+                    'codigo_postal' => '93821', 'referencia' => null,
+                    'latitud' => 19.92864, 'longitud' => -96.85402, 'created_at' => $ahora, 'updated_at' => $ahora,
+                ],
+            ]);
         });
 
         $this->command?->info('Datos de demo cargados.');

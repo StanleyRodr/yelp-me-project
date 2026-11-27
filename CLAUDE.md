@@ -66,7 +66,8 @@ Comandos (desde `backend/`): `php artisan serve` · `php artisan db:seed` (datos
 - Pruebas: `$this->como('correo@demo')` en `tests/TestCase.php` autentica con Sanctum sin login.
 - **Proteger rutas nuevas** dentro de los grupos de `routes/api.php`: `auth:sanctum` + `cuenta.activa` + `rol:usuario` (app) o `rol:admin` con prefijo `admin` (panel). El `usuario_id` sale de `$request->user()`, nunca del body.
 - Usuario en respuestas: siempre con `App\Support\PresentadorUsuario` (sin `password` ni `fcm_token`). Reglas de strikes/suspensión en `App\Support\ReglasCuenta`; credenciales en `App\Support\Credenciales`.
-- Errores con `abort(código, 'mensaje en español')`: el render de `bootstrap/app.php` los devuelve en el formato estándar.
+- Errores con `abort(código, 'mensaje en español')`: el render de `bootstrap/app.php` los devuelve en el formato estándar. Excepción: un 404 con mensaje propio va con `throw new HttpException(404, '...')`, porque el render cambia toda `NotFoundHttpException` (incluido `abort(404, ...)`) por "Recurso no encontrado.".
+- **Domicilio (plan 009):** `GET|PUT|DELETE /api/perfil/domicilio` (rol usuario, 1:1 en `domicilios`, PUT crea o reemplaza). `App\Support\PresentadorDomicilio` (`deUsuario`, `porUsuarios` en lote, `texto`). `usuario.veces_suspendido` con `ReglasCuenta::vecesSuspendido`.
 
 - **Controladores sin modelos Eloquent**: `DB::table(...)` / Query Builder. **Única excepción:** `App\Models\User`, solo para Sanctum (`HasApiTokens`).
 - Controladores con `index`, `show`, `store`, `update`, `destroy`.

@@ -89,7 +89,6 @@ class PresentadorCuenta
             ->merge($suspensiones->pluck('suspendido_por_id'))
             ->merge($suspensiones->pluck('rehabilitado_por_id')));
 
-
         $suspension = fn ($s) => [
             'id' => $s->id,
             'usuario_id' => $s->usuario_id,
@@ -122,6 +121,7 @@ class PresentadorCuenta
                 'created_at' => Normalizar::fecha($s->created_at),
             ])->values()->all(),
             'suspensiones' => $suspensiones->map($suspension)->values()->all(),
+            'domicilio' => PresentadorDomicilio::deUsuario($id),
         ];
     }
 }
