@@ -72,6 +72,19 @@ export const useSolicitudesStore = defineStore('solicitudes', () => {
     }
   }
 
+  /**
+   * Recarga periódica del detalle (Atención): silenciosa, sin skeleton ni error;
+   * si falla se conserva lo que ya se veía. Solo aplica si sigue abierta la misma.
+   */
+  async function refrescarUna(id) {
+    try {
+      const solicitud = await solicitudesService.obtener(id)
+      if (String(actual.value?.id) === String(id)) aplicar(solicitud)
+    } catch {
+      // Silenciosa: la siguiente consulta lo vuelve a intentar.
+    }
+  }
+
   /** Reemplaza la solicitud actualizada en el detalle y en el listado. */
   function aplicar(solicitud) {
     if (actual.value?.id === solicitud.id) actual.value = solicitud
@@ -90,6 +103,6 @@ export const useSolicitudesStore = defineStore('solicitudes', () => {
   return {
     lista, actual, cargando, cargandoActual, error, actualizadoEn,
     conteoPorEstado, pendientesPorAntiguedad, activas,
-    cargar, refrescar, cargarUna, enviar, terminar, rechazar, actualizarServicios,
+    cargar, refrescar, cargarUna, refrescarUna, enviar, terminar, rechazar, actualizarServicios,
   }
 })
