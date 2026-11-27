@@ -10,6 +10,12 @@ val propiedadesLocales = Properties().apply {
 }
 val apiDebug: String = propiedadesLocales.getProperty("api.url", "http://10.0.2.2:8000/api/")
 
+// Firma del release (plan 013): keystore.properties fuera de git (plantilla en keystore.properties.example).
+// Sin él, assembleRelease genera un APK sin firmar.
+val firma = Properties().apply {
+    rootProject.file("keystore.properties").takeIf { it.exists() }?.inputStream()?.use(::load)
+}
+
 // Push (plan 012): sin google-services.json (no se sube a git) la app compila y corre sin notificaciones.
 val conFirebase = file("google-services.json").exists()
 if (conFirebase) {
@@ -27,10 +33,21 @@ android {
         minSdk = 30
         targetSdk = 37
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("boolean", "FCM_ACTIVO", conFirebase.toString())
+    }
+
+    signingConfigs {
+        create("release") {
+            if (!firma.isEmpty) {
+                storeFile = file(firma.getProperty("storeFile"))
+                storePassword = firma.getProperty("storePassword")
+                keyAlias = firma.getProperty("keyAlias")
+                keyPassword = firma.getProperty("keyPassword")
+            }
+        }
     }
 
     buildFeatures {
@@ -43,7 +60,8 @@ android {
             buildConfigField("String", "API_URL", "\"$apiDebug\"")
         }
         release {
-            buildConfigField("String", "API_URL", "\"https://yelpme-api.up.railway.app/api/\"")
+            if (!firma.isEmpty) signingConfig = signingConfigs.getByName("release")
+            buildConfigField("String", "API_URL", "\"https://api-production-9782e676.up.railway.app/api/\"")
             optimization {
                 enable = false
             }
