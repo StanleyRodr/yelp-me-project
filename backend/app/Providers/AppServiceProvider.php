@@ -7,9 +7,13 @@ use App\Support\NotificadorFcm;
 use App\Support\NotificadorNulo;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Kreait\Firebase\Contract\Messaging;
+use Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory;
+use Symfony\Component\Mailer\Transport\Dsn;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -56,6 +60,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Producción: URLs (p. ej. fotos de perfil) siempre con https detrás del proxy.
+        if ($this->app->isProduction()) {
+            URL::forceScheme('https');
+        }
+
+        // Correo por la API HTTP de Brevo (config/mail.php → mailers.brevo).
+        Mail::extend('brevo', fn (array $config) => (new BrevoTransportFactory())->create(
+            new Dsn('brevo+api', 'default', $config['key'] ?? null)
+        ));
+
         // Registro e inicio de sesión: 5 intentos por minuto por IP + identificador.
         RateLimiter::for('acceso', function (Request $request) {
             $identificador = mb_strtolower((string) ($request->input('correo') ?? $request->input('telefono') ?? ''));

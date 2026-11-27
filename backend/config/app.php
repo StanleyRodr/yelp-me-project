@@ -15,6 +15,11 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    // Producción (plan 013): contraseñas del seeder. Sin valor, las de demo local
+    // (Admin123* / Usuario123*), que están en el repositorio.
+    'admin_password' => env('ADMIN_PASSWORD'),
+    'demo_password' => env('DEMO_PASSWORD'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

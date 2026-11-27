@@ -30,7 +30,7 @@ Publicar el MVP completo: panel en Vercel, API y MySQL en Railway, y la app Andr
 
 | # | Tarea | Resumen | Estado |
 |---|---|---|---|
-| 076 | [Backend listo para producción](../tasks/076-tarea-backend-produccion-2026-11-26.md) | Proxies/HTTPS, CORS, admin por variable, Firebase base64, config de Railway. | ⬜ |
+| 076 | [Backend listo para producción](../tasks/076-tarea-backend-produccion-2026-11-26.md) | Proxies/HTTPS, CORS, contraseñas por variable, correo con Brevo (API), extensiones para Railpack. | ✅ |
 | 077 | [MySQL en Railway](../tasks/077-tarea-mysql-railway-2026-11-26.md) | Servicio MySQL, esquema y datos de demo. | ⬜ |
 | 078 | [API en Railway](../tasks/078-tarea-api-railway-2026-11-26.md) | Servicio desde GitHub, variables, volumen, dominio. | ⬜ |
 | 079 | [Panel en Vercel](../tasks/079-tarea-panel-vercel-2026-11-26.md) | Proyecto, variables, rewrites y CORS. | ⬜ |

@@ -53,6 +53,13 @@ return [
             'transport' => 'ses',
         ],
 
+        // Producción (plan 013): Railway bloquea SMTP en Trial/Hobby; Brevo por su API HTTPS.
+        // MAIL_MAILER=brevo + BREVO_API_KEY. El transporte se registra en AppServiceProvider.
+        'brevo' => [
+            'transport' => 'brevo',
+            'key' => env('BREVO_API_KEY'),
+        ],
+
         'postmark' => [
             'transport' => 'postmark',
             // 'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),

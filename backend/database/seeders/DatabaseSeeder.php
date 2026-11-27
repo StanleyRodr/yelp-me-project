@@ -19,6 +19,13 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
+        // Producción: ADMIN_PASSWORD reemplaza la contraseña del admin inicial del script
+        // (y de la admin de demo), aunque la demo ya esté cargada.
+        if ($admin = config('app.admin_password')) {
+            DB::table('usuarios')->whereIn('correo', ['admin@yelpme.com', self::CORREO_MARCA])
+                ->update(['password' => Hash::make($admin), 'updated_at' => now()]);
+        }
+
         if (DB::table('usuarios')->where('correo', self::CORREO_MARCA)->exists()) {
             $this->command?->info('Datos de demo ya cargados; no se hace nada.');
             return;
@@ -26,8 +33,8 @@ class DatabaseSeeder extends Seeder
 
         DB::transaction(function () {
             $ahora = now();
-            $passAdmin = Hash::make('Admin123*');
-            $passUsuario = Hash::make('Usuario123*');
+            $passAdmin = Hash::make(config('app.admin_password') ?: 'Admin123*');
+            $passUsuario = Hash::make(config('app.demo_password') ?: 'Usuario123*');
 
             // ---------- Usuarios ----------
             $admin1 = DB::table('usuarios')->where('correo', 'admin@yelpme.com')->value('id');
