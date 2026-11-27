@@ -94,7 +94,8 @@ async function ejecutar(clave) {
   const dialogos = {
     enviar: {
       titulo: 'Enviar ayuda',
-      texto: `Se despachará ${nombresServicios()} a ${s.value.ubicacion_nombre}.`,
+      // "¿Dónde?" es opcional en la app: sin referencia escrita se usa el punto del mapa.
+      texto: `Se despachará ${nombresServicios()} a ${s.value.ubicacion_nombre || 'la ubicación marcada en el mapa'}.`,
       confirmar: 'Enviar ayuda',
       accion: () => store.enviar(s.value.id),
       exito: 'Ayuda enviada',

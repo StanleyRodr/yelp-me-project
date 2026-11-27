@@ -27,7 +27,7 @@
           </td>
           <td>
             <span class="titulo">{{ s.titulo }}</span>
-            <span class="secundario"><i class="bi bi-geo-alt" aria-hidden="true"></i> {{ s.ubicacion_nombre }}</span>
+            <span class="secundario"><i class="bi bi-geo-alt" aria-hidden="true"></i> {{ s.ubicacion_nombre || 'Sin referencia' }}</span>
           </td>
           <td>{{ nombreCompleto(s.usuario) }}</td>
           <td><ListaServicios :ids="s.servicios" :catalogo="catalogo" /></td>
