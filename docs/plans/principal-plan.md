@@ -188,7 +188,7 @@ Cualquier otra transición se rechaza en el backend.
   - Ej.: piden solo ambulancia para una persona asesinada → se agrega Policía.
   - Ej.: piden solo Policía en un accidente con heridos → se agregan Tránsito y Ambulancia.
 - **Representación visual:** íconos de **Material Symbols** (el mismo ícono en web y Android). El catálogo guarda el nombre del ícono (p. ej. `local_police`, `ambulance`, `fire_truck`, `traffic`), no una imagen.
-  - Web: paquete npm de Material Symbols.
+  - Web: fuente de Material Symbols recortada a los íconos usados (`frontend/scripts/recortar-iconos.py`).
   - Android: Vector Asset de Android Studio.
 
 ### 7.4 Concurrencia y trazabilidad
@@ -327,7 +327,6 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 
 ### Pendiente en el frontend
 - Auditoría visual y de teclado en navegador del plan 002 (ver tarea 016).
-- Fuente Material Symbols ≈ 4 MB: recortar a los íconos usados si el peso molesta.
 
 ---
 

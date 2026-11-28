@@ -114,7 +114,7 @@ Reglas de componentes (plan 002):
 - Carga: skeleton (placeholders de Bootstrap) en cargas de vista/sección; círculo pequeño solo dentro de botones de acción; nada en recargas periódicas.
 
 Otras convenciones:
-- Íconos de servicios y estados con **Material Symbols** (mismo ícono que Android); Bootstrap Icons para el resto de la UI. La columna `servicios.color` no se usa en pantalla.
+- Íconos de servicios y estados con **Material Symbols** (mismo ícono que Android); Bootstrap Icons para el resto de la UI. La fuente va **recortada** (`src/assets/fonts/material-symbols-panel.woff2`, ≈ 4 KB, cargada por `styles/iconos.css`): un ícono nuevo (en el panel o en `servicios.icono`) se agrega a `ICONOS` en `scripts/recortar-iconos.py` y se regenera con `python scripts/recortar-iconos.py` (requiere `pip install fonttools brotli`); si no, se ve el nombre en texto. La columna `servicios.color` no se usa en pantalla.
 - Textos de interfaz: verbos concretos en botones ("Enviar ayuda"), errores que dicen cómo corregir, redacción neutra en género ("quien la creó"), sin separadores "·".
 - Probar services contra la API sin navegador: `vite.ssrLoadModule` con `localStorage` simulado y la API servida sobre `YelpMe_pruebas` (`DB_DATABASE=YelpMe_pruebas php artisan serve --port=8010`). El límite de 5 logins por minuto también aplica: `php artisan cache:clear` lo reinicia.
 
