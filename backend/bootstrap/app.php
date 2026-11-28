@@ -26,6 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // aunque el cliente no envíe "Accept: application/json" (p. ej. Retrofit).
         $middleware->redirectGuestsTo(fn () => null);
 
+        // Producción (Railway): el proxy termina HTTPS; confiar en sus cabeceras X-Forwarded-*.
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'rol' => \App\Http\Middleware\VerificarRol::class,
             'cuenta.activa' => \App\Http\Middleware\VerificarCuentaActiva::class,

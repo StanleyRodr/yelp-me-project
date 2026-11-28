@@ -269,6 +269,25 @@ Uno por usuario (tabla `domicilios`, 1:1). El `usuario_id` sale del token.
 
 Los cambios que hace el propio usuario (cancelar, terminar) no avisan.
 
+## Producción (Railway, plan 013)
+
+- **URL:** `https://api-production-9782e676.up.railway.app` (servicio `api`, raíz `/backend`, healthcheck `/api/ping`). Base en el servicio `MySQL` del mismo proyecto (red privada).
+- **Build:** Railpack detecta Laravel, instala las extensiones de `composer.json` (`ext-pdo_mysql`, `ext-sodium`), sirve `public/` con FrankenPHP y al arrancar hace `storage:link` y `optimize`. `RAILPACK_SKIP_MIGRATIONS=true` (el esquema vive en `database/script-bd.sql`).
+- **Proxy:** `trustProxies(at: '*')` y `URL::forceScheme('https')` en producción.
+- **CORS:** `FRONTEND_URL` acepta uno o varios orígenes separados por coma.
+- **Correo:** Railway bloquea SMTP salvo en el plan Pro → `MAIL_MAILER=brevo` con `BREVO_API_KEY` (API HTTPS de Brevo, `symfony/brevo-mailer`). `MAIL_FROM_ADDRESS` debe ser un remitente verificado en Brevo.
+- **Contraseñas del seeder:** `ADMIN_PASSWORD` (admins; también cambia la del admin inicial del script aunque la demo ya esté cargada) y `DEMO_PASSWORD` (usuarios de demo). Sin ellas, `Admin123*` / `Usuario123*`.
+- **Push:** `FIREBASE_CREDENTIALS_BASE64`.
+- **Comandos útiles** (CLI de Railway con sesión y llave SSH registrada):
+
+```bash
+railway logs --service api
+railway ssh --service api -- php artisan db:seed --force
+railway connect MySQL --tunnel-only -P 3407   # túnel a la BD en 127.0.0.1:3407
+```
+
+- **Fotos de perfil:** en el plan Free el único volumen lo usa MySQL; sin volumen en `api` las fotos se pierden al redesplegar. Con un plan de pago: volumen montado en `/app/storage/app/public`.
+
 ## Convenciones
 
 - Controladores **sin modelos Eloquent**: acceso a datos con `DB::table(...)`. Única excepción: `App\Models\User`, solo para autenticación con Sanctum.

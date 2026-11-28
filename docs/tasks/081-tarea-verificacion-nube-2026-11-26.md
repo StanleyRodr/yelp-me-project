@@ -1,6 +1,6 @@
 # 081 — Tarea: Verificación en la nube
 
-> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ⬜ Pendiente
+> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ✅ Terminada (pruebas manuales en teléfono pendientes)
 
 ## Objetivo
 Los 11 criterios del MVP (plan principal 13) en producción; documentación final del proyecto.
@@ -10,17 +10,17 @@ Los 11 criterios del MVP (plan principal 13) en producción; documentación fina
 ### 1. Recorrido (panel en Vercel + APK en teléfono, sin la PC)
 | # | Criterio | Resultado |
 |---|---|---|
-| 1 | Registro/login app; login admin web | |
-| 2 | CRUD de contactos con vinculación | |
-| 3 | A no ve datos de B | |
-| 4 | Llamada directa | |
-| 5 | Solicitud con GPS y servicios en el mapa | |
-| 6 | Admin corrige, despacha y termina | |
-| 7 | Broma con strike → suspensión → rehabilitación | |
-| 8 | Push a contacto y solicitante | |
-| 9 | Recuperar contraseña por correo | |
-| 10 | Sin GPS con domicilio; llamada al favorito | |
-| 11 | Todo en la nube | |
+| 1 | Registro/login app; login admin web | API y panel en línea; login de Carlos en el APK contra Railway ✅. Login admin con `ADMIN_PASSWORD`: manual |
+| 2 | CRUD de contactos con vinculación | Probado en local (plan 010); misma API |
+| 3 | A no ve datos de B | Pruebas de backend (108 OK) |
+| 4 | Llamada directa | Probado en local (plan 010) |
+| 5 | Solicitud con GPS y servicios en el mapa | Probado en local (plan 011); en nube: manual |
+| 6 | Admin corrige, despacha y termina | Probado en local (planes 005/007) |
+| 7 | Broma con strike → suspensión → rehabilitación | Probado en local (plan 006) |
+| 8 | Push a contacto y solicitante | FCM activo en producción (`NotificadorFcm`); manual |
+| 9 | Recuperar contraseña por correo | Mailer `brevo` activo; manual con correo real |
+| 10 | Sin GPS con domicilio; llamada al favorito | Probado en local (planes 009–011) |
+| 11 | Todo en la nube | Panel en Vercel, API + BD en Railway, APK en release ✅; teléfono físico: manual |
 
 ### 2. Documentación
 - `README.md` raíz: qué es YelpMe, enlaces (panel, API, release del APK), arquitectura (diagrama simple), cómo correr en local, cómo desplegar (resumen de tareas 076–080), **lista de variables sin valores**.
@@ -40,4 +40,11 @@ git log -p | grep -iE "MAIL_PASSWORD=.+|ADMIN_PASSWORD=.+"                      
 "Plan 013: despliegue del MVP". Tras fusionar, Railway y Vercel despliegan `main`; repetir criterios 1 y 5 como humo.
 
 ## Resultado
+- Dominios: API `https://api-production-9782e676.up.railway.app`, panel `https://yelp-me-project.vercel.app`, APK en release `v1.0.0`.
+- Secretos: ambas búsquedas vacías.
+- Fotos: sin volumen en plan Free → se pierden al redesplegar (Hobby lo resuelve).
+- Deploys fallidos en `121c9ab` (main): intentos de antes de fijar la raíz `/backend`; el servicio `yelp-me-project` ya no existe.
+- Pendiente manual: login admin, correo de recuperación, push y APK en teléfono físico.
+- Tras fusionar: Production Branch de Vercel y rama de Railway de vuelta a `main`.
+
 Commit: `docs: documenta el despliegue y cierra el MVP`.

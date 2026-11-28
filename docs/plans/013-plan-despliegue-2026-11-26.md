@@ -30,20 +30,22 @@ Publicar el MVP completo: panel en Vercel, API y MySQL en Railway, y la app Andr
 
 | # | Tarea | Resumen | Estado |
 |---|---|---|---|
-| 076 | [Backend listo para producción](../tasks/076-tarea-backend-produccion-2026-11-26.md) | Proxies/HTTPS, CORS, admin por variable, Firebase base64, config de Railway. | ⬜ |
-| 077 | [MySQL en Railway](../tasks/077-tarea-mysql-railway-2026-11-26.md) | Servicio MySQL, esquema y datos de demo. | ⬜ |
-| 078 | [API en Railway](../tasks/078-tarea-api-railway-2026-11-26.md) | Servicio desde GitHub, variables, volumen, dominio. | ⬜ |
-| 079 | [Panel en Vercel](../tasks/079-tarea-panel-vercel-2026-11-26.md) | Proyecto, variables, rewrites y CORS. | ⬜ |
-| 080 | [APK de release](../tasks/080-tarea-apk-release-2026-11-26.md) | Firma, URL de producción, versión y GitHub Release. | ⬜ |
-| 081 | [Verificación en la nube](../tasks/081-tarea-verificacion-nube-2026-11-26.md) | Los 11 criterios en producción; documentación final. | ⬜ |
+| 076 | [Backend listo para producción](../tasks/076-tarea-backend-produccion-2026-11-26.md) | Proxies/HTTPS, CORS, contraseñas por variable, correo con Brevo (API), extensiones para Railpack. | ✅ |
+| 077 | [MySQL en Railway](../tasks/077-tarea-mysql-railway-2026-11-26.md) | Servicio MySQL (plan Free), esquema por túnel SSH; demo en la 078. | ✅ |
+| 078 | [API en Railway](../tasks/078-tarea-api-railway-2026-11-26.md) | Servicio desde GitHub, variables, dominio, demo cargada (sin volumen en Free). | ✅ |
+| 079 | [Panel en Vercel](../tasks/079-tarea-panel-vercel-2026-11-26.md) | `yelp-me-project.vercel.app`, rewrite, CORS al dominio principal. | ✅ |
+| 080 | [APK de release](../tasks/080-tarea-apk-release-2026-11-26.md) | Firma con keystore propia, URL de Railway, `v1.0.0` en GitHub Releases. | ✅ |
+| 081 | [Verificación en la nube](../tasks/081-tarea-verificacion-nube-2026-11-26.md) | Los 11 criterios en producción; documentación final. | ✅ |
 
 ---
 
 ## Criterios de terminado
 
-- [ ] `https://<api>.up.railway.app/api/ping` responde; panel en `https://<panel>.vercel.app` inicia sesión.
-- [ ] Fotos sobreviven a un redespliegue (volumen).
-- [ ] APK `v1.0.0` instalado en un teléfono físico usa la API en la nube (datos móviles, sin la PC).
-- [ ] Recuperación de contraseña llega por correo real; push funciona en producción.
-- [ ] Ningún secreto en git; variables documentadas en `README` (sin valores).
-- [ ] Commits por tarea, sin atribución; PR a `main`.
+Dominios reales: API `https://api-production-9782e676.up.railway.app`, panel `https://yelp-me-project.vercel.app`, APK en el release `v1.0.0`.
+
+- [x] `/api/ping` responde; el panel carga, rutas y CORS correctos.
+- [ ] Fotos sobreviven a un redespliegue: **no en plan Free** (sin volumen libre; MySQL lo ocupa). Requiere Hobby.
+- [x] APK `v1.0.0` usa la API en la nube (probado en emulador sin `adb reverse`). Falta el teléfono físico con datos móviles (prueba manual).
+- [ ] Recuperación por correo real (Brevo) y push en producción: configurados; prueba manual pendiente.
+- [x] Ningún secreto en git; variables documentadas en `README` (sin valores).
+- [x] Commits por tarea, sin atribución; PR a `main`.

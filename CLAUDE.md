@@ -31,11 +31,11 @@ Sistema de contactos y solicitudes de emergencia. **Prototipo académico (MVP)**
 
 | Carpeta     | Stack                                       | Rol                         | Estado                  |
 |-------------|---------------------------------------------|-----------------------------|-------------------------|
-| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | Conectado a la API (planes 002, 007–009) |
-| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | API completa del MVP con push FCM (planes 001, 003–006, 008–012) |
-| `mobile/`   | Android Studio, Java                        | App del usuario final       | Completa contra la API, con push (planes 008–012); falta publicar el APK (plan 013) |
+| `frontend/` | Vue 3 + Vite                                | Panel web del administrador | En producción en Vercel (planes 002, 007–009, 013) |
+| `backend/`  | PHP Laravel + MySQL                         | API REST compartida         | En producción en Railway (planes 001, 003–006, 008–013) |
+| `mobile/`   | Android Studio, Java                        | App del usuario final       | APK `v1.0.0` en GitHub Releases (planes 008–013) |
 
-**Plan pendiente ya escrito** (tareas 076–081 en `docs/tasks/`): 013 despliegue (Vercel + Railway + APK en GitHub Releases). Para seguir: crear su rama desde `main` y ejecutar sus tareas en orden.
+**MVP en producción (plan 013):** panel `https://yelp-me-project.vercel.app`, API `https://api-production-9782e676.up.railway.app` (Railway: servicios `api` y `MySQL`, plan Free sin volumen para fotos), APK en el release `v1.0.0`. Despliegue automático al hacer push a la rama de producción. Comandos (CLI de Railway, desde la raíz): `railway logs --service api` · `railway variables --service api` · `railway ssh --service api -- php artisan db:seed --force` · `railway connect MySQL --tunnel-only -P 3407` (túnel; el cliente de XAMPP no sirve con MySQL 8.4, usar PDO o Workbench). Vercel se maneja desde su panel (raíz `frontend`, `VITE_API_URL`). Detalle y variables en `README.md`.
 
 Web y Android consumen la **misma API Laravel**.
 

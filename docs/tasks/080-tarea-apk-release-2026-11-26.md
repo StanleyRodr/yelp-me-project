@@ -1,6 +1,6 @@
 # 080 — Tarea: APK de release
 
-> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ⬜ Pendiente
+> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ✅ Hecha
 
 ## Objetivo
 APK firmado `v1.0.0` que apunta a la API en Railway, publicado en GitHub Releases.
@@ -63,7 +63,15 @@ gh release create v1.0.0 mobile/app/build/outputs/apk/release/app-release.apk \
 ```
 Actualizaciones: subir `versionCode`/`versionName`, misma keystore, nuevo release.
 
+## Cómo se hizo (2026-11-27)
+- **(Tú)** Keystore con el asistente de Android Studio (Create new → OK → Cancel) en `C:\Users\stanl\keystores\yelpme.jks`, alias `yelpme`, 25 años. `mobile/keystore.properties` (ignorado) con la ruta en `/`.
+- `app/build.gradle.kts`: `signingConfigs.release` desde `keystore.properties` (sin él, APK sin firmar), `versionName = "1.0.0"`, `API_URL` de release = `https://api-production-9782e676.up.railway.app/api/`. Minify apagado.
+- Plantilla `mobile/keystore.properties.example`.
+- `./gradlew assembleRelease` → `apksigner verify` OK (firma propia).
+- Release: `gh release create v1.0.0` con `YelpMe-1.0.0.apk`.
+
 ## Verificación
+- APK release instalado en el emulador **sin `adb reverse`**: login de Carlos contra Railway, Inicio con su solicitud de demo, mapa y barra de servicios.
 `apksigner verify --print-certs app-release.apk` muestra el certificado; app funcionando contra la nube.
 
 ## Resultado
