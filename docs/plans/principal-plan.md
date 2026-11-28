@@ -326,7 +326,7 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 | Despliegue | Plan 013: panel en `https://yelp-me-project.vercel.app`, API en `https://api-production-9782e676.up.railway.app`, APK en el release `v1.0.0`. Plan Free de Railway: fotos de perfil sin volumen (se pierden al redesplegar). |
 
 ### Pendiente en el frontend
-- Auditoría visual y de teclado en navegador del plan 002 (ver tarea 016).
+- Ninguno: auditoría visual y de teclado (tarea 016) hecha a mano; fuente de íconos recortada.
 
 ---
 

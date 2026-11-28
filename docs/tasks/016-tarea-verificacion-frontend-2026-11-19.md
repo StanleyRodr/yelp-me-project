@@ -1,6 +1,6 @@
 # 016 — Tarea: Verificación del frontend
 
-> Plan: `002-plan-frontend-estandarizacion-2026-11-19.md` · Rama: `feature/frontend-base` · Estado: ✅ Completada (verificación automática) · Auditoría visual: pendiente, manual
+> Plan: `002-plan-frontend-estandarizacion-2026-11-19.md` · Rama: `feature/frontend-base` · Estado: ✅ Completada (verificación automática) · Auditoría visual: ✅ hecha a mano
 
 ## Objetivo
 Confirmar criterios del plan 002 antes del PR.
