@@ -47,6 +47,6 @@ Dominios reales: API `https://api-production-9782e676.up.railway.app`, panel `ht
 - [ ] Fotos sobreviven a un redespliegue: **no en plan Free** (sin volumen libre; MySQL lo ocupa). Requiere Hobby.
 - [x] APK `v1.0.0` instalado en un teléfono físico usa la API en la nube.
 - [x] Recuperación de contraseña llega por correo real (Brevo).
-- [ ] Push en producción: configurado (`NotificadorFcm`); prueba manual pendiente.
+- [x] Push en producción (FCM) llega al teléfono.
 - [x] Ningún secreto en git; variables documentadas en `README` (sin valores).
 - [x] Commits por tarea, sin atribución; PR a `main`.

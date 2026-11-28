@@ -17,7 +17,7 @@ Los 11 criterios del MVP (plan principal 13) en producción; documentación fina
 | 5 | Solicitud con GPS y servicios en el mapa | Probado en local (plan 011); en nube: manual |
 | 6 | Admin corrige, despacha y termina | Probado en local (planes 005/007) |
 | 7 | Broma con strike → suspensión → rehabilitación | Probado en local (plan 006) |
-| 8 | Push a contacto y solicitante | FCM activo en producción (`NotificadorFcm`); manual |
+| 8 | Push a contacto y solicitante | Push llegó al teléfono en producción ✅ |
 | 9 | Recuperar contraseña por correo | Código llegó por Brevo a un correo real ✅ |
 | 10 | Sin GPS con domicilio; llamada al favorito | Probado en local (planes 009–011) |
 | 11 | Todo en la nube | Panel en Vercel, API + BD en Railway, APK en teléfono físico ✅ |
@@ -44,7 +44,7 @@ git log -p | grep -iE "MAIL_PASSWORD=.+|ADMIN_PASSWORD=.+"                      
 - Secretos: ambas búsquedas vacías.
 - Fotos: sin volumen en plan Free → se pierden al redesplegar (Hobby lo resuelve).
 - Deploys fallidos en `121c9ab` (main): intentos de antes de fijar la raíz `/backend`; el servicio `yelp-me-project` ya no existe.
-- Probado a mano: APK en teléfono físico y correo de recuperación. Pendiente: push en producción.
+- Probado a mano: APK en teléfono físico, correo de recuperación y push en producción.
 - Tras fusionar: Production Branch de Vercel y rama de Railway de vuelta a `main`.
 
 Commit: `docs: documenta el despliegue y cierra el MVP`.
