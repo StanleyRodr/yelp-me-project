@@ -44,7 +44,7 @@ Publicar el MVP completo: panel en Vercel, API y MySQL en Railway, y la app Andr
 Dominios reales: API `https://api-production-9782e676.up.railway.app`, panel `https://yelp-me-project.vercel.app`, APK en el release `v1.0.0`.
 
 - [x] `/api/ping` responde; el panel carga, rutas y CORS correctos.
-- [ ] Fotos sobreviven a un redespliegue: **no en plan Free** (sin volumen libre; MySQL lo ocupa). Requiere Hobby.
+- [x] Fotos de perfil: aceptado sin volumen en plan Free (MySQL ocupa el único); se pierden al redesplegar. Si hace falta conservarlas: plan Hobby + volumen en `storage/app/public`.
 - [x] APK `v1.0.0` instalado en un teléfono físico usa la API en la nube.
 - [x] Recuperación de contraseña llega por correo real (Brevo).
 - [x] Push en producción (FCM) llega al teléfono.
