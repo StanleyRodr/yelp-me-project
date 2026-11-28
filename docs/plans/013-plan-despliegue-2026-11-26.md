@@ -45,7 +45,8 @@ Dominios reales: API `https://api-production-9782e676.up.railway.app`, panel `ht
 
 - [x] `/api/ping` responde; el panel carga, rutas y CORS correctos.
 - [ ] Fotos sobreviven a un redespliegue: **no en plan Free** (sin volumen libre; MySQL lo ocupa). Requiere Hobby.
-- [x] APK `v1.0.0` usa la API en la nube (probado en emulador sin `adb reverse`). Falta el teléfono físico con datos móviles (prueba manual).
-- [ ] Recuperación por correo real (Brevo) y push en producción: configurados; prueba manual pendiente.
+- [x] APK `v1.0.0` instalado en un teléfono físico usa la API en la nube.
+- [x] Recuperación de contraseña llega por correo real (Brevo).
+- [ ] Push en producción: configurado (`NotificadorFcm`); prueba manual pendiente.
 - [x] Ningún secreto en git; variables documentadas en `README` (sin valores).
 - [x] Commits por tarea, sin atribución; PR a `main`.

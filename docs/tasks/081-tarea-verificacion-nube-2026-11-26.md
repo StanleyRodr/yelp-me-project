@@ -1,6 +1,6 @@
 # 081 — Tarea: Verificación en la nube
 
-> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ✅ Terminada (pruebas manuales en teléfono pendientes)
+> Plan: `013-plan-despliegue-2026-11-26.md` · Rama: `feature/despliegue` · Estado: ✅ Terminada
 
 ## Objetivo
 Los 11 criterios del MVP (plan principal 13) en producción; documentación final del proyecto.
@@ -18,9 +18,9 @@ Los 11 criterios del MVP (plan principal 13) en producción; documentación fina
 | 6 | Admin corrige, despacha y termina | Probado en local (planes 005/007) |
 | 7 | Broma con strike → suspensión → rehabilitación | Probado en local (plan 006) |
 | 8 | Push a contacto y solicitante | FCM activo en producción (`NotificadorFcm`); manual |
-| 9 | Recuperar contraseña por correo | Mailer `brevo` activo; manual con correo real |
+| 9 | Recuperar contraseña por correo | Código llegó por Brevo a un correo real ✅ |
 | 10 | Sin GPS con domicilio; llamada al favorito | Probado en local (planes 009–011) |
-| 11 | Todo en la nube | Panel en Vercel, API + BD en Railway, APK en release ✅; teléfono físico: manual |
+| 11 | Todo en la nube | Panel en Vercel, API + BD en Railway, APK en teléfono físico ✅ |
 
 ### 2. Documentación
 - `README.md` raíz: qué es YelpMe, enlaces (panel, API, release del APK), arquitectura (diagrama simple), cómo correr en local, cómo desplegar (resumen de tareas 076–080), **lista de variables sin valores**.
@@ -44,7 +44,7 @@ git log -p | grep -iE "MAIL_PASSWORD=.+|ADMIN_PASSWORD=.+"                      
 - Secretos: ambas búsquedas vacías.
 - Fotos: sin volumen en plan Free → se pierden al redesplegar (Hobby lo resuelve).
 - Deploys fallidos en `121c9ab` (main): intentos de antes de fijar la raíz `/backend`; el servicio `yelp-me-project` ya no existe.
-- Pendiente manual: login admin, correo de recuperación, push y APK en teléfono físico.
+- Probado a mano: APK en teléfono físico y correo de recuperación. Pendiente: push en producción.
 - Tras fusionar: Production Branch de Vercel y rama de Railway de vuelta a `main`.
 
 Commit: `docs: documenta el despliegue y cierra el MVP`.
