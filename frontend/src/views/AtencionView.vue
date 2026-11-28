@@ -62,6 +62,7 @@ import SkeletonBloque from '../components/comunes/SkeletonBloque.vue'
 import ModalEditarServicios from '../components/modals/ModalEditarServicios.vue'
 import ModalRechazar from '../components/modals/ModalRechazar.vue'
 import { useCargaDiferida } from '../composables/useCargaDiferida'
+import { useConsultaPeriodica } from '../composables/useConsultaPeriodica'
 import { accionesPermitidas } from '../constantes/transiciones'
 import { useSolicitudesStore } from '../stores/solicitudes'
 import { useCatalogosStore } from '../stores/catalogos'
@@ -83,6 +84,12 @@ const mostrarSkeleton = computed(() => cargaDiferida.value && !s.value)
 
 catalogos.cargar()
 watch(() => props.id, (id) => store.cargarUna(id), { immediate: true })
+
+// Cambios hechos desde la app (cancelar, terminar, editar) aparecen sin recargar la página.
+// No se recarga mientras hay un modal abierto o una acción en curso.
+useConsultaPeriodica(() => {
+  if (!enCurso.value && !modal.servicios && !modal.rechazar) store.refrescarUna(props.id)
+}, 15000)
 
 const nombresServicios = () =>
   s.value.servicios.map((id) => catalogos.servicioPorId[id]?.nombre).filter(Boolean).join(', ')
