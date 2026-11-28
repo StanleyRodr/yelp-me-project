@@ -1,0 +1,30 @@
+/*
+ * Material Symbols Outlined recortada a los íconos del panel (≈ 4 KB en vez de ≈ 4 MB).
+ * Generada con scripts/recortar-iconos.py; un ícono nuevo se agrega ahí y se regenera.
+ * Ejes fijos: FILL 0, wght 400, GRAD 0, opsz 24 (los de base.css).
+ */
+@font-face {
+  font-family: "Material Symbols Outlined";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("../assets/fonts/material-symbols-panel.woff2") format("woff2");
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga";
+}
