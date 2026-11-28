@@ -319,10 +319,11 @@ Los datos importantes **no se borran físicamente, se deshabilitan**, para conse
 
 | Parte    | Estado |
 |----------|--------|
-| Frontend | Planes 002, 007, 008 y 009: panel completo (rutas con login, dashboard con recarga cada 15 s, solicitudes, usuarios, perfil) conectado a la API real, recuperación de contraseña, tema claro/oscuro y domicilio del usuario con mini mapa. |
-| Backend  | Planes 001, 003–006 y 008–012: base, autenticación, recuperación de contraseña, contactos, solicitudes, gestión de usuarios (strikes, suspensiones, cuentas), perfil propio, domicilio único (`domicilios`) y contacto favorito; apellidos en dos columnas. Push con FCM a contactos vinculados y al solicitante. Pruebas sobre `YelpMe_pruebas`. Falta el despliegue (plan 013). |
-| Mobile   | Planes 008–012: proyecto en git, tema de YelpMe claro/oscuro, Retrofit con sesión, splash, login, registro, recuperación de contraseña, `BaseActivity` con menú y barra de servicios simulada; perfil completo (datos, foto, strikes, suspensiones, domicilio con mapa, contraseña); CRUD de contactos contra la API, favorito con llamada directa desde la barra, quién me tiene (con domicilio), desvincular y bloqueos. solicitudes con GPS o domicilio, servicios, estado en vivo (cada 15 s), editar, cancelar, terminar e historial. Notificaciones push (alertas de contactos con mapa y llamada; estado de mis solicitudes). Falta publicar el APK (plan 013). |
-| BD       | Creada con `database/script-bd.sql`: 10 tablas (incluye `codigos_recuperacion`), admin inicial y catálogo de servicios. |
+| Frontend | Planes 002, 007, 008 y 009: panel completo (rutas con login, dashboard con recarga cada 15 s, solicitudes, usuarios, perfil) conectado a la API real, recuperación de contraseña, tema claro/oscuro y domicilio del usuario con mini mapa. En producción en Vercel (plan 013). |
+| Backend  | Planes 001, 003–006 y 008–012: base, autenticación, recuperación de contraseña, contactos, solicitudes, gestión de usuarios (strikes, suspensiones, cuentas), perfil propio, domicilio único (`domicilios`) y contacto favorito; apellidos en dos columnas. Push con FCM a contactos vinculados y al solicitante. Pruebas sobre `YelpMe_pruebas`. En producción en Railway (plan 013). |
+| Mobile   | Planes 008–012: proyecto en git, tema de YelpMe claro/oscuro, Retrofit con sesión, splash, login, registro, recuperación de contraseña, `BaseActivity` con menú y barra de servicios simulada; perfil completo (datos, foto, strikes, suspensiones, domicilio con mapa, contraseña); CRUD de contactos contra la API, favorito con llamada directa desde la barra, quién me tiene (con domicilio), desvincular y bloqueos. solicitudes con GPS o domicilio, servicios, estado en vivo (cada 15 s), editar, cancelar, terminar e historial. Notificaciones push (alertas de contactos con mapa y llamada; estado de mis solicitudes). APK firmado `v1.0.0` en GitHub Releases, apuntando a Railway (plan 013). |
+| BD       | Creada con `database/script-bd.sql`: 10 tablas (incluye `codigos_recuperacion`), admin inicial y catálogo de servicios. En producción: MySQL 8.4 en Railway con la demo. |
+| Despliegue | Plan 013: panel en `https://yelp-me-project.vercel.app`, API en `https://api-production-9782e676.up.railway.app`, APK en el release `v1.0.0`. Plan Free de Railway: fotos de perfil sin volumen (se pierden al redesplegar). |
 
 ### Pendiente en el frontend
 - Auditoría visual y de teclado en navegador del plan 002 (ver tarea 016).
@@ -410,4 +411,4 @@ El día de la presentación debe poder demostrarse:
 10. ✅ Plan 010 — Contactos en Android: CRUD, favorito, vínculos (con domicilio), bloqueos, llamadas.
 11. ✅ Plan 011 — Solicitudes en Android: GPS con respaldo de domicilio, servicios, estados, historial.
 12. ✅ Plan 012 — Notificaciones FCM (backend + Android).
-13. Plan 013 — Despliegue: Vercel, Railway (API + MySQL), APK en GitHub Releases.
+13. ✅ Plan 013 — Despliegue: Vercel, Railway (API + MySQL), APK en GitHub Releases.
